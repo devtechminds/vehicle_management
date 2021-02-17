@@ -15,6 +15,7 @@ class LocationController extends Controller
     public function index(Request $request)
     {
         if($request->ajax()){
+			
             $uom_data_list = Location::query();
             if($request->status)
             {
