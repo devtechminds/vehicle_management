@@ -1,0 +1,5 @@
+[26-Oct-2020 12:30:01 America/New_York] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/cfsadworkstm/public_html/vehicle_management/bootstrap/app.php:14
+Stack trace:
+#0 /home/cfsadworkstm/public_html/vehicle_management/artisan(20): require_once()
+#1 {main}
+  thrown in /home/cfsadworkstm/public_html/vehicle_management/bootstrap/app.php on line 14
