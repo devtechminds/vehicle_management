@@ -56,7 +56,17 @@
                            <div class="form-group row">
                               <label class="col-sm-2 col-form-label">Type of Consignment</label>
                               <div class="col-sm-4">
-                                 <input type="text" class="form-control" value="{{ $gate_entry->getManifestoEntry->getConsignment->consignment_type}}" placeholder="" readonly="">
+                              <input type="hidden" name="consignment_type_id" value="{{ $gate_entry->getManifestoEntry->getConsignment->id }}">
+                              @if($gate_entry->getManifestoEntry->getConsignment->id ==3)         
+                              <select name="consignment_type" id="consignment_type" class="form-control boxbrd">
+                                    <option value="">Select Consignment Type</option>
+                                    @foreach($consignments as $consignment)
+                                    <option {{ $consignment['id']== $gate_entry->getManifestoEntry->getConsignment->id?'selected':'' }} value="{{ $consignment['id'] }}">{{ ucwords($consignment['consignment_type']) }}</option>
+                                    @endforeach
+                              </select>         
+                              @else
+                              <input type="text" class="form-control" value="{{ $gate_entry->getManifestoEntry->getConsignment->consignment_type}}" placeholder="" readonly="">        
+                              @endif
                               </div>
                               <label class="col-sm-2 col-form-label">Gate Entry No</label>
                               <div class="col-sm-4">
@@ -66,11 +76,24 @@
                            <div class="form-group row">
                               <label class="col-sm-2 col-form-label">Cargo Ref No</label>
                               <div class="col-sm-4">
-                                 <input type="text" class="form-control" value="{{ $gate_entry->getManifestoEntry->cargo_reference_no}}" placeholder="" readonly="">
+                              @if($gate_entry->getManifestoEntry->getConsignment->id ==3)         
+                              <input type="text"  name="cargo_reference_no" class="form-control" value="{{ $gate_entry->getManifestoEntry->cargo_reference_no}}" placeholder="">    
+                              @else
+                              <input type="text" class="form-control" value="{{ $gate_entry->getManifestoEntry->cargo_reference_no}}" placeholder="" readonly="">
+                              @endif
                               </div>
                               <label class="col-sm-2 col-form-label">Type of Cargo</label>
                               <div class="col-sm-4">
-                                 <input type="text" class="form-control" value="{{ ucwords( str_replace('_',' ',$gate_entry->getManifestoEntry->getCargo->cargo_name))}}" placeholder="" readonly="">
+                              @if($gate_entry->getManifestoEntry->getConsignment->id ==3)         
+                              <select name="cargo_type" id="cargo_type" class="form-control boxbrd">
+                                    <option value="">Select Cargo Type</option>
+                                    @foreach($cargos as $cargo)
+                                       <option {{ $cargo['cargo_code']== $gate_entry->getManifestoEntry->getCargo->cargo_code?'selected':'' }} value="{{ $cargo['cargo_name'] }}/{{ $cargo['cargo_code'] }}">{{ucwords( str_replace('_',' ',$cargo['cargo_name'])) }}</option>
+                                    @endforeach
+                                 </select>   
+                              @else
+                              <input type="text" class="form-control" value="{{ ucwords( str_replace('_',' ',$gate_entry->getManifestoEntry->getCargo->cargo_name))}}" placeholder="" readonly="">
+                              @endif
                               </div>
                            </div>
                            <div class="form-group row">
@@ -116,7 +139,7 @@
                         </div>
                         
                            <div class="form-group row">
-                           <input type="hidden" name="gate_entry_id" value="{{ $gate_entry->id}}">
+                           <input type="hidden" name="gate_entry_id" value="{{ $gate_entry->gate_entry_id}}">
                               <label class="col-sm-2 col-form-label">Initiated By  </label>
                               <div class="col-sm-4">
                                  <input type="text" name="initiated_by" class="form-control" value="{{ $gate_entry->getGateEntry->initiated_by }}" placeholder="Enter Initiated By" readonly>
@@ -133,7 +156,11 @@
                               </div>
                               <label class="col-sm-2 col-form-label">Destination </label>
                               <div class="col-sm-4">
-                                 <input type="text" name="destination" class="form-control" value="{{ $gate_entry->getGateEntry->destination}}" readonly placeholder="Enter Destination">
+                              @if($gate_entry->getManifestoEntry->getConsignment->id ==3)         
+                              <input type="text" name="destination" id="destination" class="form-control" value="{{ $gate_entry->getGateEntry->destination}}"  placeholder="Enter Destination">
+                              @else
+                              <input type="text" name="destination" class="form-control" value="{{ $gate_entry->getGateEntry->destination}}" readonly placeholder="Enter Destination">
+                              @endif
                               </div>
                            </div>
                            <div class="form-group row">
@@ -245,8 +272,12 @@
 </div>
 <label class="col-sm-2 col-form-label ">Yard : </label>
 <div class="col-sm-4">
-   <input type="text" name="bin" id="bin" class="form-control " value="{{$gate_entry->bin_id}}" placeholder="Enter Yard"  readonly>
-</div>
+ @if($gate_entry->getManifestoEntry->getConsignment->id ==3)         
+ <input type="text" name="bin" id="bin" class="form-control " value="{{$gate_entry->bin_id}}" placeholder="Enter Yard">
+ @else
+ <input type="text" name="bin" id="bin" class="form-control " value="{{$gate_entry->bin_id}}" placeholder="Enter Yard"  readonly>
+ @endif
+ </div>
 </div>
 
 <div class="form-group row fheigt">
@@ -485,6 +516,16 @@ $(document).on("change", "#area", function () {
     });
 });
 
+$('#consignment_type').change(function() {
+    var type = $(this).find("option:selected").text(); //get the current value's option
+    $.ajax({
+        type:'GET',
+        url:'/cargo-type-changes/'+type,
+        success:function(data){
+            $("#cargo_type").html(data);
+        }
+    });
+});
 
    $(".calculate").change(function(){
       WBNetWt();

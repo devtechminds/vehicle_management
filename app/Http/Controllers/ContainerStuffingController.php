@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\UploadDocuments;
 use App\ConsignmentDetails;
+use App\ManifestoEntry;
+use App\GateEntry;
 use App\WeighBridge;
 use DB;
 use App\Location;
 use App\Commodity;
 use App\Material;
 use App\UOM;
+use App\Consignment;
+use App\Cargo;
 use App\Area;
 use App\Notifications;
 use App\FieldSupervisorEntryOut;
@@ -27,7 +31,7 @@ class ContainerStuffingController extends Controller
      
         if($request->ajax()){
             $gate_entry_data = UploadDocuments::whereHas('getManifestoEntry', function($where){ 
-                $where->whereNotIn('cargo_type',[4,8]);
+                $where->whereNotIn('cargo_type',[4,8,10,11]);
              })->with('getGateEntry','getManifestoEntry.getCargo','getManifestoEntry.getConsignment','getConsignmentDetails');
             
             
@@ -164,8 +168,8 @@ class ContainerStuffingController extends Controller
         try {
             DB::beginTransaction();
             $data = $request->all(); 
-            // echo "<pre>"; 
-            // print_r($data);die;
+            //echo "<pre>"; 
+            //print_r($data);die;
             $update_data =array(
                 'wb_gross_wt' => $data['wb_gross_wt']?$data['wb_gross_wt']:'',
                 'container_tare_wt' => $data['container_tare_wt']?$data['container_tare_wt']:'',
@@ -174,6 +178,23 @@ class ContainerStuffingController extends Controller
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );
+                if($data['consignment_type_id'] ==3){
+                    $update_manifesto_entry_data =array(
+                        'consignment_type' => $data['consignment_type']?$data['consignment_type']:'',
+                        'cargo_type' => explode("/",$data['cargo_type'])[1],
+                        'cargo_reference_no' => $data['cargo_reference_no']? $data['cargo_reference_no']:'',
+                        'updated_at' => now(),
+                        'updated_by' => auth()->user()->id
+                        );
+                    $update_gate_entry_data =array(
+                            'destination' => $data['destination']?$data['destination']:'',
+                            'updated_at' => now(),
+                            'updated_by' => auth()->user()->id
+                        );
+                    ManifestoEntry::where("id", "=",$data['manifesto_entry_id'])->update($update_manifesto_entry_data);
+                    GateEntry::where("id", "=",$data['gate_entry_id'])->update($update_gate_entry_data);
+                }
+              
                 WeighBridge::where("id", "=",$data['weight_bridge_entry_id'])->update($update_data);
                 $update_data_consignment_details =array(
                     'report_no' => $data['report_no']?$data['report_no']:'',
@@ -190,7 +211,7 @@ class ContainerStuffingController extends Controller
                     );
                    
                   ConsignmentDetails::where("id", "=",$data['consignment_details_id'])->update($update_data_consignment_details);
-                  UploadDocuments::where("id", "=",$data['upload_documents_id'])->update(array('out_process_status'=>1));
+                  UploadDocuments::where("id", "=",$data['upload_documents_id'])->update(array('out_process_status'=>1,'bin_id' => $data['bin']?$data['bin']:''));
                 //   $field_supervisor_entry_out = new FieldSupervisorEntryOut();
                 //   $field_supervisor_entry_out->manifesto_entry_id = $data['manifesto_entry_id']?$data['manifesto_entry_id']:'';
                 //   $field_supervisor_entry_out->gate_entry_id = $data['gate_entry_id']?$data['gate_entry_id']:'';
@@ -240,14 +261,16 @@ class ContainerStuffingController extends Controller
         $commodity = Commodity::getCommodity();
         $materials = Material::getAllMaterial();
         $uoms = UOM::getAllUOM();
+        $consignments = Consignment::getAllConsignment();
+        $cargos = Cargo::getCargoTypeByType($gate_entry->getManifestoEntry->getConsignment->consignment_type);
 
           $areas = Area::getAllAreaById($gate_entry->location);
-        // echo "<pre>";
-        // print_r($gate_entry);die;
+        //echo "<pre>";
+        //print_r($cargos);die;
          $consignment_details_count = ConsignmentDetails::getGateEntryNo($gate_entry->manifesto_entry_id);
          return view('container_stuffing.show')->with('gate_entry',$gate_entry)->with('consignment_details_count',$consignment_details_count)
          ->with('locations',$locations) ->with('commodity',$commodity)
-         ->with('materials',$materials)->with('uoms',$uoms)->with('areas',$areas);
+         ->with('materials',$materials)->with('uoms',$uoms)->with('areas',$areas) ->with('consignments',$consignments)->with('cargos',$cargos);
     }
 
     /**
