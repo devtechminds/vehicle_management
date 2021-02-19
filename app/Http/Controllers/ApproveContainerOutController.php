@@ -187,6 +187,7 @@ class ApproveContainerOutController extends Controller
                 'cf_agent'=> isset($data['cf_agent'])?$data['cf_agent']:'',
                 'customer_name'=> isset($data['customer_name'])?$data['customer_name']:'',
                 'bl_no'=> isset($data['bl_no'])?$data['bl_no']:'',
+                'gate_pass_no'=> isset($data['gate_pass_no'])?$data['gate_pass_no']:'',
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );
@@ -286,8 +287,8 @@ class ApproveContainerOutController extends Controller
        
         $consignments = Consignment::getAllConsignment();
         $cargos = Cargo:: getCargoTypeByType($gate_entry->getManifestoEntry->getConsignment->consignment_type);
-        // echo "<pre>";
-        // print_r($gate_entry->getFieldSupervisorEntryOut);die;
+        //echo "<pre>";
+        //print_r($gate_entry);die;
            
         //  $cargos = Cargo::getAllCargo();
         $customers = Customers::getAllCustomers();
@@ -296,6 +297,9 @@ class ApproveContainerOutController extends Controller
         $materials = Material::getAllMaterial();
         $uoms = UOM::getAllUOM();
         $locations = Location::getAllLocation();
+        $gate_pass_no= ManifestoEntry::getGatePassNoOut();
+        //echo "<pre>";
+       // print_r($gate_pass_no);die;
         if(isset($gate_entry->getFieldSupervisorEntryOut->location)){
             $areas = Area::getAllAreaById($gate_entry->getFieldSupervisorEntryOut->location);
         }
@@ -314,6 +318,7 @@ class ApproveContainerOutController extends Controller
         ->with('customers',$customers)->with('commodity',$commodity)
         ->with('materials',$materials)->with('uoms',$uoms)
         ->with('locations',$locations)->with('areas',$areas)
+        ->with('gate_pass_no',$gate_pass_no)
         ->with('bins',$bins)
         ;
     }

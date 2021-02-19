@@ -76,7 +76,7 @@
                               </div>
                               <label class="col-sm-2 col-form-label">Gate Pass No(CFS Out)</label>
                               <div class="col-sm-4">
-                                 <input type="text" name="gate_pass_no" class="form-control" value="{{ $gate_entry->getManifestoEntry->gate_pass_no}}" placeholder="" readonly="">
+                                 <input type="text" name="gate_pass_no" class="form-control" value="{{ $gate_pass_no}}" placeholder="" readonly="">
                               </div>
                               
                            </div>

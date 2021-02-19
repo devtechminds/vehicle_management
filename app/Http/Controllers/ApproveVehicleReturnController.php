@@ -311,7 +311,7 @@ class ApproveVehicleReturnController extends Controller
         $materials = Material::getAllMaterial();
         $uoms = UOM::getAllUOM();
         $locations = Location::getAllLocation();
-        $gate_pass_no= ManifestoEntry::getGatePassNoOut();
+        $gate_pass_no= ManifestoEntry::getGatePassNo();
         $transports =  Transports::getTransports();
         $consignment_details_count = ConsignmentDetails::getGateEntryNo($gate_entry->manifesto_entry_id);
          return view('approve_vehicle_return.show')->with('gate_entry',$gate_entry)->with('consignment_details_count',$consignment_details_count)
