@@ -324,7 +324,8 @@
             <div class="card-block height">
                <div class="form-group row dwn">
                <div class="col-sm-12" style="text-align: center;">
-               <button class="btn btn-success waves-effect waves-light" {{$gate_entry->out_process_status == '4' ?'disabled':''}}>Save</button>
+               <!-- {{$gate_entry->out_process_status == '4' ?'disabled':''}} -->
+               <button class="btn btn-success waves-effect waves-light" >Save</button>
                <!-- <a target="_blank" href="{{ route('release.approval.print',base64_encode($gate_entry->id))}}"  class="btn btn-success waves-effect waves-light" title="Print">{{ $gate_entry->out_process_status=='4'?'Print':'Re-Print'}}<i class="fa fa-print"></i></a> -->
 	
 	

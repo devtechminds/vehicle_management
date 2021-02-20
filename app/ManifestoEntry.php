@@ -116,6 +116,11 @@ class ManifestoEntry extends Model
     {
         return $this->hasOne('App\ReleaseApprovalFinacialOfficerEntry', 'manifesto_entry_id', 'id');
     }
+
+    public function getReleaseApprovalFinacialOfficerEntryLatest()
+    {
+        return $this->hasOne('App\ReleaseApprovalFinacialOfficerEntry', 'manifesto_entry_id', 'id')->latest();
+    }
    
 
         /**
