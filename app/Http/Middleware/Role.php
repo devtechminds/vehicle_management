@@ -2,8 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
 use Auth;
+use Closure;
+
 class Role
 {
     /**
@@ -15,7 +16,8 @@ class Role
      */
     public function handle($request, Closure $next, ... $roles)
     {
-        
+
+                
         return $next($request);
         if (!Auth::check()) // I included this check because you have it, but it really should be part of your 'auth' middleware, most likely added as part of a route group.
         return redirect('login');

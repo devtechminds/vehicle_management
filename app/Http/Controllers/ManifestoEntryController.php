@@ -1,21 +1,22 @@
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Consignment;
-use App\Cargo;
-use App\Customers;
-use App\EtcAgent;
-use App\Commodity;
-use App\Material;
+use DB;
+use App\Bin;
 use App\UOM;
+use App\Area;
+use App\Cargo;
+use App\UserLog;
+use App\EtcAgent;
+use App\Material;
+use App\Commodity;
+use App\Customers;
+use App\Consignment;
+use App\Notifications;
 use App\ManifestoEntry;
 use App\ConsignmentDetails;
-use App\Area;
-use App\Bin;
-use App\Notifications;
-use DB;
-use App\UserLog;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ManifestoEntryController extends Controller
 {
@@ -56,8 +57,10 @@ class ManifestoEntryController extends Controller
             $manifesto_entry_data->whereDate('created_at',$created_date);
         }
         $manifesto_entry_data_list = $manifesto_entry_data->get();
+        $user = Auth::user();
+        $user_type = explode(',',$user->user_type);
         return datatables()->of($manifesto_entry_data_list)
-            ->addColumn('action', function ($manifesto_entry_data_list) {
+            ->addColumn('action', function ($manifesto_entry_data_list) use($user_type) {
                 $return_action = '<a href="' . route('manifesto.show',base64_encode($manifesto_entry_data_list->id)) . '"  class="btn btn-sm btn-clean btn-icon mr-2" title="View details">
                 <span class="svg-icon svg-icon-md svg-icon-primary">
                 <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
@@ -71,7 +74,7 @@ class ManifestoEntryController extends Controller
                 <!--end::Svg Icon-->
                 </span>
                 </a>';
-             if($manifesto_entry_data_list->status==0 || $manifesto_entry_data_list->status==10){
+             if($manifesto_entry_data_list->status==0 || $manifesto_entry_data_list->status==10 || in_array("admin", $user_type)){
                 $return_action .= '<a href="' . route('manifesto.edit',base64_encode($manifesto_entry_data_list->id)) . '"  class="btn btn-sm btn-clean btn-icon mr-2" title="Update details">
                 <span class="svg-icon svg-icon-md svg-icon-primary">
                 <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->

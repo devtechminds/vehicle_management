@@ -204,7 +204,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/proceed-vehilce-list-dashboard','GateEntryOfficerController@proceedVehilceListDashboard')->name('proceed.vehilce.list.dashboard')->middleware('role:gate1_entry_officer');
 
 
-    
     //CFSGateOfficer
     Route::get('/authorize-vehicle-in','CFSGateOfficerController@index')->name('authorize.vehicle.in.index')->middleware('role:cfs_gate_officer');
     Route::get('/lists-authorize-vehicle-in','CFSGateOfficerController@authorizeVehicleList')->name('authorize.vehicle.in.list')->middleware('role:cfs_gate_officer');
@@ -359,6 +358,12 @@ Route::group(['middleware' => ['auth']], function () {
          Route::post('/datewise/report/download','DatewiseReportController@download')->name('datewise.report.download');
          Route::get('/token/report','TokenWiseReportsController@index')->name('token.report');
          Route::post('/token/report/download','TokenWiseReportsController@download')->name('token.report.download');
+
+        //AdminUpdate
+        Route::get('/update-entry','AdminUpdateController@entryIndex')->name('update.entry')->middleware('role:admin');
+        Route::get('/update-entry-list','AdminUpdateController@proceedEntryList')->name('update.entry.list')->middleware('role:admin');
+        Route::get('/update-entry-show/{id}','AdminUpdateController@proceedEntryShow')->name('update.entry.show')->middleware('role:admin');
+        Route::post('/update-entry-submit','AdminUpdateController@store')->name('update.entry.submit')->middleware('role:admin');
          
 
         //Log

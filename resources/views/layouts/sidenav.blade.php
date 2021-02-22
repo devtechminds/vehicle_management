@@ -343,6 +343,23 @@
                </ul>
             </li>
             @endif
+            @if(in_array("admin", $user_type))
+            <li class="pcoded-hasmenu {{ request()->is('update-entry')  ? 'active pcoded-trigger' : '' }}">
+               <a href="javascript:void(0)" class="waves-effect waves-dark">
+               <span class="pcoded-micon">
+               <i class="feather icon-layers"></i>
+               </span>
+               <span class="pcoded-mtext">Admin Update</span>
+               </a>
+               <ul class="pcoded-submenu">
+                  <li class="{{ request()->is('update-entry') ? 'active' : '' }}">
+                     <a href="{{ route('update.entry')}}" class="waves-effect waves-dark">
+                     <span class="pcoded-mtext">Update Entry</span>
+                     </a>
+                  </li>
+               </ul>
+            </li>
+            @endif
          </ul>
          @if(in_array("admin", $user_type))
          <div class="pcoded-navigation-label">All Reports</div>
