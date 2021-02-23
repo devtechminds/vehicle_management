@@ -118,7 +118,7 @@ class PrintOutPassController extends Controller
      */
     public function show($id)
     {
-        $gate_entry =  WeightBridgeEntryOut::with('getManifestoEntry','getManifestoEntry.getUploadDocuments','getManifestoEntry.getUploadDocuments.getLocation','getManifestoEntry.getUploadDocuments.getArea','getManifestoEntry.getCargo','getManifestoEntry.getConsignment','getManifestoEntry.getAgent','getConsignmentDetails','getReleaseApprovalFinacialOfficerEntry','getGateEntryOut')
+        $gate_entry =  WeightBridgeEntryOut::with('getManifestoEntry','getManifestoEntry.getUploadDocuments','getManifestoEntry.getUploadDocuments.getLocation','getManifestoEntry.getUploadDocuments.getArea','getManifestoEntry.getCargo','getManifestoEntry.getConsignment','getManifestoEntry.getAgent','getConsignmentDetails','getReleaseApprovalFinacialOfficerEntry','getGateEntryOut','getGateEntryOut.getGateEntryIn')
         ->where("id", "=", base64_decode($id))
         ->first();
         return view('print_out_pass.show')->with('gate_entry',$gate_entry);

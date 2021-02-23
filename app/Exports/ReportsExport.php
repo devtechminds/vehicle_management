@@ -113,6 +113,8 @@ class ReportsExport implements FromCollection ,WithMapping, WithHeadings
         $size  = isset($uploadDocuments->getConsignmentDetails->size)?$uploadDocuments->getConsignmentDetails->size:'';
         $transporter = isset($uploadDocuments->getConsignmentDetails->transporter)?$uploadDocuments->getConsignmentDetails->transporter:'';
         $vehilce_exit_date ='-';
+        $vehilce_exit_no =isset($uploadDocuments->getManifestoEntry->gate_pass_no)?$uploadDocuments->getManifestoEntry->gate_pass_no:'';
+        $Customer_DN_No =isset($uploadDocuments->getManifestoEntry->delivery_note_no)?$uploadDocuments->getManifestoEntry->delivery_note_no:'';  
         $time_in = isset($uploadDocuments->getGateEntry->time_in)?$uploadDocuments->getGateEntry->time_in:'-';
         $wb_ticket_no ='';
         $remark ='';
@@ -140,7 +142,7 @@ class ReportsExport implements FromCollection ,WithMapping, WithHeadings
        $truck_no = isset($uploadDocuments->getConsignmentDetails->truck_no)?$uploadDocuments->getConsignmentDetails->truck_no:'-';
        $trailer_no = isset($uploadDocuments->getConsignmentDetails->trailer_no)?$uploadDocuments->getConsignmentDetails->trailer_no:'-';
        $From_Destination =isset($uploadDocuments->getGateEntry->destination)?$uploadDocuments->getGateEntry->destination:'-';
-       $Customer_DN_No='-';
+       
        $Bill_No=isset($uploadDocuments->getManifestoEntry->bl_no)?$uploadDocuments->getManifestoEntry->bl_no:'-';
        
        $commodity_name = isset($uploadDocuments->getConsignmentDetails->getCommodity->commodity_name)?$uploadDocuments->getConsignmentDetails->getCommodity->commodity_name:'-';
@@ -154,6 +156,7 @@ class ReportsExport implements FromCollection ,WithMapping, WithHeadings
           $uploadDocuments->id,
           $uploadDocuments->getManifestoEntry->date,
           $vehilce_exit_date,
+          $vehilce_exit_no,
           $time_in,
           $wb_ticket_no,
           $cfa,
@@ -197,6 +200,7 @@ class ReportsExport implements FromCollection ,WithMapping, WithHeadings
             'Sr. No',
             'Entry Date',
             'Vehicle Exit Date',
+            'Vehicle Exit No',
             'Exit Time',
             'WB Ticket Number',
             'CFA',
@@ -223,7 +227,7 @@ class ReportsExport implements FromCollection ,WithMapping, WithHeadings
             'Size',
             'Status',
             'Interchange No',
-            'Remark'
+            'Remark',
             
         ];
     }

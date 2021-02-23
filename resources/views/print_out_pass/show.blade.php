@@ -69,7 +69,7 @@
                                     
                                  </select>
                               </div>
-                              <label class="col-sm-2 col-form-label">Gate Entry No</label>
+                              <label class="col-sm-2 col-form-label">Gate Pass No</label>
                               <div class="col-sm-4">
                                  <input type="text" name="gate_entry_no" class="form-control" value="{{ $gate_entry->getManifestoEntry->gate_pass_no}}" placeholder="" readonly="">
                               </div>

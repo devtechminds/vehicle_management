@@ -328,9 +328,14 @@
 <div class="col-sm-4">
 <input type="number" min="1" name="container_tare_wt"  id="container_tare_wt" class="form-control calculate" value="{{ $gate_entry->weighBridges->container_tare_wt}}" placeholder="Enter Container Tare Wt"  >
 </div>
+
 <label class="col-sm-2 col-form-label">WB Tare Wt</label>
 <div class="col-sm-4">
+@if($gate_entry->weighBridges->status == 1)
 <input type="number" min="1" class="form-control calculate" name="wb_tare_wt" id="wb_tare_wt" value="{{ $gate_entry->weighBridges->wb_tare_wt}}" placeholder="Enter WB Tare Wt">
+@else
+<input type="number" min="1" class="form-control calculate" name="wb_tare_wt" id="wb_tare_wt" value="{{ $gate_entry->weighBridges->wb_tare_wt}}" placeholder="Enter WB Tare Wt" readonly="">
+@endif
 </div>
 </div>    
 
