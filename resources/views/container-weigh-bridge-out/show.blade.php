@@ -66,7 +66,7 @@
                               </div>
                               <label class="col-sm-2 col-form-label">Gate Entry No</label>
                               <div class="col-sm-4">
-                                 <input type="text" name="gate_entry_no" class="form-control" value="{{ $gate_entry->getManifestoEntry->gate_pass_no}}" placeholder="" readonly="">
+                                 <input type="text" name="gate_entry_no" class="form-control" value="{{ $gate_entry->getGateEntryOut->gate_entry_no }}" placeholder="" readonly="">
                               </div>
                               
                            </div>
@@ -169,10 +169,6 @@
                               <label class="col-sm-2 col-form-label">Shipping Line </label>
                               <div class="col-sm-4">
                                  <input type="text" name="shipping_line" class="form-control" value="{{ $gate_entry->getGateEntryOut->shipping_line}}"  placeholder="Enter Shipping Line" readonly>
-                              </div>
-                              <label class="col-sm-2 col-form-label">Gate Entry No </label>
-                              <div class="col-sm-4">
-                                 <input readonly type="text" name="gate_entry_no" class="form-control" value="{{ $gate_entry->getGateEntryOut->gate_entry_no}}"  placeholder="Enter Gate Entry No" >
                               </div>
                            </div>
                         

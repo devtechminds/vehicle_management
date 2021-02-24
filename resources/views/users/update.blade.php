@@ -93,7 +93,7 @@
                               <option value="cfs_gate_officer" {{  in_array("cfs_gate_officer", $type)?'selected':'' }}>CFS Gate Officer</option>
                               <option value="weigh_bridge_officer" {{ in_array("weigh_bridge_officer", $type)?'selected':'' }}>Weigh Bridge Officer</option>
                               <option value="field_supervisor" {{ in_array("field_supervisor", $type)?'selected':'' }}>Field Supervisor</option>
-                              <option value="sfc_operation_manager" {{ in_array("sfc_operation_manager", $type)?'selected':'' }}>Operation Manager</option>
+                              <option value="sfs_operation_manager" {{ in_array("sfs_operation_manager", $type)?'selected':'' }}>Operation Manager</option>
                               <option value="finance_controller" {{in_array("finance_controller", $type)?'selected':'' }}>Finance Controller</option>
                               </select>
                               </div>

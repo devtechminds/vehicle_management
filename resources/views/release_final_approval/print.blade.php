@@ -85,7 +85,7 @@
 </div>  
 <label class="col-sm-2 col-form-label" style="padding-top: 0px;font-weight: 700;font-size: 12px;">Gate Entry No</label>
 <div class="col-sm-4">
-<p style="font-size: 12px !important;">{{ isset($gate_entry->getManifestoEntry->gate_pass_no)?$gate_entry->getManifestoEntry->gate_pass_no:'N/A'}}</p>
+<p style="font-size: 12px !important;">{{ isset($gate_entry->getGateEntry->gate_entry_no)?$gate_entry->getGateEntry->gate_entry_no:'N/A'}}</p>
 </div>
 </div>
 

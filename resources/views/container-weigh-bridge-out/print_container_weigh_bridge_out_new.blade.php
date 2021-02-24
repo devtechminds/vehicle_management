@@ -81,11 +81,11 @@
 <div class="form-group row " style="margin-bottom: -12px;">
 <label class="col-sm-2 col-form-label" style="padding-top: 0px;font-weight: 700;font-size: 12px;">Type of Consignment</label>
 <div class="col-sm-4">
-  <p style="font-size: 12px !important;">Transit</p>
+  <p style="font-size: 12px !important;">{{ $gate_entry->getManifestoEntry->getConsignment->consignment_type}}</p>
 </div>  
 <label class="col-sm-2 col-form-label" style="padding-top: 0px;font-weight: 700;font-size: 12px;">Gate Entry No</label>
 <div class="col-sm-4">
-<p style="font-size: 12px !important;">{{ $gate_entry->getManifestoEntry->getConsignment->consignment_type}}</p>
+<p style="font-size: 12px !important;">{{ $gate_entry->getGateEntryOut->gate_entry_no }}</p>
 </div>
 </div>
 
@@ -178,7 +178,7 @@
 </div>
 <label class="col-sm-2 col-form-label" style="padding-top: 0px;font-weight: 700;font-size: 12px;">WB Ticket No </label>
 <div class="col-sm-4">
-<p style="font-size: 12px !important;">{{ isset($wb_ticket_no)?$wb_ticket_no:'N/A'}}</p>
+<p style="font-size: 12px !important;">{{ isset($gate_entry->wb_ticket_no)?$gate_entry->wb_ticket_no:'N/A'}}</p>
 </div>
 </div>
 
@@ -189,18 +189,18 @@
 </div>
 <label class="col-sm-2 col-form-label" style="padding-top: 0px;font-weight: 700;font-size: 12px;">Container Tare Wt</label>
 <div class="col-sm-4">
-<p style="font-size: 12px !important;">{{ isset($gate_entry->weighBridges->container_tare_wt)?$gate_entry->weighBridges->container_tare_wt:'N/A'}}</p>
+<p style="font-size: 12px !important;">{{ isset($gate_entry->container_tare_wt)?$gate_entry->container_tare_wt:'N/A'}}</p>
 </div>
 </div>
 
 <div class="form-group row " style="margin-bottom: -12px;">
 <label class="col-sm-2 col-form-label" style="padding-top: 0px;font-weight: 700;font-size: 12px;">WB Tare Wt </label>
 <div class="col-sm-4">
-<p style="font-size: 12px !important;">{{ isset($gate_entry->weighBridges->wb_tare_wt)?$gate_entry->weighBridges->wb_tare_wt:'N/A'}}</p>
+<p style="font-size: 12px !important;">{{ isset($gate_entry->wb_tare_wt)?$gate_entry->wb_tare_wt:'N/A'}}</p>
 </div>
 <label class="col-sm-2 col-form-label" style="padding-top: 0px;font-weight: 700;font-size: 12px;">WB Net Wt</label>
 <div class="col-sm-4">
-<p style="font-size: 12px !important;">{{ isset($gate_entry->weighBridges->wb_net_wt)?$gate_entry->weighBridges->wb_net_wt:'N/A'}}</p>
+<p style="font-size: 12px !important;">{{ isset($gate_entry->wb_net_wt)?$gate_entry->wb_net_wt:'N/A'}}</p>
 
 </div>
 

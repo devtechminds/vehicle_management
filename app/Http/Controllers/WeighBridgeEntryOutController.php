@@ -199,7 +199,8 @@ class WeighBridgeEntryOutController extends Controller
         ->where("id", "=", base64_decode($id))
         ->first();
         $WB_Ticket_No=  WeightBridgeEntryOut::getWBTicketNo();
-        return view('weigh_bridge_entry_out.show')->with('gate_entry',$gate_entry)->with('WB_Ticket_No',$WB_Ticket_No);
+        $wb_entry_out= WeightBridgeEntryOut::where("gate_entry_out_id", "=", base64_decode($id))->first();
+        return view('weigh_bridge_entry_out.show')->with('gate_entry',$gate_entry)->with('WB_Ticket_No',$WB_Ticket_No)->with('wb_entry_out',$wb_entry_out);
     }
 
 
@@ -207,8 +208,9 @@ class WeighBridgeEntryOutController extends Controller
         $gate_entry = GateEntryOut::with('getManifestoEntry','getManifestoEntry.getCargo','getManifestoEntry.getConsignment','getManifestoEntry.getAgent','getConsignmentDetails','getReleaseApprovalFinacialOfficerEntry')
         ->where("id", "=", base64_decode($id))
         ->first();
+        $wb_entry_out= WeightBridgeEntryOut::where("gate_entry_out_id", "=", base64_decode($id))->first();
         UserLog::AddLog('Weigh Bridge Entry Printed By');
-         return view('weigh_bridge_entry_out.print_weigh_bridge_entry_new')->with('gate_entry',$gate_entry)->with('msg',' Weigh Bridge Entry-Weigh - Bridge Officer
+         return view('weigh_bridge_entry_out.print_weigh_bridge_entry_new')->with('gate_entry',$gate_entry)->with('wb_entry_out',$wb_entry_out)->with('msg',' Weigh Bridge Entry-Weigh - Bridge Officer
          ');
     }
     /**

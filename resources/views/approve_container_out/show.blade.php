@@ -82,9 +82,9 @@
                            </div>
                            <div class="form-group row">
                              
-                              <label class="col-sm-2 col-form-label">Gate Entry No</label>
+                              <label class="col-sm-2 col-form-label">Gate Entry No(CFS Out)</label>
                               <div class="col-sm-4">
-                                 <input type="text" name="gate_entry_no" class="form-control" value="{{ $gate_entry->getGateEntryOut->getGateEntryIn->gate_entry_no}}" placeholder="" readonly="">
+                                 <input type="text" name="gate_entry_no" class="form-control" value="{{ $gate_entry->getGateEntryOut->gate_entry_no }}" placeholder="" readonly="">
                               </div>
                               
                            </div>

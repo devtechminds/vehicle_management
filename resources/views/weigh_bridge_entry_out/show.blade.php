@@ -66,7 +66,7 @@
                               </div>
                               <label class="col-sm-2 col-form-label">Gate Entry No</label>
                               <div class="col-sm-4">
-                                 <input type="text" name="gate_entry_no" class="form-control" value="{{ $gate_entry->getManifestoEntry->gate_pass_no}}" placeholder="" readonly="">
+                                 <input type="text" name="gate_entry_no" class="form-control" value="{{ $gate_entry->gate_entry_no }}" placeholder="" readonly="">
                               </div>
                               
                            </div>
@@ -170,10 +170,6 @@
                               <div class="col-sm-4">
                                  <input type="text" name="shipping_line" class="form-control" value="{{ $gate_entry->shipping_line}}"  placeholder="Enter Shipping Line" readonly>
                               </div>
-                              <label class="col-sm-2 col-form-label">Gate Entry No </label>
-                              <div class="col-sm-4">
-                                 <input readonly type="text" name="gate_entry_no" class="form-control" value="{{ $gate_entry->gate_entry_no}}"  placeholder="Enter Gate Entry No" >
-                              </div>
                            </div>
                         
                      </div>
@@ -236,7 +232,7 @@
 <div class="col-sm-4">
 
 <!-- <input type="text" name="wb_ticket_no" class="form-control fill" value="{{ $WB_Ticket_No}}" placeholder="" > -->
-<input type="text" name="wb_ticket_no" class="form-control fill" value="" placeholder="Enter WB Ticket No" >
+<input type="text" name="wb_ticket_no" class="form-control fill" value="{{ $wb_entry_out->wb_ticket_no}}" placeholder="Enter WB Ticket No" >
 </div>
 <label class="col-sm-2 col-form-label">WB Gross Wt </label>
 <div class="col-sm-4">
@@ -253,7 +249,7 @@
 </div>
 <label class="col-sm-2 col-form-label">WB Tare Wt</label>
 <div class="col-sm-4">
-<input type="number" min="1" required class="form-control calculate" name="wb_tare_wt" id="wb_tare_wt" value="" placeholder="Enter WB Tare Wt" >
+<input type="number" min="1" required class="form-control calculate" name="wb_tare_wt" id="wb_tare_wt" value="{{ $wb_entry_out->wb_tare_wt}}" placeholder="Enter WB Tare Wt" >
 </div>
 </div>    
 

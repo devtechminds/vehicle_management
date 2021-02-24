@@ -88,7 +88,7 @@
                               <option value="cfs_gate_officer" {{ old('user_type')=='cfs_gate_officer'?'selected':'' }}>CFS Gate Officer</option>
                               <option value="weigh_bridge_officer" {{ old('user_type')=='weigh_bridge_officer'?'selected':'' }}>Weigh Bridge Officer</option>
                               <option value="field_supervisor" {{ old('user_type')=='field_supervisor'?'selected':'' }}>Field Supervisor</option>
-                              <option value="sfs_operation_manager" {{ old('user_type')=='finance_officer'?'selected':'' }}>Operation Manager</option>
+                              <option value="sfs_operation_manager" {{ old('user_type')=='sfs_operation_manager'?'selected':'' }}>Operation Manager</option>
                               <option value="finance_controller" {{ old('user_type')=='finance_controller'?'selected':'' }}>Finance Controller</option>
                               </select>
                               </div>
@@ -201,7 +201,7 @@ $('#myform').validate({ // initialize the plugin
 
 jQuery.validator.addMethod("lettersonly", function(value, element) {
 return this.optional(element) || /^[a-z\s]+$/i.test(value);
-}, "Enter vaild agent name.");
+}, "Enter vaild user name.");
 });
 
 
