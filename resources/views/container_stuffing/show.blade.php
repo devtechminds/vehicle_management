@@ -285,7 +285,14 @@
 <div class="col-sm-4">
 <input type="number" name="no_of_package" class="form-control " min="1" value="{{$gate_entry->no_of_package}}" placeholder="Enter No of Package" readonly>
 </div>
-
+<label class="col-sm-2 col-form-label">Uploaded File : </label>
+<div class="col-sm-4">
+@if(isset($gate_entry->getAllUploadDocumentsFiles))
+@foreach($gate_entry->getAllUploadDocumentsFiles as $attachment)
+<a href="{{route('download.document',['file'=>$attachment->document])}}" class="btn btn-large pull-right"><i class="fa fa-download" aria-hidden="true"> </i>  Document </a>
+@endforeach
+@endif
+</div>
 </div>
 
 <div class="form-group row fheigt">

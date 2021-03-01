@@ -9,6 +9,7 @@ use App\GateEntryOut;
 use App\ConsignmentDetails;
 use App\WeightBridgeEntryOut;
 use App\Location;
+use App\UploadDocuments;
 use App\Area;
 use App\Notifications;
 use App\UserLog;
@@ -203,9 +204,10 @@ class ProceedContainerOutController extends Controller
         $areas = Area::getAllArea();
         // echo "<pre>";
         // print_r($gate_entry->getFieldSupervisorEntryOut);die;
+        $upload_document= UploadDocuments::with('getUploadDocumentsFiles','getAllUploadDocumentsFiles')->where("manifesto_entry_id", "=", $gate_entry->manifesto_entry_id)->first();
         return view('proceed_container_out.show')
         ->with('gate_entry',$gate_entry)->with('locations',$locations)
-        ->with('areas',$areas);
+        ->with('areas',$areas)->with('upload_document',$upload_document);
     }
 
     /**

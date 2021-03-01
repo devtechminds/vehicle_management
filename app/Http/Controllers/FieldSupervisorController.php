@@ -215,7 +215,9 @@ class FieldSupervisorController extends Controller
          $wb_ticket_no= WeighBridge::getWBTicketNo();
          $locations =Location::getAllLocation();
          $consignment_details_count= ConsignmentDetails::getGateEntryNo($gate_entry->manifesto_entry_id);
-         return view('field_supervisor.show')->with('gate_entry',$gate_entry)->with('wb_ticket_no',$wb_ticket_no)->with('locations',$locations)->with('consignment_details_count',$consignment_details_count);
+         $upload_document= UploadDocuments::with('getUploadDocumentsFiles','getAllUploadDocumentsFiles')->where("weigh_bridges_id", "=", base64_decode($id))->first();
+        
+         return view('field_supervisor.show')->with('gate_entry',$gate_entry)->with('wb_ticket_no',$wb_ticket_no)->with('locations',$locations)->with('consignment_details_count',$consignment_details_count)->with('upload_document',$upload_document);
     }
 
     /**
@@ -250,5 +252,13 @@ class FieldSupervisorController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getDownload(Request $request)
+    {  
+        if($request->has('file')){
+            $file= storage_path('app/uploads/').$request->file;   
+            return response()->download($file);
+        }
     }
 }

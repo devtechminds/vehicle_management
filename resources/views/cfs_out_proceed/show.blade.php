@@ -82,10 +82,6 @@
                               <div class="col-sm-4 cargo_ref_no_div">
                                  <input type="text" name="cargo_reference_no" class="form-control" value="{{ $gate_entry->getManifestoEntry->cargo_reference_no}}" placeholder="Enter Cargo Ref No" readonly>
                               </div>
-                              <label class="col-sm-2 col-form-label ecd_name_div">ECD Name</label>
-                              <div class="col-sm-4">
-                                 <input type="text" name="ecd_name" id="ecd_name"  value="{{$gate_entry->getManifestoEntry->ecd_name}}" class="form-control ecd_name_div" placeholder="Enter ECD Name" readonly>
-                              </div>
                               <label class="col-sm-2 col-form-label">Type of Cargo</label>
                               <div class="col-sm-4">
                               <select name="cargo_type" id="cargo_type" class="form-control boxbrd" disabled>
@@ -95,14 +91,20 @@
                               </div>
                            </div>
                            <div class="form-group row">
-                              <label class="col-sm-2 col-form-label delivery_note_no_div">Delivery Note No</label>
-                              <div class="col-sm-4 delivery_note_no_div">
-                                 <input type="text" name="delivery_note_no"  id="delivery_note_no" class="form-control" value="{{ $gate_entry->getManifestoEntry->delivery_note_no}}" placeholder="" readonly >
+                           <label class="col-sm-2 col-form-label ecd_name_div">ECD Name</label>
+                              <div class="col-sm-4">
+                                 <input type="text" name="ecd_name" id="ecd_name"  value="{{$gate_entry->getManifestoEntry->ecd_name}}" class="form-control ecd_name_div" placeholder="Enter ECD Name" readonly>
                               </div>
                               <label class="total_no_of_container_div col-sm-2 col-form-label">Total No of Container</label>
                               <div class="col-sm-4 total_no_of_container_div">
                                  <input type="text" name="no_container" id="no_container"  value="{{$gate_entry->getManifestoEntry->no_container}}" class="form-control" placeholder="Enter Total No of Container" readonly>
                               </div>
+                           </div>
+                           <div class="form-group row">
+                              <label class="col-sm-2 col-form-label delivery_note_no_div">Delivery Note No</label>
+                              <div class="col-sm-4 delivery_note_no_div">
+                                 <input type="text" name="delivery_note_no"  id="delivery_note_no" class="form-control" value="{{ $gate_entry->getManifestoEntry->delivery_note_no}}" placeholder="" readonly >
+                              </div> 
                               <label class="col-sm-2 col-form-label">No of Package  </label>
                               <div class="col-sm-4">
                                  <input type="text" name="no_package" id="no_package" class="form-control" value="{{ $gate_entry->getManifestoEntry->no_package}}" placeholder=""  readonly>

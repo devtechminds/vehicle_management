@@ -200,6 +200,8 @@ class WeighBridgeEntryOutController extends Controller
         ->first();
         $WB_Ticket_No=  WeightBridgeEntryOut::getWBTicketNo();
         $wb_entry_out= WeightBridgeEntryOut::where("gate_entry_out_id", "=", base64_decode($id))->first();
+       // echo'<pre>';
+       // print_r($wb_entry_out);die;
         return view('weigh_bridge_entry_out.show')->with('gate_entry',$gate_entry)->with('WB_Ticket_No',$WB_Ticket_No)->with('wb_entry_out',$wb_entry_out);
     }
 

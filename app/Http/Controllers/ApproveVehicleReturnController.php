@@ -300,7 +300,7 @@ class ApproveVehicleReturnController extends Controller
      */
     public function show($id)
     {
-        $gate_entry = UploadDocuments::with('getGateEntry','getManifestoEntry','getManifestoEntry.getCargo','getManifestoEntry.getConsignment','getConsignmentDetails','getWeighBridge','getLocation')
+        $gate_entry = UploadDocuments::with('getGateEntry','getManifestoEntry','getManifestoEntry.getCargo','getManifestoEntry.getConsignment','getConsignmentDetails','getWeighBridge','getLocation','getUploadDocumentsFiles','getAllUploadDocumentsFiles')
         ->where("id", "=", base64_decode($id))
         ->first();
         $consignments = Consignment::getAllConsignment();

@@ -178,11 +178,13 @@ class ApproveContainerOutController extends Controller
             $data = $request->all(); 
             $update_data_manifesto_entry = array(
                 'consignment_type'=> $data['consignment_type']?$data['consignment_type']:'',
-                'cargo_reference_no'=> $data['cargo_reference_no']?$data['cargo_reference_no']:'',
+                'cargo_reference_no'=> isset($data['cargo_reference_no'])?$data['cargo_reference_no']:'',
+                'ecd_name'=> isset($data['ecd_name'])?$data['ecd_name']:'',
                 'cargo_type'=> explode("/",$data['cargo_type'])[1],
-                'delivery_note_no'=> $data['delivery_note_no']?$data['delivery_note_no']:'',
+                'delivery_note_no'=> isset($data['delivery_note_no'])?$data['delivery_note_no']:'',
                 'no_package'=> isset($data['no_package'])?$data['no_package']:NULL,
-                'booking_no'=> $data['booking_no']?$data['booking_no']:'',
+                'no_container'=> isset($data['no_container'])?$data['no_container']:'',
+                'booking_no'=> isset($data['booking_no'])?$data['booking_no']:'',
                 'consignment_wgt'=> isset($data['consignment_wgt'])?$data['consignment_wgt']:NULL,
                 'cf_agent'=> isset($data['cf_agent'])?$data['cf_agent']:'',
                 'customer_name'=> isset($data['customer_name'])?$data['customer_name']:'',
@@ -298,6 +300,7 @@ class ApproveContainerOutController extends Controller
         $uoms = UOM::getAllUOM();
         $locations = Location::getAllLocation();
         $gate_pass_no= ManifestoEntry::getGatePassNoOut();
+        $upload_document= UploadDocuments::with('getUploadDocumentsFiles','getAllUploadDocumentsFiles')->where("manifesto_entry_id", "=", $gate_entry->manifesto_entry_id)->first();
         //echo "<pre>";
        // print_r($gate_pass_no);die;
         if(isset($gate_entry->getFieldSupervisorEntryOut->location)){
@@ -320,6 +323,7 @@ class ApproveContainerOutController extends Controller
         ->with('locations',$locations)->with('areas',$areas)
         ->with('gate_pass_no',$gate_pass_no)
         ->with('bins',$bins)
+        ->with('upload_document',$upload_document)
         ;
     }
 

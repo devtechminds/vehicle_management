@@ -9,6 +9,7 @@ use App\GateEntryOut;
 use App\ConsignmentDetails;
 use App\WeightBridgeEntryOut;
 use App\Location;
+use App\UploadDocuments;
 use App\Area;
 use App\FieldSupervisorEntryOut;
 use App\Notifications;
@@ -237,11 +238,12 @@ class ContainerWeighbridgeOutController extends Controller
         $gate_entry =  WeightBridgeEntryOut::with('getManifestoEntry','getManifestoEntry.getCargo','getManifestoEntry.getConsignment','getManifestoEntry.getAgent','getConsignmentDetails','getReleaseApprovalFinacialOfficerEntry','getGateEntryOut')
         ->where("id", "=", base64_decode($id))
         ->first();
+        $upload_document= UploadDocuments::with('getUploadDocumentsFiles','getAllUploadDocumentsFiles')->where("manifesto_entry_id", "=", $gate_entry->manifesto_entry_id)->first();
         $locations = Location::getAllLocation();
         $areas = Area::getAllAreaById($gate_entry->location);
         return view('container-weigh-bridge-out.show')
         ->with('gate_entry',$gate_entry)->with('locations',$locations)
-        ->with('areas',$areas);
+        ->with('areas',$areas)->with('upload_document',$upload_document);
     }
 
     /**

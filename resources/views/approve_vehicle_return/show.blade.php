@@ -197,15 +197,16 @@
                               <div class="col-sm-4 cargo_ref_no_div">
                                  <input type="text" name="cargo_reference_no" id="cargo_reference_no" class="form-control" value="{{$gate_entry->getManifestoEntry->cargo_reference_no}}" placeholder="Enter Cargo Ref No">
                               </div>
-                              <label class="col-sm-2 col-form-label ecd_name_div">ECD Name</label>
-                              <div class="col-sm-4">
-                                 <input type="text" name="ecd_name" id="ecd_name"  value="{{$gate_entry->getManifestoEntry->ecd_name}}" class="form-control ecd_name_div" placeholder="Enter ECD Name">
-                              </div>
-                           </div>
-                           <div class="form-group row">
+                              
                               <label class="col-sm-2 col-form-label delivery_note_no_div">Delivery Note No</label>
                               <div class="col-sm-4 delivery_note_no_div">
                                  <input type="text" name="delivery_note_no" id="delivery_note_no"  value="{{$gate_entry->getManifestoEntry->delivery_note_no}}" class="form-control" placeholder="Enter Delivery Note No">
+                              </div>
+                           </div>
+                           <div class="form-group row">
+                           <label class="col-sm-2 col-form-label ecd_name_div">ECD Name</label>
+                              <div class="col-sm-4">
+                                 <input type="text" name="ecd_name" id="ecd_name"  value="{{$gate_entry->getManifestoEntry->ecd_name}}" class="form-control ecd_name_div" placeholder="Enter ECD Name">
                               </div>
                               <label class="total_no_of_container_div col-sm-2 col-form-label">Total No of Container</label>
                               <div class="col-sm-4 total_no_of_container_div">
@@ -213,8 +214,8 @@
                               </div>
                            </div>
                            <div class="form-group row">
-                              <label class="col-sm-2 col-form-label">Booking No </label>
-                              <div class="col-sm-4">
+                              <label class="col-sm-2 col-form-label booking_no_div">Booking No </label>
+                              <div class="col-sm-4 booking_no_div">
                                  <input type="text" name="booking_no"  id="booking_no" value="{{$gate_entry->getManifestoEntry->booking_no}}"  class="form-control" placeholder="Enter Booking Number">
                               </div>
                               <label class="col-sm-2 col-form-label">Customer Name</label>
@@ -399,7 +400,14 @@
 <div class="col-sm-4">
 <input type="text" class="form-control " name="no_of_package_field_supervisor" id="no_of_package_field_supervisor" value="{{ $gate_entry->no_of_package}}" placeholder="" >
 </div>
-
+<label class="col-sm-2 col-form-label">Uploaded File : </label>
+<div class="col-sm-4">
+@if(isset($gate_entry->getAllUploadDocumentsFiles))
+@foreach($gate_entry->getAllUploadDocumentsFiles as $attachment)
+<a href="{{route('download.document',['file'=>$attachment->document])}}" class="btn btn-large pull-right"><i class="fa fa-download" aria-hidden="true"> </i>  Document </a>
+@endforeach
+@endif
+</div>
 </div>
 
 <div class="form-group row fheigt">
@@ -567,6 +575,7 @@ function hideAndShow(){
     $('.total_no_of_container_div').css('display','block');
     $('.delivery_note_no_div').css('display','block');
     $('.cargo_ref_no_div').css('display','block');
+    $('.booking_no_div').css('display','block');
     
     if(cargo == 'transit_full_container_comes_and_empty_container_goes_out_with_vehicle' || 
        cargo == 'transit_full_container_comes_and_full_container_goes_out_with_vehicle'||

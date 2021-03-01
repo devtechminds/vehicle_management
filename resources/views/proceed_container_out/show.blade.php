@@ -76,21 +76,31 @@
 
                        
                            <div class="form-group row">
-                              <label class="col-sm-2 col-form-label">Cargo Ref No</label>
-                              <div class="col-sm-4">
+                              <label class="col-sm-2 col-form-label cargo_ref_no_div">Cargo Ref No</label>
+                              <div class="col-sm-4 cargo_ref_no_div">
                                  <input type="text" name="cargo_reference_no" class="form-control" value="{{ $gate_entry->getManifestoEntry->cargo_reference_no}}" placeholder="Enter Cargo Ref No" readonly>
                               </div>
                               <label class="col-sm-2 col-form-label">Type of Cargo</label>
                               <div class="col-sm-4">
                               <select name="cargo_type" id="cargo_type" class="form-control boxbrd" disabled>
-                                    <option value="">{{ $gate_entry->getManifestoEntry->getCargo->cargo_name}}</option>
+                                    <option value="{{ $gate_entry->getManifestoEntry->getCargo->cargo_name}}">{{ $gate_entry->getManifestoEntry->getCargo->cargo_name}}</option>
                                    
                                  </select>
                               </div>
                            </div>
                            <div class="form-group row">
-                              <label class="col-sm-2 col-form-label">Delivery Note No</label>
+                              <label class="col-sm-2 col-form-label ecd_name_div">ECD Name</label>
                               <div class="col-sm-4">
+                                 <input type="text" name="ecd_name" id="ecd_name"  value="{{$gate_entry->getManifestoEntry->ecd_name}}" class="form-control ecd_name_div" placeholder="Enter ECD Name" readonly>
+                              </div>
+                              <label class="total_no_of_container_div col-sm-2 col-form-label">Total No of Container</label>
+                              <div class="col-sm-4 total_no_of_container_div">
+                                 <input type="text" name="no_container" id="no_container"  value="{{$gate_entry->getManifestoEntry->no_container}}" class="form-control" placeholder="Enter Total No of Container" readonly>
+                              </div>
+                           </div>
+                           <div class="form-group row">
+                              <label class="col-sm-2 col-form-label delivery_note_no_div">Delivery Note No</label>
+                              <div class="col-sm-4 delivery_note_no_div">
                                  <input type="text" name="delivery_note_no"  id="delivery_note_no" class="form-control" value="{{ $gate_entry->getManifestoEntry->delivery_note_no}}" placeholder="" readonly >
                               </div>
                               <label class="col-sm-2 col-form-label">No of Package  </label>
@@ -99,8 +109,8 @@
                               </div>
                            </div>
                            <div class="form-group row">
-                              <label class="col-sm-2 col-form-label">Booking No </label>
-                              <div class="col-sm-4">
+                              <label class="col-sm-2 col-form-label booking_no_div">Booking No </label>
+                              <div class="col-sm-4 booking_no_div">
                                  <input type="text" name="booking_no" id="booking_no" class="form-control" value="{{ $gate_entry->getManifestoEntry->booking_no}}" placeholder="" readonly>
                               </div>
                               <label class="col-sm-2 col-form-label">Consignment Weight  </label>
@@ -126,10 +136,6 @@
                            </div>
 
                            <div class="form-group row">
-                              <label class="col-sm-2 col-form-label"> </label>
-                              <div class="col-sm-4">
-                             
-                              </div>
                               <label class="col-sm-2 col-form-label">BL No: </label>
                               <div class="col-sm-4">
                               <input type="text"  name="bl_no" id="bl_no" class="form-control" value="{{ $gate_entry->getManifestoEntry->bl_no}}" placeholder=""  readonly>
@@ -332,7 +338,14 @@
 <div class="col-sm-4">
 <input type="number" name="no_of_package" class="form-control " min="1" value="{{ isset($gate_entry->getFieldSupervisorEntryOut->no_of_package)?$gate_entry->getFieldSupervisorEntryOut->no_of_package:''}}" placeholder="Enter No of Package" readonly>
 </div>
-
+<label class="col-sm-2 col-form-label">Uploaded File : </label>
+<div class="col-sm-4">
+@if(isset($upload_document->getAllUploadDocumentsFiles))
+@foreach($upload_document->getAllUploadDocumentsFiles as $attachment)
+<a href="{{route('download.document',['file'=>$attachment->document])}}" class="btn btn-large pull-right"><i class="fa fa-download" aria-hidden="true"> </i>  Document </a>
+@endforeach
+@endif
+</div>
 </div>
 
 <div class="form-group row fheigt">
@@ -470,6 +483,45 @@
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/jquery.validate.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.0/additional-methods.js"></script>
 <script>
+ $(document).ready(function() {
+   hideAndShow();
+  });
+
+  function hideAndShow(){
+   var cargo = $('#cargo_type').val();
+    $('.ecd_name_div').css('display','block');
+    $('.total_no_of_container_div').css('display','block');
+    $('.delivery_note_no_div').css('display','block');
+    $('.cargo_ref_no_div').css('display','block');
+    $('.booking_no_div').css('display','block');
+    
+    if(cargo == 'transit_full_container_comes_and_empty_container_goes_out_with_vehicle' || 
+       cargo == 'transit_full_container_comes_and_full_container_goes_out_with_vehicle'||
+       cargo =='transit_full_container_comes_and_empty_vehicle_goes_out'||
+       cargo =='transit_loose_material_comes_in_and_empty_vehicle_goes_out'){
+      $('.ecd_name_div').css('display','none');
+      $('.total_no_of_container_div').css('display','none');
+      $('.delivery_note_no_div').css('display','none');
+      $('.booking_no_div').css('display','none');
+       
+
+    }else if(cargo == 'local_full_container_comes_and_empty_container_goes_out_with_vehicle'||
+    cargo =="local_full_container_comes_and_full_container_goes_out_with_vehicle" ||
+    cargo =="local_full_container_comes_and_empty_vehicle_goes_out" ||
+    cargo =="local_loose_material_comes_in_and_empty_vehicle_goes_out"){
+        $('.ecd_name_div').css('display','none');
+        $('.total_no_of_container_div').css('display','none');
+        $('.cargo_ref_no_div').css('display','none');
+        $('.booking_no_div').css('display','none');
+    }else if(cargo == 'empty_container_comes_in_and_empty_vehicle_goes_out.' ||
+        cargo =="empty_vehicle_comes_in_and_empty_container_goes_out_with_vehicle" ||
+        cargo =="empty_vehicle_comes_in_and_full_container_goes_with_vehicle" ){
+        $('.cargo_ref_no_div').css('display','none');
+        $('.booking_no_div').css('display','block');
+        $('.delivery_note_no_div').css('display','none');
+    }
+   
+}
   
    
    $('#myform').validate({ // initialize the plugin

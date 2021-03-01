@@ -232,7 +232,7 @@
 <div class="col-sm-4">
 
 <!-- <input type="text" name="wb_ticket_no" class="form-control fill" value="{{ $WB_Ticket_No}}" placeholder="" > -->
-<input type="text" name="wb_ticket_no" class="form-control fill" value="{{ $wb_entry_out->wb_ticket_no}}" placeholder="Enter WB Ticket No" >
+<input type="text" name="wb_ticket_no" class="form-control fill" value="{{ isset($wb_entry_out->wb_ticket_no)?$wb_entry_out->wb_ticket_no:''}}" placeholder="Enter WB Ticket No" >
 </div>
 <label class="col-sm-2 col-form-label">WB Gross Wt </label>
 <div class="col-sm-4">
@@ -249,7 +249,7 @@
 </div>
 <label class="col-sm-2 col-form-label">WB Tare Wt</label>
 <div class="col-sm-4">
-<input type="number" min="1" required class="form-control calculate" name="wb_tare_wt" id="wb_tare_wt" value="{{ $wb_entry_out->wb_tare_wt}}" placeholder="Enter WB Tare Wt" >
+<input type="number" min="1" required class="form-control calculate" name="wb_tare_wt" id="wb_tare_wt" value="{{ isset($wb_entry_out->wb_tare_wt)?$wb_entry_out->wb_tare_wt:''}}" placeholder="Enter WB Tare Wt" >
 </div>
 </div>    
 

@@ -238,7 +238,12 @@
       </div>
       <label class="col-sm-2 col-form-label ">File Upload:</label>
       <div class="col-sm-4">
-      <input type="file" name="file_upload[]" accept="application/pdf, image/jpeg,image/jpg"  class="form-control" multiple>
+      <!-- <input type="file" name="file_upload[]" accept="application/pdf, image/jpeg,image/jpg"  class="form-control" multiple> -->
+      @if(isset($upload_document->getAllUploadDocumentsFiles))
+      @foreach($upload_document->getAllUploadDocumentsFiles as $attachment)
+      <a href="{{route('download.document',['file'=>$upload_document->getUploadDocumentsFiles->document])}}" class="btn btn-large pull-right"><i class="fa fa-download" aria-hidden="true"> </i>  Document </a>
+      @endforeach
+      @endif
       </div>    
       </div>
       <div class="form-group row fheigt">

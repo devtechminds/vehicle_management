@@ -226,7 +226,7 @@ Route::group(['middleware' => ['auth']], function () {
      Route::get('/lists-supervisor-doc-upload-entry','FieldSupervisorController@supervisorEntryList')->name('supervisor.doc.upload.entrylist')->middleware('role:field_supervisor');
      Route::get('/supervisor-doc-upload/{id}','FieldSupervisorController@show')->name('supervisor.doc.upload')->middleware('role:field_supervisor');
      Route::post('/supervisor-doc-upload-submit','FieldSupervisorController@store')->name('supervisor.doc.upload.submit')->middleware('role:field_supervisor');
-    
+     Route::get('/download-document', 'FieldSupervisorController@getDownload')->name('download.document');
     
     //WeighBridgeExitController
     Route::get('/weigh-bridge-exit','WeighBridgeExitController@index')->name('weigh.bridge.exit')->middleware('role:weigh_bridge_officer');
