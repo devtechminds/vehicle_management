@@ -32,11 +32,11 @@ class CreateLuGateEntriesTable extends Migration
             $table->String('driver_name')->nullable();
             $table->String('driver_lic_no')->nullable();
             $table->String('driver_ph_no')->nullable();
-            $table->String('interchange_no');
-            $table->String('destination');
+            $table->String('interchange_no')->nullable();
+            $table->String('destination')->nullable();
             $table->String('container_no')->nullable();
-            $table->String('shipping_line');
-            $table->String('tra_seal_no');
+            $table->String('shipping_line')->nullable();
+            $table->String('tra_seal_no')->nullable();
             $table->String('gate_pass_no')->nullable();
             $table->String('time_in');
             $table->boolean('status')->default('0');

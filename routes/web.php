@@ -187,6 +187,12 @@ Route::group(['middleware' => ['auth']], function () {
      Route::get('/manifesto-show-finance-officer/{id}','FinanceOfficerController@show')->name('finance.officer.manifesto.show')->middleware('role:finance_officer');
      Route::get('/manifesto-finance-officer-status/{status}/{id}','FinanceOfficerController@updateStatus')->name('finance.officer.manifesto.status')->middleware('role:finance_officer');
 
+    //Loading CSF Gate Officer
+    Route::get('/loading-entry-list','LuGateEntrieController@index')->name('loading.entry.index')->middleware('role:gate1_entry_officer');
+    Route::get('/loading-entry-add','LuGateEntrieController@create')->name('loading.entry.create')->middleware('role:gate1_entry_officer');
+    Route::post('/loading-entry-store','LuGateEntrieController@store')->name('loading.entry.store')->middleware('role:gate1_entry_officer');
+    Route::get('/lists-loading-entry','LuGateEntrieController@loadingList')->name('list.loading.entry')->middleware('role:gate1_entry_officer');
+    Route::get('/loading-entry-show/{id}','LuGateEntrieController@show')->name('loading.entry.show')->middleware('role:gate1_entry_officer');
 
     //ManifestoEntry CSF Gate Officer
     Route::get('/vehilce-in-register','GateEntryOfficerController@index')->name('vehilce.in.register.index')->middleware('role:gate1_entry_officer');
