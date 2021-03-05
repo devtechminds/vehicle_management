@@ -692,6 +692,7 @@ class ComposerStaticInit8eca3936d6c9dde19455e61808249e91
         'App\\Http\\Controllers\\LocationController' => __DIR__ . '/../..' . '/app/Http/Controllers/LocationController.php',
         'App\\Http\\Controllers\\LuCommodityDetailController' => __DIR__ . '/../..' . '/app/Http/Controllers/LuCommodityDetailController.php',
         'App\\Http\\Controllers\\LuGateEntrieController' => __DIR__ . '/../..' . '/app/Http/Controllers/LuGateEntrieController.php',
+        'App\\Http\\Controllers\\LuWeightBridgeController' => __DIR__ . '/../..' . '/app/Http/Controllers/LuWeightBridgeController.php',
         'App\\Http\\Controllers\\ManifestoEntryController' => __DIR__ . '/../..' . '/app/Http/Controllers/ManifestoEntryController.php',
         'App\\Http\\Controllers\\MaterialController' => __DIR__ . '/../..' . '/app/Http/Controllers/MaterialController.php',
         'App\\Http\\Controllers\\NotificationsController' => __DIR__ . '/../..' . '/app/Http/Controllers/NotificationsController.php',

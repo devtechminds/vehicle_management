@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 class LuGateEntrie extends Model
 {
+    public function getCreatedAtAttribute($value)
+    {
+        return date('d/m/Y H:i:s', strtotime($value));
+    }
+
     public static function getRefNo(){
         $last_row = DB::table('lu_gate_entries')->select('id')->orderBy('id', 'DESC')->first();
         if($last_row){
@@ -25,5 +30,10 @@ class LuGateEntrie extends Model
     public function getCommodity()
     {
         return $this->hasOne('App\Commodity', 'commodity_code', 'commodity');
+    }
+
+    public function getTransporter()
+    {
+        return $this->hasOne('App\Transports', 'transport_code', 'transporter');
     }
 }

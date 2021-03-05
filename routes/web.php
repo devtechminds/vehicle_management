@@ -187,12 +187,26 @@ Route::group(['middleware' => ['auth']], function () {
      Route::get('/manifesto-show-finance-officer/{id}','FinanceOfficerController@show')->name('finance.officer.manifesto.show')->middleware('role:finance_officer');
      Route::get('/manifesto-finance-officer-status/{status}/{id}','FinanceOfficerController@updateStatus')->name('finance.officer.manifesto.status')->middleware('role:finance_officer');
 
-    //Loading CSF Gate Officer
+    //Loading GateEntry CSF Gate Officer
     Route::get('/loading-entry-list','LuGateEntrieController@index')->name('loading.entry.index')->middleware('role:gate1_entry_officer');
     Route::get('/loading-entry-add','LuGateEntrieController@create')->name('loading.entry.create')->middleware('role:gate1_entry_officer');
     Route::post('/loading-entry-store','LuGateEntrieController@store')->name('loading.entry.store')->middleware('role:gate1_entry_officer');
     Route::get('/lists-loading-entry','LuGateEntrieController@loadingList')->name('list.loading.entry')->middleware('role:gate1_entry_officer');
     Route::get('/loading-entry-show/{id}','LuGateEntrieController@show')->name('loading.entry.show')->middleware('role:gate1_entry_officer');
+    Route::get('/loading-entry-edit/{id}','LuGateEntrieController@edit')->name('loading.entry.edit')->middleware('role:gate1_entry_officer');
+    Route::put('/loading-entry-update','LuGateEntrieController@update')->name('loading.entry.update')->middleware('role:gate1_entry_officer');
+
+
+    //Unloading GateEntry CSF Gate Officer
+    Route::get('/unloading-entry-list','LuGateEntrieController@unloadingIndex')->name('unloading.entry.index')->middleware('role:gate1_entry_officer');
+    Route::get('/unloading-entry-add','LuGateEntrieController@unloadingCreate')->name('unloading.entry.create')->middleware('role:gate1_entry_officer');
+    Route::post('/unloading-entry-store','LuGateEntrieController@unloadingStore')->name('unloading.entry.store')->middleware('role:gate1_entry_officer');
+    Route::get('/lists-unloading-entry','LuGateEntrieController@unloadingList')->name('list.unloading.entry')->middleware('role:gate1_entry_officer');
+    // Route::get('/loading-entry-show/{id}','LuGateEntrieController@show')->name('loading.entry.show')->middleware('role:gate1_entry_officer');
+    // Route::get('/loading-entry-edit/{id}','LuGateEntrieController@edit')->name('loading.entry.edit')->middleware('role:gate1_entry_officer');
+    // Route::put('/loading-entry-update','LuGateEntrieController@update')->name('loading.entry.update')->middleware('role:gate1_entry_officer');
+    Route::get('/material-by-comodity/{id}','LuGateEntrieController@getMaterialByComodity')->name('material-by-comodity')->middleware('role:gate1_entry_officer');
+    Route::get('/uom-by-material/{id}','LuGateEntrieController@getUomByMaterial')->name('uom-by-material')->middleware('role:gate1_entry_officer');
 
     //ManifestoEntry CSF Gate Officer
     Route::get('/vehilce-in-register','GateEntryOfficerController@index')->name('vehilce.in.register.index')->middleware('role:gate1_entry_officer');

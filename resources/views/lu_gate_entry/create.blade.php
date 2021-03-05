@@ -6,7 +6,7 @@
          <div class="page-header-title">
             <i class="feather icon-clipboard bg-c-blue"></i>
             <div class="d-inline">
-               <h2>Manifesto Entry</h2>
+               <h3>TRUCK PARKING NOTE(LOADING)</h3>
             </div>
          </div>
       </div>
@@ -18,7 +18,7 @@
                </li>
                <li class="breadcrumb-item"><a href="#!">Gate1 Entry Officer</a></li>
                <li class="breadcrumb-item">
-                  <a href="#!">Loading Gate1 Entry Screen</a>
+                  <a href="#!">Loading Entry Screen</a>
                </li>
             </ul>
          </div>
@@ -52,7 +52,7 @@
    </div>
 </div>
 <div class="pcoded-inner-content">
-<form action="{{route('manifesto.store')}}" id="myform" method="post">
+<form action="{{route('loading.entry.store')}}" id="myform" method="post">
    <div class="main-body">
       <div class="page-wrapper">
          <div class="page-body">
@@ -64,14 +64,14 @@
                            <div class="form-group row">
                            <div class="col-sm-2">
                            <p class="bigf">Token No:</p>
-                           <input type="text" class="form-control bld sdt" value="{{$ref_no}}" placeholder="" readonly>
+                           <input type="text" name="ref_no" id="ref_no" class="form-control bld sdt" value="{{$ref_no}}" placeholder="" readonly>
                            </div>
                            <div class="col-sm-8">
 
                            </div>
                            <div class="col-sm-2">
                            <p class="bigf">Date:</p>	
-                           <input type="text" class="form-control bld"  value="{{ date('d-m-Y')}}" placeholder="" readonly>
+                           <input type="text" name="date" id="date" class="form-control bld"  value="{{ date('d-m-Y')}}" placeholder="" readonly>
                            </div>
 
                            </div>
@@ -91,7 +91,7 @@
                               <select name="commodity" id="commodity" class="form-control boxbrd">
                                     <option value="">Select Commodity</option>
                                     @foreach($commoditys as $commodity)
-                                       <option value="{{ {{ $commodity['commodity_code'] }}">{{ucwords( str_replace('_',' ',$commodity['commodity_name'])) }}</option>
+                                       <option value="{{ $commodity['commodity_code'] }}">{{ucwords( str_replace('_',' ',$commodity['commodity_name'])) }}</option>
                                     @endforeach
                               </select>
                            </div>
@@ -114,7 +114,7 @@
                              <select name="transporter" id="transporter" class="form-control boxbrd">
                                     <option value="">Select Transporter</option>
                                     @foreach($transports as $transport)
-                                       <option value="{{ {{ $transport['transport_code'] }}">{{ucwords( str_replace('_',' ',$transport['transport_name'])) }}</option>
+                                       <option value="{{ $transport['transport_code'] }}">{{ucwords( str_replace('_',' ',$transport['transport_name'])) }}</option>
                                     @endforeach
                               </select>
                            </div>
@@ -138,7 +138,7 @@
                            <div class="form-group row">
                            <label class="col-sm-2 col-form-label">Time In </label>
                            <div class="col-sm-4">
-                           <input type="text" name="time_in" id="time_in" class="form-control" placeholder="" value="10:10 AM" readonly>
+                           <input type="text" name="time_in" id="time_in" class="form-control" placeholder="" value="{{  date('h:i A', strtotime(now())) }}" readonly>
                            </div>
                            <label class="col-sm-2 col-form-label">Destination (TO) </label>
                            <div class="col-sm-4">
@@ -191,9 +191,6 @@
                            </div>
                            </div>
                      </div>
-                  </div>
-                 
-                  <div class="card">
                      <div class="card-block height">
                         <div class="row">
                            <div class="col-sm-12" style="text-align: center;">
@@ -224,158 +221,32 @@
 
 
 <script>
-
-
-$("#cargo_type").change(function () {                            
-   hideAndShow();
-});
-
-function hideAndShow(){
-   var test = $('#cargo_type').val();
-    cargo  =  test.substring(0, test.lastIndexOf("/"));
-     console.log(cargo);
-
-    $('.ecd_name_div').css('display','block');
-    $('.total_no_of_container_div').css('display','block');
-    $('.delivery_note_no_div').css('display','block');
-    $('.cargo_ref_no_div').css('display','block');
-    
-    if(cargo == 'transit_full_container_comes_and_empty_container_goes_out_with_vehicle' || 
-       cargo == 'transit_full_container_comes_and_full_container_goes_out_with_vehicle'||
-       cargo =='transit_full_container_comes_and_empty_vehicle_goes_out'||
-       cargo =='transit_loose_material_comes_in_and_empty_vehicle_goes_out'){
-       $('.ecd_name_div').css('display','none');
-       $('.total_no_of_container_div').css('display','none');
-       $('.delivery_note_no_div').css('display','none');
-       $('.booking_no_div').css('display','none');
-       
-
-    }else if(cargo == 'local_full_container_comes_and_empty_container_goes_out_with_vehicle'||
-    cargo =="local_full_container_comes_and_full_container_goes_out_with_vehicle" ||
-    cargo =="local_full_container_comes_and_empty_vehicle_goes_out" ||
-    cargo =="local_loose_material_comes_in_and_empty_vehicle_goes_out"){
-        $('.ecd_name_div').css('display','none');
-        $('.total_no_of_container_div').css('display','none');
-        $('.cargo_ref_no_div').css('display','none');
-        $('.booking_no_div').css('display','none');
-    }else if(cargo == 'empty_container_comes_in_and_empty_vehicle_goes_out.' ||
-        cargo =="empty_vehicle_comes_in_and_empty_container_goes_out_with_vehicle" ||
-        cargo =="empty_vehicle_comes_in_and_full_container_goes_with_vehicle" ){
-        $('.cargo_ref_no_div').css('display','none');
-        $('.booking_no_div').css('display','block');
-        $('.delivery_note_no_div').css('display','none');
-    }
-
-    var consignment_type = $("#consignment_type").find("option:selected").text();
-    console.log(cargo);
-    if(consignment_type =='Empty' && cargo=='empty_container_comes_in_and_empty_vehicle_goes_out.' || cargo=='empty_vehicle_comes_in_and_empty_container_goes_out_with_vehicle' || cargo=='empty_vehicle_comes_in_and_full_container_goes_with_vehicle'){
-      $("#consignment_wgt").attr('disabled','disabled');
-      $("#no_package").attr('disabled','disabled');
-      $('.seal_s_no1').attr('disabled','disabled');
-      $('.container_no').removeAttr('disabled','disabled');
-      $('.size').removeAttr('disabled','disabled');
-   }else if((consignment_type =='Transit' && cargo=='transit_loose_material_comes_in_and_empty_vehicle_goes_out') || (consignment_type =='Local' && cargo=='local_loose_material_comes_in_and_empty_vehicle_goes_out')){
-      $('.seal_s_no1').attr('disabled','disabled');
-      $('.container_no').attr('disabled','disabled');
-      $('.size').attr('disabled','disabled');
-      $("#consignment_wgt").removeAttr('disabled');
-      $("#no_package").removeAttr('disabled');
-   }else{
-      $("#consignment_wgt").removeAttr('disabled');
-      $("#no_package").removeAttr('disabled');
-      $('.seal_s_no1').removeAttr('disabled');
-      $('.container_no').removeAttr('disabled','disabled');
-      $('.size').removeAttr('disabled','disabled');
-   } 
-
-   // if((consignment_type =='Transit' && cargo=='transit_loose_material_comes_in_and_empty_vehicle_goes_out') || (consignment_type =='Local' && cargo=='local_loose_material_comes_in_and_empty_vehicle_goes_out')){
-   //    $('.seal_s_no1').attr('disabled','disabled');
-   //    $('.container_no').attr('disabled','disabled');
-   //    $('.size').attr('disabled','disabled');
-   // }else{
-   //    $('.seal_s_no1').removeAttr('disabled');
-   //    $('.container_no').removeAttr('disabled','disabled');
-   //    $('.size').removeAttr('disabled','disabled');
-   // }
-   
-}
-
-$("#addMoreConsignment").click(function(){
-   var counter = parseInt($('#counter').val());
-   var $clone = $('table.tableExample tr.line:first').clone();
-    console.log($clone);
-    $clone.find("input").val("");
-    $clone.find('label.error').remove();
-    $clone.find('.error').removeClass('error');
-    var data_children_count = $clone.find('td').attr("data-children-count");
-      $clone.find('.clone_input').each(function() {
-      this.name= this.name.replace('[0]', '['+counter+']');
-   });
-    $clone.append("<td><div class='rmv' ><i class='btn-danger fa fa-minus-circle' aria-hidden='true'></i></div></td>");
-    $('table.tableExample').append($clone);
-    $('#counter').val( counter + 1 );
-});
-
-$('.tableExample').on('click', '.rmv', function () {
-   if (confirm('Do you want to delete this Consignment Details?')){
-      $(this).closest('tr').remove();
-   }else{
-         return false;
-   }
-});
-
 $('#myform').validate({ // initialize the plugin
     rules: {
-      consignment_type: {
+      customer_name: {
             required: true,
             
         },
-        cargo_type: {
+        commodity: {
             required: true,
             
         },
-        
-        
-        cargo_reference_no: {
-            required: {
-               depends: function(element) {
-                  let myval = $('#cargo_type').val();
-                  return (myval=='transit_full_container_comes_and_empty_container_goes_out_with_vehicle') ? false : true ;
-               }
-            
-            }
-        },
-
-        ecd_name: {
-            required: {
-               depends: function(element) {
-                  let myval = $('#cargo_type').val();
-                  return (myval=='empty_vehicle_comes_in_and_full_container_goes_with_vehicle' || myval=='empty_vehicle_comes_in_and_empty_container_goes_out_with_vehicle' || myval=='empty_container_comes_in_and_empty_vehicle_goes_out.') ? false : true ;
-               }
-            
-            },
-        },
-
-
-        booking_no: {
+        truck_no: {
             required: true,
             
         },
-        customer_name: {
+        container_no: {
             required: true,
             
         },
-        cf_agent: {
+        driver_name: {
             required: true,
         },
-        consignment_wgt: {
+        transporter: {
             required: true,
            
         },
-        no_package: {
-            required: true,
-           
-        },
+        
 
        
     },
@@ -385,40 +256,7 @@ $('#myform').validate({ // initialize the plugin
     }
 });
 
-$('#consignment_type').change(function() {
-    var type = $(this).find("option:selected").text(); //get the current value's option
-    $.ajax({
-        type:'GET',
-        url:'/cargo-type-changes/'+type,
-        success:function(data){
-            $("#cargo_type").html(data);
-        }
-    });
 
-   var cargo_type = $("#cargo_type").find("option:selected").val();
-   cargo  =  cargo_type.substring(0, cargo_type.lastIndexOf("/"));
-});
-
-
-$(document).on("change", ".commodity_select", function () {
-    var id = $(this).val(); //get the current value's option
-    var thisObj = $(this);
-    $.ajax({
-        type:'GET',
-        url:'/get-material-by-comodity/'+id,
-        success:function(data){
-            thisObj.closest('td').next().find('select').html(data);
-        }
-    });
-});
-
-
-
-$('.required').each(function() {
- $(this).rules('add', {
-    required: true,
- });
-});
 
 </script>
 @endsection

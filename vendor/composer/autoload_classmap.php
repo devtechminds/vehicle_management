@@ -63,6 +63,7 @@ return array(
     'App\\Http\\Controllers\\LocationController' => $baseDir . '/app/Http/Controllers/LocationController.php',
     'App\\Http\\Controllers\\LuCommodityDetailController' => $baseDir . '/app/Http/Controllers/LuCommodityDetailController.php',
     'App\\Http\\Controllers\\LuGateEntrieController' => $baseDir . '/app/Http/Controllers/LuGateEntrieController.php',
+    'App\\Http\\Controllers\\LuWeightBridgeController' => $baseDir . '/app/Http/Controllers/LuWeightBridgeController.php',
     'App\\Http\\Controllers\\ManifestoEntryController' => $baseDir . '/app/Http/Controllers/ManifestoEntryController.php',
     'App\\Http\\Controllers\\MaterialController' => $baseDir . '/app/Http/Controllers/MaterialController.php',
     'App\\Http\\Controllers\\NotificationsController' => $baseDir . '/app/Http/Controllers/NotificationsController.php',

@@ -153,7 +153,7 @@
             </li>
             @endif
             @if(in_array("admin", $user_type) || in_array("gate1_entry_officer", $user_type))
-            <li class="pcoded-hasmenu {{ request()->is('vehilce*') || request()->is('container-out-register-list') || request()->is('proceed-vehilce') || request()->is('cfs-out-proceed-list') || request()->is('cfs-out-proceed-list-cfsout') ? 'active pcoded-trigger' : '' }}">
+            <li class="pcoded-hasmenu {{ request()->is('vehilce*') || request()->is('container-out-register-list') || request()->is('proceed-vehilce') || request()->is('cfs-out-proceed-list') || request()->is('cfs-out-proceed-list-cfsout') || request()->is('loading-entry-list') || request()->is('unloading-entry-list') ? 'active pcoded-trigger' : '' }}">
                <a href="javascript:void(0)" class="waves-effect waves-dark">
                <span class="pcoded-micon">
                <i class="feather icon-layers"></i>
@@ -186,6 +186,56 @@
                      <span class="pcoded-mtext">CFS OUT</span>
                      </a>
                   </li>
+
+
+                  <!-- <ul class="pcoded-submenu" style="display: block;"> -->
+                  <li class="pcoded-hasmenu pcoded-trigger" dropdown-icon="style1" subitem-icon="style1">
+                  <a href="javascript:void(0)" class="waves-effect waves-dark">
+                     <span class="pcoded-micon">
+                     
+                  </span>
+                  <span class="pcoded-mtext">Loading</span>
+                  </a>
+                  <ul class="pcoded-submenu" style="display: block;">
+                  <li class="{{ request()->is('loading-entry-list') ? 'active' : '' }}">
+                  <a href="{{route('loading.entry.index')}}" class="waves-effect waves-dark">
+                  <span class="pcoded-mtext">Vehicle Registration</span>
+                  </a>
+                  </li>
+                  <li class="">
+                  <a href="vehicle-allow-inside.html" class="waves-effect waves-dark">
+                  <span class="pcoded-mtext">Vehicle Allow Inside</span>
+                  </a>
+                  </li>
+
+                  </ul>
+                  </li>
+
+                  <li class="pcoded-hasmenu" dropdown-icon="style1" subitem-icon="style1">
+                  <a href="javascript:void(0)" class="waves-effect waves-dark">
+                     <span class="pcoded-micon">
+                     
+                  </span>
+                  <span class="pcoded-mtext">Unloading</span>
+                  </a>
+                  <ul class="pcoded-submenu">
+                  <li class="{{ request()->is('unloading-entry-list') ? 'active' : '' }}">
+                  <a href="{{route('unloading.entry.index')}}" class="waves-effect waves-dark">
+                  <span class="pcoded-mtext">Vehicle Entry Form</span>
+                  </a>
+                  </li>
+                  <li class="">
+                  <a href="vehicle-unloading-list.html" class="waves-effect waves-dark">
+                  <span class="pcoded-mtext">Vehicle Allow Inside</span>
+                  </a>
+                  </li>
+
+                  </ul>
+                  </li>
+
+<!-- </ul> -->
+
+
                </ul>
             </li>
             @endif
