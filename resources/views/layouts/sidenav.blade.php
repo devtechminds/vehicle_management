@@ -284,7 +284,7 @@
             @endif
             @if(in_array("admin", $user_type) || in_array("weigh_bridge_officer", $user_type))
             
-            <li class="pcoded-hasmenu {{ request()->is('weigh-bridge*') || request()->is('container-weigh-bridge-out-list') ? 'active pcoded-trigger' : '' }}">
+            <li class="pcoded-hasmenu {{ request()->is('weigh-bridge*') || request()->is('container-weigh-bridge-out-list') || request()->is('loading-weigh-bridge-entry-list') || request()->is('unloading-weigh-bridge-entry-list') ? 'active pcoded-trigger' : '' }}">
                <a href="javascript:void(0)" class="waves-effect waves-dark">
                <span class="pcoded-micon">
                <i class="feather icon-layers"></i>
@@ -312,6 +312,55 @@
                      <span class="pcoded-mtext">CFS Out Weighbridge Exit</span>
                      </a>
                   </li>
+
+
+                  <!-- <ul class="pcoded-submenu" style="display: block;"> -->
+                  <li class="pcoded-hasmenu {{ request()->is('loading-weigh-bridge-entry-list') || request()->is('unloading-weigh-bridge-entry-list') ? 'active pcoded-trigger' : '' }}" dropdown-icon="style1" subitem-icon="style1">
+                  <a href="javascript:void(0)" class="waves-effect waves-dark">
+                     <span class="pcoded-micon">
+                     
+                  </span>
+                  <span class="pcoded-mtext">Loading</span>
+                  </a>
+                  <ul class="pcoded-submenu" style="display: none;">
+                  <li class="{{ request()->is('loading-weigh-bridge-entry-list')  ? 'active' : '' }}">
+                  <a href="{{route('loading.weigh.bridge.entry.index')}}" class="waves-effect waves-dark">
+                  <span class="pcoded-mtext">Registered Vehicle</span>
+                  </a>
+                  </li>
+                  <li class="">
+                  <a href="weigh-bridge-allow-inside.html" class="waves-effect waves-dark">
+                  <span class="pcoded-mtext">Vehicle Return After Loading</span>
+                  </a>
+                  </li>
+
+                  </ul>
+                  </li>
+
+                  <li class="pcoded-hasmenu" dropdown-icon="style1" subitem-icon="style1">
+                  <a href="javascript:void(0)" class="waves-effect waves-dark">
+                     <span class="pcoded-micon">
+                     
+                  </span>
+                  <span class="pcoded-mtext">Unloading</span>
+                  </a>
+                  <ul class="pcoded-submenu">
+                  <li class="{{ request()->is('unloading-weigh-bridge-entry-list')  ? 'active' : '' }}">
+                  <a href="{{route('unloading.weigh.bridge.entry.index')}}" class="waves-effect waves-dark">
+                  <span class="pcoded-mtext">Registered Vehicle</span>
+                  </a>
+                  </li>
+                  <li class="">
+                  <a href="weigh-bridge-list-unloading.html" class="waves-effect waves-dark">
+                  <span class="pcoded-mtext">Vehicle Return After Unloading</span>
+                  </a>
+                  </li>
+
+                  </ul>
+                  </li>
+                  <!-- </ul> -->
+
+
                </ul>
             </li>
             @endif 

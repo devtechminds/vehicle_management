@@ -36,4 +36,14 @@ class LuGateEntrie extends Model
     {
         return $this->hasOne('App\Transports', 'transport_code', 'transporter');
     }
+
+    public function getLuCommodityDetail()
+    {
+        return $this->hasMany('App\LuCommodityDetail', 'lu_gate_entry_id', 'id');
+    }
+
+    public function getLuWeightBridge()
+    {
+        return $this->hasOne('App\LuWeightBridge', 'lu_gate_entry_id', 'id');
+    }
 }

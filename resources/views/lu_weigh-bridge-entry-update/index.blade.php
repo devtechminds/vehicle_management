@@ -6,7 +6,7 @@
 <div class="page-header-title">
 <i class="feather icon-clipboard bg-c-blue"></i>
 <div class="d-inline">
-<h4>TRUCK PARKING NOTE(UNLOADING)</h4>
+<h3>Authorization Selection Window (Loading)</h3>
 
 </div>
 </div>
@@ -17,9 +17,8 @@
 <li class="breadcrumb-item">
 <a href="index.html"><i class="feather icon-home"></i></a>
 </li>
-<li class="breadcrumb-item"><a href="#!">Gate1 Entry Officer</a></li>
-<li class="breadcrumb-item"><a href="#!">Unloading Gate1 Entry</a></li>
-<li class="breadcrumb-item"><a href="{{route('unloading.entry.create')}}" class="btn btn-info btn-sm waves-effect waves-light btnspace">Add Unloading Entry</a></li>
+<li class="breadcrumb-item"><a href="#!">Authorization Officer</a></li>
+<li class="breadcrumb-item"><a href="#!">Weighbridge Entry Updates</a></li>
 </ul>
 </div>
 </div>
@@ -130,7 +129,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ route('list.unloading.entry') }}",
+                    url: "{{ route('list.loading.weigh.bridge.entry.update') }}",
                     type: 'GET',
                     data: function (d) {
                         d.status = $('#status').val();

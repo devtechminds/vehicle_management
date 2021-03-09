@@ -38,5 +38,9 @@ class Material extends Model
     public static function getAllMaterial(){
         return  Material::select('id','material_name')->where('status','=','1')->get()->toArray();
       } 
+
+      public static function getAllMaterialData(){
+        return  Material::select('id','material_name','unit_weight')->where('status','=','1')->get()->toArray();
+      } 
    
 }

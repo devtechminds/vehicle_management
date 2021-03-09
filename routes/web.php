@@ -202,11 +202,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/unloading-entry-add','LuGateEntrieController@unloadingCreate')->name('unloading.entry.create')->middleware('role:gate1_entry_officer');
     Route::post('/unloading-entry-store','LuGateEntrieController@unloadingStore')->name('unloading.entry.store')->middleware('role:gate1_entry_officer');
     Route::get('/lists-unloading-entry','LuGateEntrieController@unloadingList')->name('list.unloading.entry')->middleware('role:gate1_entry_officer');
-    // Route::get('/loading-entry-show/{id}','LuGateEntrieController@show')->name('loading.entry.show')->middleware('role:gate1_entry_officer');
-    // Route::get('/loading-entry-edit/{id}','LuGateEntrieController@edit')->name('loading.entry.edit')->middleware('role:gate1_entry_officer');
-    // Route::put('/loading-entry-update','LuGateEntrieController@update')->name('loading.entry.update')->middleware('role:gate1_entry_officer');
-    Route::get('/material-by-comodity/{id}','LuGateEntrieController@getMaterialByComodity')->name('material-by-comodity')->middleware('role:gate1_entry_officer');
-    Route::get('/uom-by-material/{id}','LuGateEntrieController@getUomByMaterial')->name('uom-by-material')->middleware('role:gate1_entry_officer');
+    Route::get('/unloading-entry-show/{id}','LuGateEntrieController@unloadingShow')->name('unloading.entry.show')->middleware('role:gate1_entry_officer');
+    Route::get('/unloading-entry-edit/{id}','LuGateEntrieController@unloadingEdit')->name('unloading.entry.edit')->middleware('role:gate1_entry_officer');
+    Route::put('/unloading-entry-update','LuGateEntrieController@unloadingUpdate')->name('unloading.entry.update')->middleware('role:gate1_entry_officer');
+    Route::get('/material-by-comodity/{id}','LuGateEntrieController@getMaterialByComodity')->name('material-by-comodity');
+    Route::get('/uom-by-material/{id}','LuGateEntrieController@getUomByMaterial')->name('uom-by-material');
 
     //ManifestoEntry CSF Gate Officer
     Route::get('/vehilce-in-register','GateEntryOfficerController@index')->name('vehilce.in.register.index')->middleware('role:gate1_entry_officer');
@@ -239,7 +239,26 @@ Route::group(['middleware' => ['auth']], function () {
      Route::get('/weigh-bridge-officer/{id}','CFSWeighBridgeController@show')->name('weigh.bridge.officer')->middleware('role:weigh_bridge_officer');
      Route::get('/weigh-bridge-officer-print/{id}','CFSWeighBridgeController@print')->name('weigh.bridge.officer.print')->middleware('role:weigh_bridge_officer');
      Route::post('/weigh-bridge-officer-submit','CFSWeighBridgeController@store')->name('weigh.bridge.officer.submit')->middleware('role:weigh_bridge_officer');
-    
+
+    //Loading GateEntry CFSWeighBridge
+     Route::get('/loading-weigh-bridge-entry-list','LuWeightBridgeController@index')->name('loading.weigh.bridge.entry.index')->middleware('role:weigh_bridge_officer');
+     Route::get('/lists-loading-weigh-bridge-entry','LuWeightBridgeController@loadingWeightBridgeList')->name('list.loading.weigh.bridge.entry')->middleware('role:weigh_bridge_officer');
+     Route::get('/loading-weigh-bridge-entry-show/{id}','LuWeightBridgeController@show')->name('loading.weigh.bridge.entry.show')->middleware('role:weigh_bridge_officer');
+     Route::post('/loading-weigh-bridge-officer-submit','LuWeightBridgeController@store')->name('loading.weigh.bridge.officer.submit')->middleware('role:weigh_bridge_officer');
+
+      //Unloading GateEntry CFSWeighBridge
+      Route::get('/unloading-weigh-bridge-entry-list','LuWeightBridgeController@unloadingIndex')->name('unloading.weigh.bridge.entry.index')->middleware('role:weigh_bridge_officer');
+      Route::get('/lists-unloading-weigh-bridge-entry','LuWeightBridgeController@unloadingWeightBridgeList')->name('list.unloading.weigh.bridge.entry')->middleware('role:weigh_bridge_officer');
+      Route::get('/unloading-weigh-bridge-entry-show/{id}','LuWeightBridgeController@unloadingShow')->name('unloading.weigh.bridge.entry.show')->middleware('role:weigh_bridge_officer');
+      Route::post('/unloading-weigh-bridge-officer-submit','LuWeightBridgeController@unloadingStore')->name('unloading.weigh.bridge.officer.submit')->middleware('role:weigh_bridge_officer');
+
+      //Loading GateEntry Authorization Officer
+     Route::get('/loading-weigh-bridge-entry-update-list','LuAuthorizationOfficerController@index')->name('loading.weigh.bridge.entry.update.index')->middleware('role:authorization_officer');
+     Route::get('/lists-loading-weigh-bridge-entry-update','LuAuthorizationOfficerController@loadingWeightBridgeList')->name('list.loading.weigh.bridge.entry.update')->middleware('role:authorization_officer');
+     Route::get('/loading-weigh-bridge-entry-edit/{id}','LuAuthorizationOfficerController@edit')->name('loading.weigh.bridge.entry.edit')->middleware('role:authorization_officer');
+     Route::put('/loading-weigh-bridge-entry-update','LuAuthorizationOfficerController@update')->name('loading.weigh.bridge.entry.update')->middleware('role:authorization_officer');
+
+     
      //FieldSupervisorController
      Route::get('/supervisor-doc-upload-entry','FieldSupervisorController@index')->name('supervisor.doc.upload.entry')->middleware('role:field_supervisor');
      Route::get('/lists-supervisor-doc-upload-entry-dashboard','FieldSupervisorController@dashboard')->name('supervisor.doc.upload.entrylist.dashboard')->middleware('role:field_supervisor');

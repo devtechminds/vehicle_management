@@ -304,35 +304,35 @@ class LuGateEntrieController extends Controller
 
     
     public function unloadingList(Request $request){
-        $loading_entry_data = LuGateEntrie::with('getCustomer','getCommodity');
+        $unloading_entry_data = LuGateEntrie::with('getCustomer','getCommodity');
         if($request->status)
         {
             $serch_status= 1;
             if($request->status==2){
                 $serch_status = 0;
             }
-            $loading_entry_data->where('status','=',$serch_status);
+            $unloading_entry_data->where('status','=',$serch_status);
             if($request->status==3){
-                $loading_entry_data->where('status','=',$request->status);
-                $loading_entry_data->Orwhere('status','=',$request->status);
+                $unloading_entry_data->where('status','=',$request->status);
+                $unloading_entry_data->Orwhere('status','=',$request->status);
             }
         }
         if($request->ref_no)
         {
-            $loading_entry_data->where('ref_no','=',$request->ref_no);
+            $unloading_entry_data->where('ref_no','=',$request->ref_no);
         }
         if(isset($request->created_date))
         {
             $created_date = date('Y-m-d',strtotime($request->created_date));
-            $loading_entry_data->whereDate('created_at',$created_date);
+            $unloading_entry_data->whereDate('created_at',$created_date);
         }
-        $loading_entry_data->where('is_loading','=',2);
-        $loading_entry_data_list = $loading_entry_data->get();
+        $unloading_entry_data->where('is_loading','=',2);
+        $unloading_entry_data_list = $unloading_entry_data->get();
         $user = Auth::user();
         $user_type = explode(',',$user->user_type);
-        return datatables()->of($loading_entry_data_list)
-            ->addColumn('action', function ($loading_entry_data_list) use($user_type) {
-                $return_action = '<a href="' . route('loading.entry.show',base64_encode($loading_entry_data_list->id)) . '"  class="btn btn-sm btn-clean btn-icon mr-2" title="View details">
+        return datatables()->of($unloading_entry_data_list)
+            ->addColumn('action', function ($unloading_entry_data_list) use($user_type) {
+                $return_action = '<a href="' . route('unloading.entry.show',base64_encode($unloading_entry_data_list->id)) . '"  class="btn btn-sm btn-clean btn-icon mr-2" title="View details">
                 <span class="svg-icon svg-icon-md svg-icon-primary">
                 <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -345,8 +345,8 @@ class LuGateEntrieController extends Controller
                 <!--end::Svg Icon-->
                 </span>
                 </a>';
-                if($loading_entry_data_list->status==0 ||  in_array("admin", $user_type)){
-                    $return_action .= '<a href="' . route('loading.entry.edit',base64_encode($loading_entry_data_list->id)) . '"  class="btn btn-sm btn-clean btn-icon mr-2" title="Update details">
+                if($unloading_entry_data_list->status==0 ||  in_array("admin", $user_type)){
+                    $return_action .= '<a href="' . route('unloading.entry.edit',base64_encode($unloading_entry_data_list->id)) . '"  class="btn btn-sm btn-clean btn-icon mr-2" title="Update details">
                     <span class="svg-icon svg-icon-md svg-icon-primary">
                     <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -407,7 +407,7 @@ class LuGateEntrieController extends Controller
         if($id){
            $materials = Material::where('commodity_id',$id)->get();
            foreach ($materials as $key => $material) {
-             $html .= '<option value="'.$material->id.'">'.ucwords( str_replace('_',' ',$material['material_name'])).' - '.$material['unit_weight'] .'Kg'.'</option>';
+             $html .= '<option data-unit_weight="'.$material->unit_weight.'" value="'.$material->id.'">'.ucwords( str_replace('_',' ',$material['material_name'])).' - '.$material['unit_weight'] .'Kg'.'</option>';
            }
         }
         return $html;
@@ -501,6 +501,114 @@ class LuGateEntrieController extends Controller
       }
 
     }
+
+
+
+    public function unloadingShow($id)
+    {
+        $unloadingGateEntry = LuGateEntrie::with('getCustomer','getCommodity','getTransporter','getLuCommodityDetail','getLuCommodityDetail.getMaterial','getLuCommodityDetail.getUOM')
+        ->where("id", "=", base64_decode($id))
+        ->first();
+        
+         return view('unloading_gate_entry.show')->with('unloadingGateEntry',$unloadingGateEntry);
+    }
+
+
+    public function unloadingEdit($id)
+    {
+        $unloadingGateEntry = LuGateEntrie::with('getCustomer','getCommodity','getTransporter','getLuCommodityDetail','getLuCommodityDetail.getMaterial','getLuCommodityDetail.getUOM')
+        ->where("id", "=", base64_decode($id))
+        ->first();
+        // echo "<pre>";
+        // print_r($manifestoEntry->getConsignmentDetails);die;
+        $customers  = Customers::getAllCustomers();
+        $commoditys  = Commodity::getCommodity();
+        $transports = Transports::getTransports();
+        $materials = Material::getAllMaterialData();
+        $uoms = UOM::getAllUOM();
+        return view('unloading_gate_entry.update')->with('unloadingGateEntry',$unloadingGateEntry)
+         ->with('customers',$customers)
+         ->with('commoditys',$commoditys)->with('transports',$transports)
+         ->with('materials',$materials)->with('uoms',$uoms);
+    }
+
+
+    public function unloadingUpdate(Request $request)
+    {
+        $validatedData = $request->validate([
+            'customer_name' => 'required',
+            'commodity' => 'required',
+            'truck_no' => 'required',
+            'container_no' => 'required',
+            'driver_name' => 'required',
+            'transporter' => 'required',
+            
+        ]);
+      if($validatedData){
+        try {
+            DB::beginTransaction();
+            $data = $request->all();  
+            
+            $update_data =array(
+                'ref_no' => $data['ref_no']?$data['ref_no']:'',
+                'date' => $data['date']? date('Y-m-d',strtotime($data['date'])):'',
+                'customer_name' => $data['customer_name']? $data['customer_name']:'',
+                'commodity' => $data['commodity']? $data['commodity']:'',
+                'truck_no' => $data['truck_no']? $data['truck_no']:'',
+                'trailer_no' => $data['trailer_no']? $data['trailer_no']:'',
+                'transporter' => $data['transporter']? $data['transporter']:'',
+                'driver_name' => $data['driver_name']? $data['driver_name']:'',
+                'driver_ph_no' => $data['driver_ph_no']? $data['driver_ph_no']:'',
+                'driver_lic_no' => $data['driver_lic_no']? $data['driver_lic_no']:'',
+                'time_in' => $data['time_in']? $data['time_in']:'',
+                'destination' => $data['destination']? $data['destination']:'',
+                'container_no' => $data['container_no']? $data['container_no']:'',
+                'bl_no' => $data['bl_no']? $data['bl_no']:'',
+                'dn_no' => $data['dn_no']? $data['dn_no']:'',
+                'bl_qty' => $data['bl_qty']? $data['bl_qty']:'',
+                'dn_qty' => $data['dn_qty']? $data['dn_qty']:'',
+                'quantity' => isset($data['quantity'])?$data['quantity']:NULL,
+                'metric_ton' => isset($data['metric_ton'])?$data['metric_ton']:NULL,
+                'shipping_line' => $data['shipping_line']? $data['shipping_line']:'',
+                'interchange_no' => $data['interchange_no']? $data['interchange_no']:'',
+                'tra_seal_no' => $data['tra_seal_no']? $data['tra_seal_no']:'',
+                'status' => 0,
+                'updated_at' => now(),
+                'updated_by' => auth()->user()->id
+                );
+                LuGateEntrie::where("id", "=",$data['id'])->update($update_data);
+                LuCommodityDetail::where('lu_gate_entry_id',$data['id'])->delete();
+                 if(count($data['material'])>0){
+                foreach($data['material'] as $key=>$value){
+                 $commodity_detail = new LuCommodityDetail();
+                 $commodity_detail->lu_gate_entry_id= $data['id'];
+                 $commodity_detail->material= $data['material'][$key];
+                 $commodity_detail->uom= $data['uom'][$key];
+                 $commodity_detail->commodity_quantity= isset($data['commodity_quantity'][$key])?$data['commodity_quantity'][$key]:NULL;
+                 $commodity_detail->total_weight= isset($data['total_weight'][$key])?$data['total_weight'][$key]:NULL;
+                 $commodity_detail->created_by= auth()->user()->id;
+                 $commodity_detail->updated_by= auth()->user()->id;
+                 $commodity_detail->save();
+                }
+             }
+             
+            DB::commit();
+            //Send Notification
+            Notifications::sendNotification(auth()->user()->user_type,'weigh_bridge_officer','New Unloading Truck Parking Note Updated','','/manifesto-list-finance-officer');
+            UserLog::AddLog('New Unloading Truck Parking Note Updated By');
+            return redirect()->route('unloading.entry.index')->with('create', 'Unloading Truck Parking Note Updated successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $e->getMessage();
+            return redirect()->route('unloading.entry.create')->with('create',$e->getMessage());
+            
+        }
+      } 
+
+    }
+
+
+    
 
 
     /**
