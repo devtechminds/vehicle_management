@@ -6,7 +6,7 @@
          <div class="page-header-title">
             <i class="feather icon-clipboard bg-c-blue"></i>
             <div class="d-inline">
-               <h3>AUTHORIZATION SELECTION WINDOW (LOADING)</h3>
+               <h3>VEHICLE SLIP RETURN FORM(AFTER LOADING)</h3>
             </div>
          </div>
       </div>
@@ -16,9 +16,9 @@
                <li class="breadcrumb-item">
                   <a href="index.html"><i class="feather icon-home"></i></a>
                </li>
-               <li class="breadcrumb-item"><a href="#!">Authorization Officer</a></li>
+               <li class="breadcrumb-item"><a href="#!">Authorization Manger</a></li>
                <li class="breadcrumb-item">
-                  <a href="#!">Weighhbridge Entry Updates</a>
+                  <a href="#!">Weighbridge Entry Update After return</a>
                </li>
             </ul>
          </div>
@@ -52,7 +52,7 @@
    </div>
 </div>
 <div class="pcoded-inner-content">
-<form action="{{route('loading.weigh.bridge.entry.update')}}" id="myform" method="post">
+<form action="{{route('loading.gate.entry.approval.process')}}" id="myform" method="post">
    <div class="main-body">
       <div class="page-wrapper">
          <div class="page-body">
@@ -259,7 +259,6 @@
                             </tr>
                           </thead>
                           <tbody>
-                          @if(isset($loadingGateEntry->getLuCommodityDetail))
                           @foreach($loadingGateEntry->getLuCommodityDetail as $key=>$value)
                             <tr class="line">
                               <td class="material-data">
@@ -282,29 +281,9 @@
                               <td><input type="text" name="total_weight[0]" id="total_weight" value="{{ $value->total_weight}}" class="form-control boxbrd clone_input"  placeholder="" readonly></td>
                             </tr>
                             @endforeach
-                          @else
-                            <tr class="line">
-                              <td class="material-data">
-                                <select name="material[0]" id="material" class="form-control boxbrd required clone_input material_select">
-                                  <option value="">Select Material</option>
-                                </select>
-                              </td>
-                              <td >
-                                <select name="uom[0]" id="uom" class="form-control boxbrd clone_input">
-                                  <option value="">Select UOM</option>
-                                </select>
-                              </td>
-                              <td><input type="text" name="commodity_quantity[0]" id="commodity_quantity" class="form-control boxbrd required clone_input "  placeholder=""></td>
-                              <td><input type="text" name="total_weight[0]" id="total_weight" class="form-control boxbrd clone_input"  placeholder="" readonly></td>
-                            </tr>
-                            @endif
                           </tbody>
                         </table>
-                        @if(isset($loadingGateEntry->getLuCommodityDetail))
                         <input type="hidden" id="counter" value="{{ count($loadingGateEntry->getLuCommodityDetail) }}">
-                        @else
-                        <input type="hidden" id="counter" value="1">
-                        @endif
                       </div>
                     </div>
                   </div>
@@ -316,7 +295,7 @@
                      <div class="card-block height">
                         <div class="form-group row dwn" >
                            <div class="col-sm-12" style="text-align: center;">
-                           <button class="btn btn-success waves-effect waves-light">Update</button>
+                           <button class="btn btn-success waves-effect waves-light">Authorize</button>
                            </div>
                         </div>
                      </div>

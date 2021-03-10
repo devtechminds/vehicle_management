@@ -16,14 +16,14 @@ use App\LuWeightBridge;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class LuAuthorizationOfficerController extends Controller
+class LuAuthorizationManagerController extends Controller
 {
     public function index()
     {
-        return view('lu_weigh-bridge-entry-update.index');
+        return view('lu_gate_entry_approval.index');
     }
 
-    public function loadingWeightBridgeList(Request $request){
+    public function loadingEntryApprovalList(Request $request){
         $loading_entry_data = LuGateEntrie::with('getCustomer','getCommodity');
         if($request->status)
         {
@@ -52,7 +52,7 @@ class LuAuthorizationOfficerController extends Controller
         $user_type = explode(',',$user->user_type);
         return datatables()->of($loading_entry_data_list)
             ->addColumn('action', function ($loading_entry_data_list) use($user_type) {
-                    $return_action = '<a href="' . route('loading.weigh.bridge.entry.edit',base64_encode($loading_entry_data_list->id)) . '"  class="btn btn-sm btn-clean btn-icon mr-2" title="Update details">
+                    $return_action = '<a href="' . route('loading.gate.entry.approval.edit',base64_encode($loading_entry_data_list->id)) . '"  class="btn btn-sm btn-clean btn-icon mr-2" title="Update details">
                     <span class="svg-icon svg-icon-md svg-icon-primary">
                     <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -91,20 +91,20 @@ class LuAuthorizationOfficerController extends Controller
             ->make(true);
     }
 
-    public function edit($id)
+      public function edit($id)
     {
         $loadingGateEntry = LuGateEntrie::with('getCustomer','getCommodity','getTransporter','getLuWeightBridge')
         ->where("id", "=", base64_decode($id))
         ->first();
-        //echo "<pre>";
-        //print_r($loadingGateEntry);die;
+        // echo "<pre>";
+        // print_r($manifestoEntry->getConsignmentDetails);die;
         $customers  = Customers::getAllCustomers();
         $commoditys  = Commodity::getCommodity();
         $transports = Transports::getTransports();
         $materials = Material::getAllMaterialData();
         $uoms = UOM::getAllUOM();
         
-        return view('lu_weigh-bridge-entry-update.update')->with('loadingGateEntry',$loadingGateEntry)
+        return view('lu_gate_entry_approval.update')->with('loadingGateEntry',$loadingGateEntry)
          ->with('customers',$customers)
          ->with('commoditys',$commoditys)->with('transports',$transports)
          ->with('materials',$materials)->with('uoms',$uoms);
@@ -149,7 +149,7 @@ class LuAuthorizationOfficerController extends Controller
                 'shipping_line' => $data['shipping_line']? $data['shipping_line']:'',
                 'interchange_no' => $data['interchange_no']? $data['interchange_no']:'',
                 'tra_seal_no' => $data['tra_seal_no']? $data['tra_seal_no']:'',
-                'status' => 2,
+                'status' => 3,
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );
@@ -179,13 +179,13 @@ class LuAuthorizationOfficerController extends Controller
              
             DB::commit();
             //Send Notification
-            Notifications::sendNotification(auth()->user()->user_type,'authorization_manager','New Loading Weigh BridgeEntry Updated','','/manifesto-list-finance-officer');
-            UserLog::AddLog('New Loading Weigh BridgeEntry Updated By');
-            return redirect()->route('loading.weigh.bridge.entry.update.index')->with('create', 'Loading Weigh BridgeEntry Updated Successfully!');
+            Notifications::sendNotification(auth()->user()->user_type,'gate1_entry_officer','New Loading Gate Entry Authorized','','/manifesto-list-finance-officer');
+            UserLog::AddLog('New Loading Gate Entry Authorized By');
+            return redirect()->route('loading.gate.entry.approval.index')->with('create', 'Loading Gate Entry Authorized Successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
             return $e->getMessage();
-            return redirect()->route('loading.weigh.bridge.entry.update.index')->with('create',$e->getMessage());
+            return redirect()->route('loading.gate.entry.approval.index')->with('create',$e->getMessage());
             
         }
       } 
@@ -195,11 +195,11 @@ class LuAuthorizationOfficerController extends Controller
 
     public function unloadingIndex()
     {
-        return view('unloading_weigh-bridge-entry-update.index');
+        return view('unloading_gate_entry_approval.index');
     }
 
     
-    public function unloadingWeightBridgeList(Request $request){
+    public function unloadingEntryApprovalList(Request $request){
         $unloading_entry_data = LuGateEntrie::with('getCustomer','getCommodity');
         if($request->status)
         {
@@ -228,7 +228,7 @@ class LuAuthorizationOfficerController extends Controller
         $user_type = explode(',',$user->user_type);
         return datatables()->of($unloading_entry_data_list)
             ->addColumn('action', function ($unloading_entry_data_list) use($user_type) {
-                    $return_action = '<a href="' . route('unloading.weigh.bridge.entry.edit',base64_encode($unloading_entry_data_list->id)) . '"  class="btn btn-sm btn-clean btn-icon mr-2" title="Update details">
+                    $return_action = '<a href="' . route('unloading.gate.entry.approval.edit',base64_encode($unloading_entry_data_list->id)) . '"  class="btn btn-sm btn-clean btn-icon mr-2" title="Update details">
                     <span class="svg-icon svg-icon-md svg-icon-primary">
                     <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -279,7 +279,7 @@ class LuAuthorizationOfficerController extends Controller
         $transports = Transports::getTransports();
         $materials = Material::getAllMaterialData();
         $uoms = UOM::getAllUOM();
-        return view('unloading_weigh-bridge-entry-update.update')->with('unloadingGateEntry',$unloadingGateEntry)
+        return view('unloading_gate_entry_approval.update')->with('unloadingGateEntry',$unloadingGateEntry)
          ->with('customers',$customers)
          ->with('commoditys',$commoditys)->with('transports',$transports)
          ->with('materials',$materials)->with('uoms',$uoms);
@@ -324,7 +324,7 @@ class LuAuthorizationOfficerController extends Controller
                 'shipping_line' => $data['shipping_line']? $data['shipping_line']:'',
                 'interchange_no' => $data['interchange_no']? $data['interchange_no']:'',
                 'tra_seal_no' => $data['tra_seal_no']? $data['tra_seal_no']:'',
-                'status' => 2,
+                'status' => 3,
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );
@@ -354,13 +354,13 @@ class LuAuthorizationOfficerController extends Controller
              
             DB::commit();
             //Send Notification
-            Notifications::sendNotification(auth()->user()->user_type,'authorization_manager','New Unloading Weigh BridgeEntry Updated','','/manifesto-list-finance-officer');
-            UserLog::AddLog('New Unloading Weigh BridgeEntry Updated By');
-            return redirect()->route('unloading.weigh.bridge.entry.update.index')->with('create', 'Unloading Weigh BridgeEntry Updated successfully!');
+            Notifications::sendNotification(auth()->user()->user_type,'gate1_entry_officer','New Unloading Gate Entry Authorized','','/manifesto-list-finance-officer');
+            UserLog::AddLog('New Unloading Gate Entry Authorized By');
+            return redirect()->route('unloading.gate.entry.approval.index')->with('create', 'Unloading Gate Entry Authorized Successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
             return $e->getMessage();
-            return redirect()->route('unloading.weigh.bridge.entry.update.index')->with('create',$e->getMessage());
+            return redirect()->route('unloading.gate.entry.approval.index')->with('create',$e->getMessage());
             
         }
       } 

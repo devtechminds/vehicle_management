@@ -258,6 +258,38 @@ Route::group(['middleware' => ['auth']], function () {
      Route::get('/loading-weigh-bridge-entry-edit/{id}','LuAuthorizationOfficerController@edit')->name('loading.weigh.bridge.entry.edit')->middleware('role:authorization_officer');
      Route::put('/loading-weigh-bridge-entry-update','LuAuthorizationOfficerController@update')->name('loading.weigh.bridge.entry.update')->middleware('role:authorization_officer');
 
+     //unloading GateEntry Authorization Officer
+     Route::get('/unloading-weigh-bridge-entry-update-list','LuAuthorizationOfficerController@unloadingIndex')->name('unloading.weigh.bridge.entry.update.index')->middleware('role:authorization_officer');
+     Route::get('/lists-unloading-weigh-bridge-entry-update','LuAuthorizationOfficerController@unloadingWeightBridgeList')->name('list.unloading.weigh.bridge.entry.update')->middleware('role:authorization_officer');
+     Route::get('/unloading-weigh-bridge-entry-edit/{id}','LuAuthorizationOfficerController@unloadingEdit')->name('unloading.weigh.bridge.entry.edit')->middleware('role:authorization_officer');
+     Route::put('/unloading-weigh-bridge-entry-update','LuAuthorizationOfficerController@unloadingUpdate')->name('unloading.weigh.bridge.entry.update')->middleware('role:authorization_officer');
+
+     //Loading GateEntry Authorization Manager
+     Route::get('/loading-gate-entry-approval-list','LuAuthorizationManagerController@index')->name('loading.gate.entry.approval.index')->middleware('role:authorization_manager');
+     Route::get('/lists-loading-gate-entry-approval','LuAuthorizationManagerController@loadingEntryApprovalList')->name('list.loading.gate.entry.approval')->middleware('role:authorization_manager');
+     Route::get('/loading-gate-entry-approval-edit/{id}','LuAuthorizationManagerController@edit')->name('loading.gate.entry.approval.edit')->middleware('role:authorization_manager');
+     Route::put('/loading-gate-entry-approval-process','LuAuthorizationManagerController@update')->name('loading.gate.entry.approval.process')->middleware('role:authorization_manager');
+
+
+      //Unloading GateEntry Authorization Manager
+      Route::get('/unloading-gate-entry-approval-list','LuAuthorizationManagerController@unloadingIndex')->name('unloading.gate.entry.approval.index')->middleware('role:authorization_manager');
+      Route::get('/lists-unloading-gate-entry-approval','LuAuthorizationManagerController@unloadingEntryApprovalList')->name('list.unloading.gate.entry.approval')->middleware('role:authorization_manager');
+      Route::get('/unloading-gate-entry-approval-edit/{id}','LuAuthorizationManagerController@unloadingEdit')->name('unloading.gate.entry.approval.edit')->middleware('role:authorization_manager');
+      Route::put('/unloading-gate-entry-approval-process','LuAuthorizationManagerController@unloadingUpdate')->name('unloading.gate.entry.approval.process')->middleware('role:authorization_manager');
+      
+      //Loading GateEntry Proceed CSF Gate Officer
+      Route::get('/loading-gate-entry-proceed-list','LuGateEntrieController@proceedIndex')->name('loading.gate.entry.proceed.index')->middleware('role:gate1_entry_officer');
+      Route::get('/lists-loading-gate-entry-proceed','LuGateEntrieController@loadingEntryProceedlList')->name('list.loading.gate.entry.proceed')->middleware('role:gate1_entry_officer');
+      Route::get('/loading-gate-entry-proceed-edit/{id}','LuGateEntrieController@proceedEdit')->name('loading.gate.entry.proceed.edit')->middleware('role:gate1_entry_officer');
+      Route::put('/loading-gate-entry-proceed-process','LuGateEntrieController@proceedUpdate')->name('loading.gate.entry.proceed.process')->middleware('role:gate1_entry_officer');
+      Route::get('/loading-proceed-form-gate-print/{id}','LuGateEntrieController@proceedVehilcePrint')->name('loading.proceed.form.gate.print')->middleware('role:gate1_entry_officer');
+
+      //Unloading GateEntry Proceed CSF Gate Officer
+      Route::get('/unloading-gate-entry-proceed-list','LuGateEntrieController@unloadingProceedIndex')->name('unloading.gate.entry.proceed.index')->middleware('role:gate1_entry_officer');
+      //Route::get('/lists-unloading-gate-entry-proceed','LuGateEntrieController@unloadingEntryProceedlList')->name('list.unloading.gate.entry.proceed')->middleware('role:gate1_entry_officer');
+      //Route::get('/unloading-gate-entry-proceed-edit/{id}','LuGateEntrieController@unloadingProceedEdit')->name('unloading.gate.entry.proceed.edit')->middleware('role:gate1_entry_officer');
+      //Route::put('/unloading-gate-entry-proceed-process','LuGateEntrieController@unloadingProceedUpdate')->name('unloading.gate.entry.proceed.process')->middleware('role:gate1_entry_officer');
+      //Route::get('/unloading-proceed-form-gate-print/{id}','LuGateEntrieController@unloadingProceedVehilcePrint')->name('unloading.proceed.form.gate.print')->middleware('role:gate1_entry_officer');
      
      //FieldSupervisorController
      Route::get('/supervisor-doc-upload-entry','FieldSupervisorController@index')->name('supervisor.doc.upload.entry')->middleware('role:field_supervisor');
