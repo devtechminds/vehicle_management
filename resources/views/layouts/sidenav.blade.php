@@ -153,7 +153,7 @@
             </li>
             @endif
             @if(in_array("admin", $user_type) || in_array("gate1_entry_officer", $user_type))
-            <li class="pcoded-hasmenu {{ request()->is('vehilce*') || request()->is('container-out-register-list') || request()->is('proceed-vehilce') || request()->is('cfs-out-proceed-list') || request()->is('cfs-out-proceed-list-cfsout') || request()->is('loading-entry-list') || request()->is('unloading-entry-list') || request()->is('loading-gate-entry-proceed-list') ? 'active pcoded-trigger' : '' }}">
+            <li class="pcoded-hasmenu {{ request()->is('vehilce*') || request()->is('container-out-register-list') || request()->is('proceed-vehilce') || request()->is('cfs-out-proceed-list') || request()->is('cfs-out-proceed-list-cfsout') || request()->is('loading-entry-list') || request()->is('unloading-entry-list') || request()->is('loading-gate-entry-proceed-list') || request()->is('unloading-gate-entry-proceed-list') ? 'active pcoded-trigger' : '' }}">
                <a href="javascript:void(0)" class="waves-effect waves-dark">
                <span class="pcoded-micon">
                <i class="feather icon-layers"></i>
@@ -224,8 +224,8 @@
                   <span class="pcoded-mtext">Vehicle Entry Form</span>
                   </a>
                   </li>
-                  <li class="">
-                  <a href="vehicle-unloading-list.html" class="waves-effect waves-dark">
+                  <li class="{{ request()->is('unloading-gate-entry-proceed-list') ? 'active' : '' }}">
+                  <a href="{{route('unloading.gate.entry.proceed.index')}}" class="waves-effect waves-dark">
                   <span class="pcoded-mtext">Vehicle Allow Inside</span>
                   </a>
                   </li>
@@ -284,7 +284,7 @@
             @endif
             @if(in_array("admin", $user_type) || in_array("weigh_bridge_officer", $user_type))
             
-            <li class="pcoded-hasmenu {{ request()->is('weigh-bridge*') || request()->is('container-weigh-bridge-out-list') || request()->is('loading-weigh-bridge-entry-list') || request()->is('unloading-weigh-bridge-entry-list') ? 'active pcoded-trigger' : '' }}">
+            <li class="pcoded-hasmenu {{ request()->is('weigh-bridge*') || request()->is('container-weigh-bridge-out-list') || request()->is('loading-weigh-bridge-entry-list') || request()->is('unloading-weigh-bridge-entry-list') || request()->is('loading-gate-entry-return-list') || request()->is('unloading-gate-entry-return-list') ? 'active pcoded-trigger' : '' }}">
                <a href="javascript:void(0)" class="waves-effect waves-dark">
                <span class="pcoded-micon">
                <i class="feather icon-layers"></i>
@@ -315,7 +315,7 @@
 
 
                   <!-- <ul class="pcoded-submenu" style="display: block;"> -->
-                  <li class="pcoded-hasmenu {{ request()->is('loading-weigh-bridge-entry-list') || request()->is('unloading-weigh-bridge-entry-list') ? 'active pcoded-trigger' : '' }}" dropdown-icon="style1" subitem-icon="style1">
+                  <li class="pcoded-hasmenu {{ request()->is('loading-weigh-bridge-entry-list') || request()->is('unloading-weigh-bridge-entry-list') || request()->is('loading-gate-entry-return-list') || request()->is('unloading-gate-entry-return-list') ? 'active pcoded-trigger' : '' }}" dropdown-icon="style1" subitem-icon="style1">
                   <a href="javascript:void(0)" class="waves-effect waves-dark">
                      <span class="pcoded-micon">
                      
@@ -328,8 +328,8 @@
                   <span class="pcoded-mtext">Registered Vehicle</span>
                   </a>
                   </li>
-                  <li class="">
-                  <a href="weigh-bridge-allow-inside.html" class="waves-effect waves-dark">
+                  <li class="{{ request()->is('loading-gate-entry-return-list')  ? 'active' : '' }}">
+                  <a href="{{route('loading.gate.entry.return.index')}}" class="waves-effect waves-dark">
                   <span class="pcoded-mtext">Vehicle Return After Loading</span>
                   </a>
                   </li>
@@ -350,8 +350,8 @@
                   <span class="pcoded-mtext">Registered Vehicle</span>
                   </a>
                   </li>
-                  <li class="">
-                  <a href="weigh-bridge-list-unloading.html" class="waves-effect waves-dark">
+                  <li class="{{ request()->is('unloading-gate-entry-return-list')  ? 'active' : '' }}">
+                  <a href="{{route('unloading.gate.entry.return.index')}}" class="waves-effect waves-dark">
                   <span class="pcoded-mtext">Vehicle Return After Unloading</span>
                   </a>
                   </li>
@@ -443,7 +443,7 @@
             </li>
             @endif
             @if(in_array("admin", $user_type) || in_array("authorization_officer", $user_type))
-            <li class="pcoded-hasmenu {{ request()->is('loading-weigh-bridge-entry-update-list') || request()->is('unloading-weigh-bridge-entry-update-list') ? 'active pcoded-trigger' : '' }}" dropdown-icon="style1" subitem-icon="style1">
+            <li class="pcoded-hasmenu {{ request()->is('loading-weigh-bridge-entry-update-list') || request()->is('unloading-weigh-bridge-entry-update-list') || request()->is('loading-gate-entry-return-update-list') || request()->is('unloading-gate-entry-return-update-list')? 'active pcoded-trigger' : '' }}" dropdown-icon="style1" subitem-icon="style1">
                <a href="javascript:void(0)" class="waves-effect waves-dark">
                <span class="pcoded-micon">
                <i class="feather icon-layers"></i>
@@ -463,8 +463,8 @@
                            <span class="pcoded-mtext">Weigh Bridge Entry Updates</span>
                            </a>
                         </li>
-                        <li class="">
-                           <a href="weigh-bridge-entry-updates-after-return-auth-officer-list.html" class="waves-effect waves-dark">
+                        <li class="{{ request()->is('loading-gate-entry-return-update-list') ? 'active' : '' }}">
+                           <a href="{{route('loading.gate.entry.return.update.index')}}" class="waves-effect waves-dark">
                            <span class="pcoded-mtext">Weigh Bridge Entry Updates After Return</span>
                            </a>
                         </li>
@@ -482,8 +482,8 @@
                            <span class="pcoded-mtext">Weigh Bridge Entry Updates</span>
                            </a>
                         </li>
-                        <li class="">
-                           <a href="weigh-bridge-entry-updates-after-return-auth-officer-list-unloading.html" class="waves-effect waves-dark">
+                        <li class="{{ request()->is('unloading-gate-entry-return-update-list') ? 'active' : '' }}">
+                           <a href="{{route('unloading.gate.entry.return.update.index')}}" class="waves-effect waves-dark">
                            <span class="pcoded-mtext">Weigh Bridge Entry Updates After Return</span>
                            </a>
                         </li>

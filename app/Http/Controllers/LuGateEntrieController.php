@@ -742,6 +742,139 @@ class LuGateEntrieController extends Controller
     }
 
 
+    public function unloadingProceedIndex()
+    {
+        return view('unloading_gate_entry_proceed.index');
+    }
+
+    
+    public function unloadingEntryProceedlList(Request $request){
+        $unloading_entry_data = LuGateEntrie::with('getCustomer','getCommodity');
+        if($request->status)
+        {
+            $serch_status= 1;
+            if($request->status==2){
+                $serch_status = 0;
+            }
+            $unloading_entry_data->where('status','=',$serch_status);
+            if($request->status==3){
+                $unloading_entry_data->where('status','=',$request->status);
+                $unloading_entry_data->Orwhere('status','=',$request->status);
+            }
+        }
+        if($request->ref_no)
+        {
+            $unloading_entry_data->where('ref_no','=',$request->ref_no);
+        }
+        if(isset($request->created_date))
+        {
+            $created_date = date('Y-m-d',strtotime($request->created_date));
+            $unloading_entry_data->whereDate('created_at',$created_date);
+        }
+        $unloading_entry_data->where('is_loading','=',2);
+        $unloading_entry_data_list = $unloading_entry_data->get();
+        $user = Auth::user();
+        $user_type = explode(',',$user->user_type);
+        return datatables()->of($unloading_entry_data_list)
+            ->addColumn('action', function ($unloading_entry_data_list) use($user_type) {
+                $return_action = '<a href="' . route('unloading.gate.entry.proceed.edit',base64_encode($unloading_entry_data_list->id)) . '"  class="btn btn-info " title="View details">
+                Proceed</a>';
+                
+            
+            return $return_action;
+            })
+            ->editColumn('customer_name', function($row){
+                return  $row->getCustomer->customer_name;
+            })
+            ->editColumn('commodity_name', function($row){
+                return  $row->getCommodity->commodity_name;
+            })
+            ->editColumn('status', function($row){
+                 $status= '';
+                 if($row->status==0){
+                    $status="Pending";
+                }elseif($row->status==2 || $row->status==3){
+                    $status="Approve";
+                }elseif($row->status==10){
+                    $status="Rejected";
+                }
+              return $status;
+
+            })
+            ->rawColumns(['customer_name','commodity_name','action'])
+            ->make(true);
+    }
+
+    public function unloadingProceedEdit($id)
+    {
+        $unloadingGateEntry = LuGateEntrie::with('getCustomer','getCommodity','getTransporter','getLuCommodityDetail','getLuCommodityDetail.getMaterial','getLuCommodityDetail.getUOM','getLuWeightBridge')
+        ->where("id", "=", base64_decode($id))
+        ->first();
+        // echo "<pre>";
+        // print_r($manifestoEntry->getConsignmentDetails);die;
+        $customers  = Customers::getAllCustomers();
+        $commoditys  = Commodity::getCommodity();
+        $transports = Transports::getTransports();
+        $materials = Material::getAllMaterialData();
+        $uoms = UOM::getAllUOM();
+        return view('unloading_gate_entry_proceed.update')->with('unloadingGateEntry',$unloadingGateEntry)
+         ->with('customers',$customers)
+         ->with('commoditys',$commoditys)->with('transports',$transports)
+         ->with('materials',$materials)->with('uoms',$uoms);
+    }
+
+    public function unloadingProceedUpdate(Request $request)
+    {
+      if($request->action =='Proceed')
+      {
+        $validatedData = $request->validate([
+            'id' => 'required',
+        ]);
+      if($validatedData){
+        try {
+            DB::beginTransaction();
+            $data = $request->all();  
+            
+            $update_data =array(
+                'status'=>4,
+                'updated_at' => now(),
+                'updated_by' => auth()->user()->id
+                );
+                
+            LuGateEntrie::where("id", "=",$data['id'])->update($update_data);
+            DB::commit();
+            //Send Notification
+            Notifications::sendNotification(auth()->user()->user_type,'weigh_bridge_officer','Proceed Vehilce Added ','','/manifesto-list-finance-officer');
+            UserLog::AddLog('Proceed Vehilce Added By');
+            return redirect()->route('unloading.gate.entry.proceed.index')->with('create', 'Proceed Successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $e->getMessage();
+            return redirect()->route('unloading.gate.entry.proceed.index')->with('create',$e->getMessage());
+            
+        }
+      } 
+
+     }
+
+    }
+
+
+
+    public function unloadingProceedVehilcePrint($id)
+    {
+        $unloadingGateEntry = LuGateEntrie::with('getCustomer','getCommodity','getTransporter','getLuWeightBridge','getLuCommodityDetail','getLuCommodityDetail.getMaterial','getLuCommodityDetail.getUOM')
+        ->where("id", "=", base64_decode($id))
+        ->first();
+        if($unloadingGateEntry)  {
+         UserLog::AddLog('Gate1 Entry Officer Loading Vehicle In Print By');   
+        // $consignment_details_count= ConsignmentDetails::getGateEntryNo($gate_entry->manifesto_entry_id);
+        }
+         // return view('proceed_vehilce.print_proceed_vehilce')->with('gate_entry',$gate_entry)->with('consignment_details_count',$consignment_details_count)->with('msg','Main Gate1 Entry Proceed ');
+          return view('unloading_gate_entry_proceed.print_proceed_vehilce_new')->with('unloadingGateEntry',$unloadingGateEntry)->with('msg','Main Gate1 Loading Entry Proceed ');
+    }
+
+
 
     
 

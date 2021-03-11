@@ -6,7 +6,7 @@
          <div class="page-header-title">
             <i class="feather icon-clipboard bg-c-blue"></i>
             <div class="d-inline">
-               <h3>AUTHORIZATION LOADING DETAILS</h3>
+               <h3>AUTHORIZATION SELECTION WINDOW(UNLOADING)</h3>
             </div>
          </div>
       </div>
@@ -16,9 +16,9 @@
                <li class="breadcrumb-item">
                   <a href="index.html"><i class="feather icon-home"></i></a>
                </li>
-               <li class="breadcrumb-item"><a href="#!">Gate Entry</a></li>
+               <li class="breadcrumb-item"><a href="#!">Weigh Bridge</a></li>
                <li class="breadcrumb-item">
-                  <a href="#!">Registered Vehicle</a>
+                  <a href="#!">Vehicle return after unloading</a>
                </li>
             </ul>
          </div>
@@ -52,7 +52,7 @@
    </div>
 </div>
 <div class="pcoded-inner-content">
-<form action="{{route('unloading.gate.entry.proceed.process')}}" id="myform" method="post">
+<form action="{{route('unloading.gate.entry.return.process')}}" id="myform" method="post">
   <div class="main-body">
     <div class="page-wrapper">
       <div class="page-body">
@@ -208,23 +208,63 @@
                               </div>
                               <label class="col-sm-2 col-form-label">WB Gross Wt </label>
                               <div class="col-sm-4">
-                                 <input type="text" name="wb_gross_wt" id="wb_gross_wt" class="form-control" value="" placeholder="" readonly>
+                                 <input type="text" name="wb_gross_wt" id="wb_gross_wt" value="{{ $unloadingGateEntry->getLuWeightBridge->wb_gross_wt}}" class="form-control" value="" placeholder="">
                               </div>
                            </div>
                            <div class="form-group row">
                               <label class="col-sm-2 col-form-label">Container Tare Wt </label>
                               <div class="col-sm-4">
-                                 <input type="text" name="container_tare_wt" id="container_tare_wt" class="form-control" value="" placeholder="" readonly>
+                                 <input type="text" name="container_tare_wt" id="container_tare_wt" value="{{ $unloadingGateEntry->getLuWeightBridge->container_tare_wt}}" class="form-control calculate" value="" placeholder="">
                               </div>
                               <label class="col-sm-2 col-form-label">WB Tare Wt</label>
                               <div class="col-sm-4">
-                                 <input type="text" name="wb_tare_wt" id="wb_tare_wt" value="{{ $unloadingGateEntry->getLuWeightBridge->wb_tare_wt}}" class="form-control" value="" placeholder="" readonly>
+                                 <input type="text" name="wb_tare_wt" id="wb_tare_wt" value="{{ $unloadingGateEntry->getLuWeightBridge->wb_tare_wt}}" class="form-control calculate" value="" placeholder="" readonly>
                               </div>
                            </div>
                            <div class="form-group row">
                               <label class="col-sm-2 col-form-label">WB Net Wt </label>
                               <div class="col-sm-4">
-                                 <input type="text" name="wb_net_wt" id="wb_net_wt" class="form-control" value="" placeholder="" readonly>
+                                 <input type="text" name="wb_net_wt" id="wb_net_wt" class="form-control" value="" placeholder="" readonly >
+                              </div>
+                           </div>
+                     </div>
+                  </div>
+
+                  <div class="card">
+                     <div class="card-block">
+                           <div class="form-group row">
+                              <label class="col-sm-2 col-form-label">Loaded By </label>
+                              <div class="col-sm-4">
+                                 <input type="text" name="loaded_by" id="loaded_by" value="{{ $unloadingGateEntry->getLuWeightBridge->loaded_by}}" class="form-control" placeholder="">
+                              </div>
+                              <label class="col-sm-2 col-form-label">Name</label>
+                              <div class="col-sm-4">
+                                 <input type="text" name="name" id="name" value="{{ $unloadingGateEntry->getLuWeightBridge->name}}" class="form-control" placeholder="">
+                              </div>
+                           </div>
+                           <div class="form-group row">
+                              <label class="col-sm-2 col-form-label">Quantity Loaded </label>
+                              <div class="col-sm-4">
+                                 <input type="text" name="quantity_loaded" id="quantity_loaded" value="{{ $unloadingGateEntry->getLuWeightBridge->quantity_loaded}}" class="form-control" placeholder="">
+                              </div>
+                              <label class="col-sm-2 col-form-label">Quantity (short)</label>
+                              <div class="col-sm-4">
+                                 <input type="text" name="quantity_short" id="quantity_short" value="{{ $unloadingGateEntry->getLuWeightBridge->quantity_short}}" class="form-control"  placeholder="">
+                              </div>
+                           </div>
+                           <div class="form-group row">
+                              <label class="col-sm-2 col-form-label">KGS </label>
+                              <div class="col-sm-4">
+                                 <input type="text" name="kgs" id="kgs" class="form-control" value="{{ $unloadingGateEntry->getLuWeightBridge->kgs}}" placeholder="">
+                              </div>
+                              <label class="col-sm-2 col-form-label">Warehouse </label>
+                              <div class="col-sm-4">
+                              <select name="location" id="location" class="form-control boxbrd">
+                                    <option value="">Select Warehouse</option>
+                                    @foreach($locations as $location)
+                                       <option {{ $location['id']== $unloadingGateEntry->getLuWeightBridge->location?'selected':'' }} value="{{ $location['id'] }}">{{ucwords( str_replace('_',' ',$location['location'])) }}</option>
+                                    @endforeach
+                              </select>
                               </div>
                            </div>
                      </div>
@@ -294,12 +334,7 @@
               <div class="card-block height">
                 <div class="row" >
                   <div class="col-sm-12" style="text-align: center;">
-                   @if($unloadingGateEntry->status=='3')
-                      <button class="btn btn-warning waves-effect waves-light" name="action" value="Proceed">Proceed</button>
-                   @else
-                      <a class="btn btn-success waves-effect waves-light" href="{{route('unloading.gate.entry.proceed.index')}}">Back </a>
-                      <a class="btn btn-success waves-effect waves-light" target="_blank" href="{{route('unloading.proceed.form.gate.print',base64_encode($unloadingGateEntry->id))}}">Print <i class="fa fa-print"></i></a>
-                   @endif
+                   <button class="btn btn-warning waves-effect waves-light">Save</button>
                   </div>
                 </div>
               </div>
@@ -328,26 +363,26 @@
 
 $('#myform').validate({ // initialize the plugin
     rules: {
-      customer_name: {
+      container_tare_wt: {
             required: true,
             
         },
-        commodity: {
+        wb_gross_wt: {
             required: true,
             
         },
-        truck_no: {
+        loaded_by: {
             required: true,
             
         },
-        container_no: {
+        quantity_loaded: {
             required: true,
             
         },
-        driver_name: {
+        quantity_short: {
             required: true,
         },
-        transporter: {
+        kgs: {
             required: true,
            
         },
@@ -451,6 +486,30 @@ $('.tableExample').on('click', '.rmv', function () {
          return false;
    }
 });
+
+$(".calculate").change(function(){
+      WBNetWt();
+   });
+   
+$(".calculate").keypress(function(){
+      WBNetWt();
+   });
+   function WBNetWt(){
+      var container_tare_wt = $('#container_tare_wt').val();
+      var wb_tare_wt = $('#wb_tare_wt').val();
+      
+      if(wb_tare_wt==''){
+         wb_tare_wt = 0;
+      }
+      if(container_tare_wt==''){
+         container_tare_wt = 0;
+      }
+      var add  = parseInt(container_tare_wt) + parseInt(wb_tare_wt);
+      console.log(add);
+      var wb_gross_wt = $('#wb_gross_wt').val(); 
+      $('#wb_net_wt').val(parseInt(wb_gross_wt)-parseInt(add));
+     
+   } 
 
 
 $('.required').each(function() {

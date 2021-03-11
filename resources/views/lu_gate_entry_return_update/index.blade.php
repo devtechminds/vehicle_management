@@ -6,7 +6,7 @@
 <div class="page-header-title">
 <i class="feather icon-clipboard bg-c-blue"></i>
 <div class="d-inline">
-<h4>AUTHORIZATION UNLOADING DETAILS</h4>
+<h3>Vehicle Return Selection Window(After Loading)</h3>
 
 </div>
 </div>
@@ -17,8 +17,8 @@
 <li class="breadcrumb-item">
 <a href="index.html"><i class="feather icon-home"></i></a>
 </li>
-<li class="breadcrumb-item"><a href="#!">Gate Entry</a></li>
-<li class="breadcrumb-item"><a href="#!">Allow Vehicle In</a></li>
+<li class="breadcrumb-item"><a href="#!">Authorization Officer</a></li>
+<li class="breadcrumb-item"><a href="#!">Weighbridge Entry Updates After Return</a></li>
 </ul>
 </div>
 </div>
@@ -129,7 +129,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ route('list.unloading.gate.entry.proceed') }}",
+                    url: "{{ route('list.loading.gate.entry.return.update') }}",
                     type: 'GET',
                     data: function (d) {
                         d.status = $('#status').val();
