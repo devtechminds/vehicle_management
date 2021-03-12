@@ -22,6 +22,17 @@ class LuGateEntrie extends Model
         
     }
 
+    public static function getGatePassNo(){
+        $last_row = DB::table('lu_gate_entries')->select('gate_pass_no')->orderBy('id', 'DESC')->first();
+        if($last_row){
+            $id =$last_row->gate_pass_no+1;
+            return "LOD/GP-OUT/".date('Y')."/".$id;
+        }else{
+            return "LOD/GP-OUT/".date('Y')."/1";
+        }
+        
+    }
+
     public function getCustomer()
     {
         return $this->hasOne('App\Customers', 'customer_code', 'customer_name');

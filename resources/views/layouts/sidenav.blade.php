@@ -513,8 +513,8 @@
                            <span class="pcoded-mtext">Weigh Bridge Entry Updates</span>
                            </a>
                         </li>
-                        <li class="">
-                           <a href="auth-manager-after-list.html" class="waves-effect waves-dark">
+                        <li class="{{ request()->is('loading-weigh-bridge-return-update-list') ? 'active' : '' }}">
+                           <a href="{{route('loading.weigh.bridge.return.update.index')}}" class="waves-effect waves-dark">
                            <span class="pcoded-mtext">Weigh Bridge Entry Updates After Return</span>
                            </a>
                         </li>
@@ -532,8 +532,8 @@
                            <span class="pcoded-mtext">Weigh Bridge Entry Updates</span>
                            </a>
                         </li>
-                        <li class="">
-                           <a href="authorization-m-unloading-list.html" class="waves-effect waves-dark">
+                        <li class="{{ request()->is('unloading-weigh-bridge-return-update-list') ? 'active' : '' }}">
+                           <a href="{{route('unloading.weigh.bridge.return.update.index')}}" class="waves-effect waves-dark">
                            <span class="pcoded-mtext">Weigh Bridge Entry Updates After Return</span>
                            </a>
                         </li>

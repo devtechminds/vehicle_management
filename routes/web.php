@@ -315,6 +315,20 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('/unloading-gate-entry-return-update-edit/{id}','LuAuthorizationOfficerController@unloadingReturnUpdateEdit')->name('unloading.gate.entry.return.update.edit')->middleware('role:authorization_officer');
       Route::put('/unloading-gate-entry-return-update','LuAuthorizationOfficerController@unloadingReturnUpdateSubmit')->name('unloading.gate.entry.return.update.submit')->middleware('role:authorization_officer');
 
+       //Loading WeighBridge Return Update Authorization Officer
+       Route::get('/loading-weigh-bridge-return-update-list','LuAuthorizationManagerController@afterReturnUpdateIndex')->name('loading.weigh.bridge.return.update.index')->middleware('role:authorization_manager');
+       Route::get('/lists-loading-weigh-bridge-return-update','LuAuthorizationManagerController@loadingEntryAfterReturnUpdatelList')->name('list.loading.weigh.bridge.return.update')->middleware('role:authorization_manager');
+       Route::get('/loading-weigh-bridge-return-update-edit/{id}','LuAuthorizationManagerController@afterReturnUpdateEdit')->name('loading.weigh.bridge.return.update.edit')->middleware('role:authorization_manager');
+       Route::put('/loading-weigh-bridge-return-update','LuAuthorizationManagerController@afterReturnUpdateSubmit')->name('loading.weigh.bridge.return.update.submit')->middleware('role:authorization_manager');
+       Route::get('/loading-weigh-bridge-return-update-print/{id}','LuAuthorizationManagerController@afterReturnUpdatePrint')->name('loading.weigh.bridge.return.update.print')->middleware('role:authorization_manager');
+
+        //Unloading WeighBridge Return Update Authorization Officer
+        Route::get('/unloading-weigh-bridge-return-update-list','LuAuthorizationManagerController@unloadingAfterReturnUpdateIndex')->name('unloading.weigh.bridge.return.update.index')->middleware('role:authorization_manager');
+        Route::get('/lists-unloading-weigh-bridge-return-update','LuAuthorizationManagerController@unloadingEntryAfterReturnUpdatelList')->name('list.unloading.weigh.bridge.return.update')->middleware('role:authorization_manager');
+        Route::get('/unloading-weigh-bridge-return-update-edit/{id}','LuAuthorizationManagerController@unloadingAfterReturnUpdateEdit')->name('unloading.weigh.bridge.return.update.edit')->middleware('role:authorization_manager');
+        Route::put('/unloading-weigh-bridge-return-update','LuAuthorizationManagerController@unloadingAfterReturnUpdateSubmit')->name('unloading.weigh.bridge.return.update.submit')->middleware('role:authorization_manager');
+        Route::get('/unloading-weigh-bridge-return-update-print/{id}','LuAuthorizationManagerController@unloadingAfterReturnUpdatePrint')->name('unloading.weigh.bridge.return.update.print')->middleware('role:authorization_manager');
+
      //FieldSupervisorController
      Route::get('/supervisor-doc-upload-entry','FieldSupervisorController@index')->name('supervisor.doc.upload.entry')->middleware('role:field_supervisor');
      Route::get('/lists-supervisor-doc-upload-entry-dashboard','FieldSupervisorController@dashboard')->name('supervisor.doc.upload.entrylist.dashboard')->middleware('role:field_supervisor');
