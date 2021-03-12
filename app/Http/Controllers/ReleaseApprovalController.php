@@ -122,7 +122,17 @@ class ReleaseApprovalController extends Controller
             $ReleaseApproval->updated_by= auth()->user()->id;
             $ReleaseApproval->save();
 
-            
+            $update_consignment_details = array(
+                'truck_no' => $data['truck_no']?$data['truck_no']:'',  
+                'trailer_no' => $data['trailer_no']?$data['trailer_no']:'',
+                'driver_name' => $data['driver_name']?$data['driver_name']:'',
+                'driver_lic_no' => $data['driver_license']?$data['driver_license']:'',
+                'driver_ph_no' => $data['driver_ph_no']?$data['driver_ph_no']:'',
+                'chasis_no' => $data['chasis_no']?$data['chasis_no']:'',
+                'updated_at' => now(),
+                'updated_by' => auth()->user()->id
+                );
+            ConsignmentDetails::where("id", "=",$data['consignment_details_id'])->update($update_consignment_details);
 
             $update_document_upload = array(
                 'out_process_status' => 4,

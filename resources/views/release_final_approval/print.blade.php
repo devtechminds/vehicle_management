@@ -280,9 +280,42 @@
     </tbody>
   </table>
 </div>
+</div>
+
+<div class="row " style="margin-top: 5px;">
+  <div style="overflow-x:auto; margin-left: auto; margin-right: auto;">
+  <table class="table table2 table-bordered">
+    <thead>
+       <tr>
+        <th style="width: 210px;font-size: 12px;font-weight: 700;padding: 0px!important;padding-left: 2px !important;">Truck No</th>
+        <th style="width: 210px;font-size: 12px;font-weight: 700;padding: 0px!important;padding-left: 2px !important;">Trailer No</th>
+       <th style="width: 95px;font-size: 12px;font-weight: 700;padding: 0px!important;padding-left: 2px !important;">Driver Name</th>
+        <th style="width: 95px;font-size: 12px;font-weight: 700;padding: 0px!important;padding-left: 2px !important;">Driver License</th>
+        <th style="width: 95px;font-size: 12px;font-weight: 700;padding: 0px!important;padding-left: 2px !important;">Driver Ph No</th>
+        <th style="width: 165px;font-size: 12px;font-weight: 700;padding: 0px!important;padding-left: 2px !important;">Chasis No</th>
+       
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+      <td style="font-size: 12px !important;padding: .25rem .25rem !important;">{{ isset($gate_entry->getConsignmentDetails->truck_no)?$gate_entry->getConsignmentDetails->truck_no:'N/A'}}</td>
+        <td style="font-size: 12px !important;padding: .25rem .25rem !important;"> {{ isset($gate_entry->getConsignmentDetails->trailer_no)?$gate_entry->getConsignmentDetails->trailer_no:'N/A'}}</td>
+        <td style="font-size: 12px !important;padding: .25rem .25rem !important;">{{ isset($gate_entry->getConsignmentDetails->driver_name)?$gate_entry->getConsignmentDetails->driver_name:'N/A'}}</td>
+        <td style="font-size: 12px !important;padding: .25rem .25rem !important;">{{ isset($gate_entry->getConsignmentDetails->driver_lic_no)?$gate_entry->getConsignmentDetails->driver_lic_no:'N/A'}}</td>
+        <td style="font-size: 12px !important;padding: .25rem .25rem !important;">{{ isset($gate_entry->getConsignmentDetails->driver_ph_no)?$gate_entry->getConsignmentDetails->driver_ph_no:'N/A'}}</td>
+        <td style="font-size: 12px !important;padding: .25rem .25rem !important;">{{ isset($gate_entry->getConsignmentDetails->chasis_no)?$gate_entry->getConsignmentDetails->chasis_no:'N/A'}}</td>
+        
+
+      </tr>
+      
+    </tbody>
+  </table>
+</div>
 
 
 </div>
+
+
 </div>
 
 <button id="btnPrint" class="btn btn-info" style="margin-left:50%;">Print</button> 

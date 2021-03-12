@@ -302,12 +302,12 @@
                                           <td><input type="number"  name="qty" min="1" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->qty}}" placeholder="Enter Qty" readonly></td>
                                           <td><input type="text" name="lot_no" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->lot_no}}" placeholder="Enter Lot No" readonly></td>
                                           <td><input type="text" name="location" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->location}}" placeholder="Enter Location" readonly></td>  
-                                          <td><input type="text" name="truck_no" class="form-control cwth" value="" placeholder="Enter Truck Number"></td> 
-                                          <td><input type="text" name="trailer_no" class="form-control cwth" value="" placeholder="Enter Trailer Number"></td> 
-                                          <td><input type="text" name="driver_name" class="form-control cwth" value="" placeholder="Enter Driver Name"></td>                          
-                                          <td><input type="text" name="driver_license" class="form-control cwth" value="" placeholder="Enter Driver License"></td>                          
-                                          <td><input type="text" name="driver_ph_no" class="form-control cwth" value="" placeholder="Enter Driver Phone Number"></td> 
-                                          <td><input type="text" name="chasis_no" class="form-control cwth" value="" placeholder="Enter Chasis Number"></td>   
+                                          <td><input type="text" name="truck_no" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->truck_no}}" placeholder="Enter Truck Number"></td> 
+                                          <td><input type="text" name="trailer_no" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->trailer_no}}" placeholder="Enter Trailer Number"></td> 
+                                          <td><input type="text" name="driver_name" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->driver_name}}" placeholder="Enter Driver Name"></td>                          
+                                          <td><input type="text" name="driver_license" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->driver_lic_no}}" placeholder="Enter Driver License"></td>                          
+                                          <td><input type="text" name="driver_ph_no" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->driver_ph_no}}" placeholder="Enter Driver Phone Number"></td> 
+                                          <td><input type="text" name="chasis_no" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->chasis_no}}" placeholder="Enter Chasis Number"></td>   
                                        </tr>
                                     </tbody>
                                    
