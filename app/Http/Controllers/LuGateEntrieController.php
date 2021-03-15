@@ -12,6 +12,7 @@ use App\Transports;
 use App\UserLog;
 use App\Notifications;
 use App\LuCommodityDetail;
+use App\LuTimeTracking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,15 +32,9 @@ class LuGateEntrieController extends Controller
         $loading_entry_data = LuGateEntrie::with('getCustomer','getCommodity');
         if($request->status)
         {
-            $serch_status= 1;
-            if($request->status==2){
-                $serch_status = 0;
-            }
-            $loading_entry_data->where('status','=',$serch_status);
-            if($request->status==3){
-                $loading_entry_data->where('status','=',$request->status);
-                $loading_entry_data->Orwhere('status','=',$request->status);
-            }
+            $loading_entry_data->where('status','=',$request->status);
+        }else{
+            $loading_entry_data->where('status','=',1);
         }
         if($request->ref_no)
         {
@@ -173,8 +168,19 @@ class LuGateEntrieController extends Controller
             $loading_gate_entry->is_loading = 1;
             $loading_gate_entry->created_at  = now();
             $loading_gate_entry->created_by  = auth()->user()->id;
-            $loading_gate_entry->updated_by  =  auth()->user()->id;
+            $loading_gate_entry->updated_by  = auth()->user()->id;
             $loading_gate_entry->save();
+
+            $loading_time_track_entry = new LuTimeTracking();
+            $loading_time_track_entry->lu_gate_entry_id = $loading_gate_entry->id;
+            $loading_time_track_entry->in_or_out = 1;
+            $loading_time_track_entry->old_status = NULL;
+            $loading_time_track_entry->new_status = 1;
+            $loading_time_track_entry->new_status_time = date('h:i A', strtotime(now()));
+            $loading_time_track_entry->time_diff = 0;
+            $loading_time_track_entry->updated_by = auth()->user()->id;
+            $loading_time_track_entry->save();
+            
            
             DB::commit();
             //Send Notification
@@ -307,15 +313,9 @@ class LuGateEntrieController extends Controller
         $unloading_entry_data = LuGateEntrie::with('getCustomer','getCommodity');
         if($request->status)
         {
-            $serch_status= 1;
-            if($request->status==2){
-                $serch_status = 0;
-            }
-            $unloading_entry_data->where('status','=',$serch_status);
-            if($request->status==3){
-                $unloading_entry_data->where('status','=',$request->status);
-                $unloading_entry_data->Orwhere('status','=',$request->status);
-            }
+            $unloading_entry_data->where('status','=',$request->status);
+        }else{
+            $unloading_entry_data->where('status','=',1);
         }
         if($request->ref_no)
         {
@@ -467,7 +467,6 @@ class LuGateEntrieController extends Controller
             $unloading_gate_entry->shipping_line = $data['shipping_line']?$data['shipping_line']:'';
             $unloading_gate_entry->interchange_no = $data['interchange_no']?$data['interchange_no']:'';
             $unloading_gate_entry->tra_seal_no = $data['tra_seal_no']?$data['tra_seal_no']:'';
-            
             $unloading_gate_entry->is_loading = 2;
             $unloading_gate_entry->created_at  = now();
             $unloading_gate_entry->created_by  = auth()->user()->id;
@@ -486,6 +485,18 @@ class LuGateEntrieController extends Controller
                  $commodity_detail->save();
                 }
              }
+
+            $loading_time_track_entry = new LuTimeTracking();
+            $loading_time_track_entry->lu_gate_entry_id = $unloading_gate_entry->id;
+            $loading_time_track_entry->in_or_out = 1;
+            $loading_time_track_entry->old_status = NULL;
+            $loading_time_track_entry->new_status = 1;
+            $loading_time_track_entry->new_status_time = date('h:i A', strtotime(now()));
+            $loading_time_track_entry->time_diff = 0;
+            $loading_time_track_entry->is_loading = 1;
+            $loading_time_track_entry->updated_by = auth()->user()->id;
+            $loading_time_track_entry->is_loading = 2;
+            $loading_time_track_entry->save();
              
             DB::commit();
             //Send Notification

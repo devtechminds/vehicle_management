@@ -65,6 +65,7 @@ return array(
     'App\\Http\\Controllers\\LuAuthorizationOfficerController' => $baseDir . '/app/Http/Controllers/LuAuthorizationOfficerController.php',
     'App\\Http\\Controllers\\LuCommodityDetailController' => $baseDir . '/app/Http/Controllers/LuCommodityDetailController.php',
     'App\\Http\\Controllers\\LuGateEntrieController' => $baseDir . '/app/Http/Controllers/LuGateEntrieController.php',
+    'App\\Http\\Controllers\\LuTimeTrackingController' => $baseDir . '/app/Http/Controllers/LuTimeTrackingController.php',
     'App\\Http\\Controllers\\LuWeightBridgeController' => $baseDir . '/app/Http/Controllers/LuWeightBridgeController.php',
     'App\\Http\\Controllers\\ManifestoEntryController' => $baseDir . '/app/Http/Controllers/ManifestoEntryController.php',
     'App\\Http\\Controllers\\MaterialController' => $baseDir . '/app/Http/Controllers/MaterialController.php',

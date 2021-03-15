@@ -153,6 +153,7 @@
                     {data: 'created_at', name: 'created_at'},
                     {data: 'action', name: 'action'}
                 ],
+                'order': [[ 1, "desc" ]],
                 'columnDefs': [{
                     'targets': [], /* column index */
                     'orderable'

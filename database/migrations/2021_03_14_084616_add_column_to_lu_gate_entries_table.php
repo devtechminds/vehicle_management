@@ -15,8 +15,8 @@ class AddColumnToLuGateEntriesTable extends Migration
     {
         Schema::table('lu_gate_entries', function (Blueprint $table) {
             $table->boolean('out_process_status')->default('0');
-            $table->String('time_out');
-            $table->Integer('authorized_by');
+            $table->String('time_out')->nullable();
+            $table->Integer('authorized_by')->nullable();
         });
     }
 

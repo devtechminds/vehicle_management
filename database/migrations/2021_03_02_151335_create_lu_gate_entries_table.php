@@ -39,7 +39,7 @@ class CreateLuGateEntriesTable extends Migration
             $table->String('tra_seal_no')->nullable();
             $table->String('gate_pass_no')->nullable();
             $table->String('time_in');
-            $table->boolean('status')->default('0');
+            $table->boolean('status')->default('1');
             $table->Integer('created_by');
             $table->Integer('updated_by');
             $table->softDeletes();

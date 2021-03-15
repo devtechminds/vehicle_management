@@ -66,9 +66,8 @@
 <div class="col boxspace">
 <select name="status" id="status" class="form-control boxbrd hgt">
 <option value="">Status</option>
-<option value="2">Pending</option>
+<option value="1">Pending</option>
 <option value="3">Approve</option>
-<option value="10">Rejected</option>
 </select>
 
 </div>
@@ -153,6 +152,7 @@
                     {data: 'created_at', name: 'created_at'},
                     {data: 'action', name: 'action'}
                 ],
+                'order': [[ 1, "desc" ]],
                 'columnDefs': [{
                     'targets': [], /* column index */
                     'orderable'

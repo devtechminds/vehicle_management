@@ -16,6 +16,7 @@ use App\UserLog;
 use App\Notifications;
 use App\LuCommodityDetail;
 use App\LuWeightBridge;
+use App\LuTimeTracking;
 use Illuminate\Support\Facades\Auth;
 
 class LuWeightBridgeController extends Controller
@@ -36,15 +37,14 @@ class LuWeightBridgeController extends Controller
        // print_r($loading_entry_data);die;
         if($request->status)
         {
-            $serch_status= 1;
+            $loading_entry_data->where('status','=',$request->status);
+            
             if($request->status==2){
-                $serch_status = 0;
+                $loading_entry_data->Orwhere('status','=',3);
+                $loading_entry_data->Orwhere('status','=',4);
             }
-            $loading_entry_data->where('status','=',$serch_status);
-            if($request->status==3){
-                $loading_entry_data->where('status','=',$request->status);
-                $loading_entry_data->Orwhere('status','=',$request->status);
-            }
+        }else{
+            $loading_entry_data->where('status','=',1);
         }
         if($request->ref_no)
         {
@@ -84,12 +84,10 @@ class LuWeightBridgeController extends Controller
             })
             ->editColumn('status', function($row){
                  $status= '';
-                 if($row->status==0){
+                 if($row->status==1){
                     $status="Pending";
-                }elseif($row->status==2 || $row->status==3){
+                }elseif($row->status==2 || $row->status==3 || $row->status==4){
                     $status="Approve";
-                }elseif($row->status==10){
-                    $status="Rejected";
                 }
               return $status;
 
@@ -125,7 +123,7 @@ class LuWeightBridgeController extends Controller
         try {
             DB::beginTransaction();
             $data = $request->all();
-           
+            
             $loading_weigh_bridge = new LuWeightBridge();
             $loading_weigh_bridge->wb_ticket_no = $data['wb_ticket_no']?$data['wb_ticket_no']:NULL;
             $loading_weigh_bridge->wb_tare_wt = $data['wb_tare_wt']?$data['wb_tare_wt']:NULL;
@@ -137,11 +135,27 @@ class LuWeightBridgeController extends Controller
             $loading_weigh_bridge->updated_by = auth()->user()->id;
             $loading_weigh_bridge->save();
             $update_data =array(
-                'status'=>1,
+                'status'=>2,
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );
             LuGateEntrie::where("id", "=",$data['loading_gate_entry_id'])->update($update_data);
+            
+            $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $data['loading_gate_entry_id'])->where("new_status", "=", 1)->first();
+            $start_time = strtotime($loading_gate_time->new_status_time);
+            $end_time   = strtotime(date('h:i A', strtotime(now())));
+            $secs       = ($end_time-$start_time);
+            $loading_time_track_entry = new LuTimeTracking();
+            $loading_time_track_entry->lu_gate_entry_id = $data['loading_gate_entry_id'];
+            $loading_time_track_entry->in_or_out = 1;
+            $loading_time_track_entry->old_status = 1;
+            $loading_time_track_entry->new_status = 2;
+            $loading_time_track_entry->new_status_time = date('h:i A', strtotime(now()));
+            $loading_time_track_entry->time_diff = $secs;
+            $loading_time_track_entry->is_loading = 1;
+            $loading_time_track_entry->updated_by = auth()->user()->id;
+            $loading_time_track_entry->save();
+
             DB::commit();
             //Send Notification
             Notifications::sendNotification(auth()->user()->user_type,'authorization_officer','New Loading Weigh BridgeEntry Added','','/manifesto-list-finance-officer');
@@ -205,15 +219,14 @@ class LuWeightBridgeController extends Controller
         $unloading_entry_data = LuGateEntrie::with('getCustomer','getCommodity');
         if($request->status)
         {
-            $serch_status= 1;
+            $unloading_entry_data->where('status','=',$request->status);
+            
             if($request->status==2){
-                $serch_status = 0;
+                $unloading_entry_data->Orwhere('status','=',3);
+                $unloading_entry_data->Orwhere('status','=',4);
             }
-            $unloading_entry_data->where('status','=',$serch_status);
-            if($request->status==3){
-                $unloading_entry_data->where('status','=',$request->status);
-                $unloading_entry_data->Orwhere('status','=',$request->status);
-            }
+        }else{
+            $unloading_entry_data->where('status','=',1);
         }
         if($request->ref_no)
         {
@@ -254,12 +267,10 @@ class LuWeightBridgeController extends Controller
             })
             ->editColumn('status', function($row){
                  $status= '';
-                 if($row->status==0){
+                 if($row->status==1){
                     $status="Pending";
-                }elseif($row->status==2 || $row->status==3){
+                }elseif($row->status==2 || $row->status==3 || $row->status==4){
                     $status="Approve";
-                }elseif($row->status==10){
-                    $status="Rejected";
                 }
               return $status;
 
@@ -300,11 +311,27 @@ class LuWeightBridgeController extends Controller
             $loading_weigh_bridge->updated_by = auth()->user()->id;
             $loading_weigh_bridge->save();
             $update_data =array(
-                'status'=>1,
+                'status'=>2,
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );
             LuGateEntrie::where("id", "=",$data['loading_gate_entry_id'])->update($update_data);
+
+            $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $data['loading_gate_entry_id'])->where("new_status", "=", 1)->first();
+            $start_time = strtotime($loading_gate_time->new_status_time);
+            $end_time   = strtotime(date('h:i A', strtotime(now())));
+            $secs       = ($end_time-$start_time);
+            $loading_time_track_entry = new LuTimeTracking();
+            $loading_time_track_entry->lu_gate_entry_id = $data['loading_gate_entry_id'];
+            $loading_time_track_entry->in_or_out = 1;
+            $loading_time_track_entry->old_status = 1;
+            $loading_time_track_entry->new_status = 2;
+            $loading_time_track_entry->new_status_time = date('h:i A', strtotime(now()));
+            $loading_time_track_entry->time_diff = $secs;
+            $loading_time_track_entry->is_loading = 2;
+            $loading_time_track_entry->updated_by = auth()->user()->id;
+            $loading_time_track_entry->save();
+
             DB::commit();
             //Send Notification
             Notifications::sendNotification(auth()->user()->user_type,'authorization_officer','New Unloading Weigh BridgeEntry Added','','/manifesto-list-finance-officer');

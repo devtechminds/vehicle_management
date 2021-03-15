@@ -138,7 +138,7 @@
                            <div class="form-group row">
                            <label class="col-sm-2 col-form-label">Time In </label>
                            <div class="col-sm-4">
-                           <input type="text" name="time_in" id="time_in" class="form-control" placeholder="" value="{{  date('h:i A', strtotime(now())) }}" readonly>{{  date_default_timezone_get()}}
+                           <input type="text" name="time_in" id="time_in" class="form-control" placeholder="" value="{{  date('h:i A', strtotime(now())) }}" readonly>
                            </div>
                            <label class="col-sm-2 col-form-label">Destination (TO) </label>
                            <div class="col-sm-4">
