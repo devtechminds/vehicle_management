@@ -186,6 +186,7 @@
                         <div class="row">
                            <div class="col-sm-12" style="text-align: center;">
                            <a href="{{route('loading.entry.index')}}" class="btn btn-success waves-effect waves-light">Back</a>
+                           <a class="btn btn-success waves-effect waves-light" target="_blank" href="{{route('loading.gate.entry.print',base64_encode($loadingGateEntry->id))}}">Print <i class="fa fa-print"></i></a>
                            </div>
                         </div>
                      </div>

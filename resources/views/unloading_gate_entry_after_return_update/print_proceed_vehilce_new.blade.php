@@ -55,7 +55,7 @@
                                     <div class="col-sm-5" style="margin-bottom: 5px;">
                                     </div>
                                     <div class="col-sm-4" style="margin-bottom: -12px;">
-                                       <p style="font-weight: 700;font-size: 12px">D. NO : 26990</p>
+                                       <p style="font-weight: 700;font-size: 12px">D. NO : {{ isset($unloadingGateEntry->gate_pass_no)?$unloadingGateEntry->gate_pass_no:'N/A'}}</p>
                                     </div>
                                  </div>
                                  <div class="form-group row" style="margin-bottom: 5px; text-align: center!important;display: block;margin-left: auto;margin-right: auto;width: 90%;">
@@ -174,13 +174,13 @@
                                     </div>
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Time out</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">12:12 PM</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->time_out)?$unloadingGateEntry->time_out:'N/A'}}</p>
                                     </div>
                                  </div>
                                  <div class="form-group row " style="margin-bottom: -8px;">
-                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Authorized by </label>
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Authorized byee </label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">rashid salim</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->authorized_by)?$unloadingGateEntry->authorized_by:'N/A'}}</p>
                                     </div>
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">WB Ticket No</label>
                                     <div class="col-sm-4">
@@ -307,7 +307,7 @@
                                     <div class="col-sm-5" style="margin-bottom: 5px;">
                                     </div>
                                     <div class="col-sm-4" style="margin-bottom: -12px;">
-                                       <p style="font-weight: 700;font-size: 12px">D. NO : 26990</p>
+                                       <p style="font-weight: 700;font-size: 12px">D. NO : {{ isset($unloadingGateEntry->gate_pass_no)?$unloadingGateEntry->gate_pass_no:'N/A'}}</p>
                                     </div>
                                  </div>
                                  <div class="form-group row" style="margin-bottom: 5px; text-align: center!important;display: block;margin-left: auto;margin-right: auto;width: 90%;">
@@ -426,13 +426,13 @@
                                     </div>
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Time out</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">12:12 PM</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->time_out)?$unloadingGateEntry->time_out:'N/A'}}</p>
                                     </div>
                                  </div>
                                  <div class="form-group row " style="margin-bottom: -8px;">
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Authorized by </label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">rashid salim</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->authorized_by)?$unloadingGateEntry->authorized_by:'N/A'}}</p>
                                     </div>
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">WB Ticket No</label>
                                     <div class="col-sm-4">
@@ -559,7 +559,7 @@
                                     <div class="col-sm-5" style="margin-bottom: 5px;">
                                     </div>
                                     <div class="col-sm-4" style="margin-bottom: -12px;">
-                                       <p style="font-weight: 700;font-size: 12px">D. NO : 26990</p>
+                                       <p style="font-weight: 700;font-size: 12px">D. NO : {{ isset($unloadingGateEntry->gate_pass_no)?$unloadingGateEntry->gate_pass_no:'N/A'}}</p>
                                     </div>
                                  </div>
                                  <div class="form-group row" style="margin-bottom: 5px; text-align: center!important;display: block;margin-left: auto;margin-right: auto;width: 90%;">
@@ -678,13 +678,13 @@
                                     </div>
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Time out</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">12:12 PM</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->time_out)?$unloadingGateEntry->time_out:'N/A'}}</p>
                                     </div>
                                  </div>
                                  <div class="form-group row " style="margin-bottom: -8px;">
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Authorized by </label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">rashid salim</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->authorized_by)?$unloadingGateEntry->authorized_by:'N/A'}}</p>
                                     </div>
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">WB Ticket No</label>
                                     <div class="col-sm-4">
@@ -811,7 +811,7 @@
                                     <div class="col-sm-5" style="margin-bottom: 5px;">
                                     </div>
                                     <div class="col-sm-4" style="margin-bottom: -12px;">
-                                       <p style="font-weight: 700;font-size: 12px">D. NO : 26990</p>
+                                       <p style="font-weight: 700;font-size: 12px">D. NO : {{ isset($unloadingGateEntry->gate_pass_no)?$unloadingGateEntry->gate_pass_no:'N/A'}}</p>
                                     </div>
                                  </div>
                                  <div class="form-group row" style="margin-bottom: 5px; text-align: center!important;display: block;margin-left: auto;margin-right: auto;width: 90%;">
@@ -930,13 +930,13 @@
                                     </div>
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Time out</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">12:12 PM</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->time_out)?$unloadingGateEntry->time_out:'N/A'}}</p>
                                     </div>
                                  </div>
                                  <div class="form-group row " style="margin-bottom: -8px;">
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Authorized by </label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">rashid salim</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->authorized_by)?$unloadingGateEntry->authorized_by:'N/A'}}</p>
                                     </div>
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">WB Ticket No</label>
                                     <div class="col-sm-4">
@@ -1046,12 +1046,20 @@
                               </form>
                            </div>
                         </div>
+                      <button  class="btn btn-info" id="btnPrint" style="margin-left:50%;"> Print</button>
                      </div>
                   </div>
                </div>
             </div>
          </div>
       </div>
+      <style type="text/css">
+       @media print {
+          #btnPrint {
+            display :  none;
+         }
+      }
+      </style>
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
       <script>
          $('#btnPrint').click(function(){

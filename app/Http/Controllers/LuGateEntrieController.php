@@ -33,6 +33,7 @@ class LuGateEntrieController extends Controller
         if($request->status)
         {
             $loading_entry_data->where('status','=',$request->status);
+            
         }else{
             $loading_entry_data->where('status','=',1);
         }
@@ -90,12 +91,10 @@ class LuGateEntrieController extends Controller
             })
             ->editColumn('status', function($row){
                  $status= '';
-                 if($row->status==0){
+                 if($row->status==1){
                     $status="Pending";
-                }elseif($row->status==2 || $row->status==3){
+                }elseif($row->status==3){
                     $status="Approve";
-                }elseif($row->status==10){
-                    $status="Rejected";
                 }
               return $status;
 
@@ -186,7 +185,12 @@ class LuGateEntrieController extends Controller
             //Send Notification
             Notifications::sendNotification(auth()->user()->user_type,'weigh_bridge_officer','New Loading Truck Parking Note Added','','/manifesto-list-finance-officer');
             UserLog::AddLog('New Loading Truck Parking Note Added By');
-            return redirect()->route('loading.entry.index')->with('create', 'Loading Truck Parking Note Added successfully!');
+            //return redirect()->route('loading.entry.index')->with('create', 'Loading Truck Parking Note Added successfully!');
+            $loadingGateEntry = LuGateEntrie::with('getCustomer','getCommodity','getTransporter','getLuWeightBridge','getLuCommodityDetail','getLuCommodityDetail.getMaterial','getLuCommodityDetail.getUOM')
+            ->where("id", "=", $loading_gate_entry->id)
+            ->first();
+            //return view('lu_gate_entry_proceed.print_proceed_vehilce_new')->with('loadingGateEntry',$loadingGateEntry)->with('msg','Loading Truck Parking Note Added successfully! ');
+            return view('lu_gate_entry.print_truck_parking_note')->with('loadingGateEntry',$loadingGateEntry)->with('msg','Loading Truck Parking Note Added successfully! ');
         } catch (\Exception $e) {
             DB::rollBack();
             // return $e->getMessage();
@@ -301,6 +305,20 @@ class LuGateEntrieController extends Controller
     }
 
 
+    public function gateEntryPrint($id)
+    {
+        $loadingGateEntry = LuGateEntrie::with('getCustomer','getCommodity','getTransporter','getLuWeightBridge','getLuCommodityDetail','getLuCommodityDetail.getMaterial','getLuCommodityDetail.getUOM')
+        ->where("id", "=", base64_decode($id))
+        ->first();
+        if($loadingGateEntry)  {
+         UserLog::AddLog('Gate1 Entry Officer Loading Vehicle In Print By');   
+        // $consignment_details_count= ConsignmentDetails::getGateEntryNo($gate_entry->manifesto_entry_id);
+        }
+         // return view('proceed_vehilce.print_proceed_vehilce')->with('gate_entry',$gate_entry)->with('consignment_details_count',$consignment_details_count)->with('msg','Main Gate1 Entry Proceed ');
+          return view('lu_gate_entry.print_truck_parking_note')->with('loadingGateEntry',$loadingGateEntry);
+    }
+
+
 
 
     public function unloadingIndex()
@@ -371,12 +389,10 @@ class LuGateEntrieController extends Controller
             })
             ->editColumn('status', function($row){
                  $status= '';
-                 if($row->status==0){
+                 if($row->status==1){
                     $status="Pending";
-                }elseif($row->status==2 || $row->status==3){
+                }elseif($row->status==3){
                     $status="Approve";
-                }elseif($row->status==10){
-                    $status="Rejected";
                 }
               return $status;
 
@@ -502,7 +518,11 @@ class LuGateEntrieController extends Controller
             //Send Notification
             Notifications::sendNotification(auth()->user()->user_type,'weigh_bridge_officer','New Unloading Truck Parking Note Added','','/manifesto-list-finance-officer');
             UserLog::AddLog('New Unloading Truck Parking Note Added By');
-            return redirect()->route('unloading.entry.index')->with('create', 'Unloading Truck Parking Note Added successfully!');
+            //return redirect()->route('unloading.entry.index')->with('create', 'Unloading Truck Parking Note Added successfully!');
+            $unloadingGateEntry = LuGateEntrie::with('getCustomer','getCommodity','getTransporter','getLuWeightBridge','getLuCommodityDetail','getLuCommodityDetail.getMaterial','getLuCommodityDetail.getUOM')
+            ->where("id", "=", $unloading_gate_entry->id)
+            ->first();
+            return view('unloading_gate_entry.print_truck_parking_note')->with('unloadingGateEntry',$unloadingGateEntry)->with('msg','Unloading Truck Parking Note Added successfully! ');
         } catch (\Exception $e) {
             DB::rollBack();
             // return $e->getMessage();
@@ -619,6 +639,20 @@ class LuGateEntrieController extends Controller
     }
 
 
+    public function unloadingGateEntryPrint($id)
+    {
+        $unloadingGateEntry = LuGateEntrie::with('getCustomer','getCommodity','getTransporter','getLuWeightBridge','getLuCommodityDetail','getLuCommodityDetail.getMaterial','getLuCommodityDetail.getUOM')
+        ->where("id", "=", base64_decode($id))
+        ->first();
+        if($unloadingGateEntry)  {
+         UserLog::AddLog('Gate1 Entry Officer Loading Vehicle In Print By');   
+        // $consignment_details_count= ConsignmentDetails::getGateEntryNo($gate_entry->manifesto_entry_id);
+        }
+         // return view('proceed_vehilce.print_proceed_vehilce')->with('gate_entry',$gate_entry)->with('consignment_details_count',$consignment_details_count)->with('msg','Main Gate1 Entry Proceed ');
+          return view('unloading_gate_entry.print_truck_parking_note')->with('unloadingGateEntry',$unloadingGateEntry);
+    }
+
+
 
     public function proceedIndex()
     {
@@ -629,15 +663,20 @@ class LuGateEntrieController extends Controller
         $loading_entry_data = LuGateEntrie::with('getCustomer','getCommodity');
         if($request->status)
         {
-            $serch_status= 1;
-            if($request->status==2){
-                $serch_status = 0;
-            }
-            $loading_entry_data->where('status','=',$serch_status);
-            if($request->status==3){
+            
+            if($request->status==4){
                 $loading_entry_data->where('status','=',$request->status);
-                $loading_entry_data->Orwhere('status','=',$request->status);
             }
+            
+            if($request->status==1){
+                $loading_entry_data->where('status','=',4);
+                $loading_entry_data->where('out_process_status','=',$request->status);
+                $loading_entry_data->Orwhere('out_process_status','=',2);
+                $loading_entry_data->Orwhere('out_process_status','=',3);
+                $loading_entry_data->Orwhere('out_process_status','=',4);
+            }
+        }else{
+            $loading_entry_data->where('status','=',4);
         }
         if($request->ref_no)
         {
@@ -668,12 +707,10 @@ class LuGateEntrieController extends Controller
             })
             ->editColumn('status', function($row){
                  $status= '';
-                 if($row->status==0){
+                 if($row->status==4){
                     $status="Pending";
-                }elseif($row->status==2 || $row->status==3){
+                }elseif($row->out_process_status==1 || $row->out_process_status==2 || $row->out_process_status==3 || $row->out_process_status==4 ){
                     $status="Approve";
-                }elseif($row->status==10){
-                    $status="Rejected";
                 }
               return $status;
 
@@ -714,12 +751,27 @@ class LuGateEntrieController extends Controller
             $data = $request->all();  
             
             $update_data =array(
-                'status'=>4,
+                'out_process_status'=>1,
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );
                 
             LuGateEntrie::where("id", "=",$data['id'])->update($update_data);
+
+            $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $data['id'])->where("new_status", "=", 4)->where("in_or_out", "=", 1)->first();
+                 $start_time = strtotime($loading_gate_time->new_status_time);
+                 $end_time   = strtotime(date('h:i A', strtotime(now())));
+                 $secs       = ($end_time-$start_time);
+                 $loading_time_track_entry = new LuTimeTracking();
+                 $loading_time_track_entry->lu_gate_entry_id = $data['id'];
+                 $loading_time_track_entry->in_or_out = 2;
+                 $loading_time_track_entry->old_status = 4;
+                 $loading_time_track_entry->new_status = 1;
+                 $loading_time_track_entry->new_status_time = date('h:i A', strtotime(now()));
+                 $loading_time_track_entry->time_diff = $secs;
+                 $loading_time_track_entry->is_loading = 1;
+                 $loading_time_track_entry->updated_by = auth()->user()->id;
+                 $loading_time_track_entry->save();
             DB::commit();
             //Send Notification
             Notifications::sendNotification(auth()->user()->user_type,'weigh_bridge_officer','Proceed Vehilce Added ','','/manifesto-list-finance-officer');
@@ -763,15 +815,20 @@ class LuGateEntrieController extends Controller
         $unloading_entry_data = LuGateEntrie::with('getCustomer','getCommodity');
         if($request->status)
         {
-            $serch_status= 1;
-            if($request->status==2){
-                $serch_status = 0;
-            }
-            $unloading_entry_data->where('status','=',$serch_status);
-            if($request->status==3){
+            
+            if($request->status==4){
                 $unloading_entry_data->where('status','=',$request->status);
-                $unloading_entry_data->Orwhere('status','=',$request->status);
             }
+            
+            if($request->status==1){
+                $unloading_entry_data->where('status','=',4);
+                $unloading_entry_data->where('out_process_status','=',$request->status);
+                $unloading_entry_data->Orwhere('out_process_status','=',2);
+                $unloading_entry_data->Orwhere('out_process_status','=',3);
+                $unloading_entry_data->Orwhere('out_process_status','=',4);
+            }
+        }else{
+            $unloading_entry_data->where('status','=',4);
         }
         if($request->ref_no)
         {
@@ -802,12 +859,10 @@ class LuGateEntrieController extends Controller
             })
             ->editColumn('status', function($row){
                  $status= '';
-                 if($row->status==0){
+                 if($row->status==4){
                     $status="Pending";
-                }elseif($row->status==2 || $row->status==3){
+                }elseif($row->out_process_status==1 || $row->out_process_status==2 || $row->out_process_status==3 || $row->out_process_status==4 ){
                     $status="Approve";
-                }elseif($row->status==10){
-                    $status="Rejected";
                 }
               return $status;
 
@@ -847,12 +902,27 @@ class LuGateEntrieController extends Controller
             $data = $request->all();  
             
             $update_data =array(
-                'status'=>4,
+                'out_process_status'=>1,
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );
                 
             LuGateEntrie::where("id", "=",$data['id'])->update($update_data);
+            
+            $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $data['id'])->where("new_status", "=", 4)->where("in_or_out", "=", 1)->first();
+                 $start_time = strtotime($loading_gate_time->new_status_time);
+                 $end_time   = strtotime(date('h:i A', strtotime(now())));
+                 $secs       = ($end_time-$start_time);
+                 $loading_time_track_entry = new LuTimeTracking();
+                 $loading_time_track_entry->lu_gate_entry_id = $data['id'];
+                 $loading_time_track_entry->in_or_out = 2;
+                 $loading_time_track_entry->old_status = 4;
+                 $loading_time_track_entry->new_status = 1;
+                 $loading_time_track_entry->new_status_time = date('h:i A', strtotime(now()));
+                 $loading_time_track_entry->time_diff = $secs;
+                 $loading_time_track_entry->is_loading = 2;
+                 $loading_time_track_entry->updated_by = auth()->user()->id;
+                 $loading_time_track_entry->save();
             DB::commit();
             //Send Notification
             Notifications::sendNotification(auth()->user()->user_type,'weigh_bridge_officer','Proceed Vehilce Added ','','/manifesto-list-finance-officer');

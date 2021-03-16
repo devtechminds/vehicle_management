@@ -294,7 +294,7 @@
               <div class="card-block height">
                 <div class="row" >
                   <div class="col-sm-12" style="text-align: center;">
-                   @if($unloadingGateEntry->status=='3')
+                   @if($unloadingGateEntry  ->status=='4' and $unloadingGateEntry ->out_process_status=='0')
                       <button class="btn btn-warning waves-effect waves-light" name="action" value="Proceed">Proceed</button>
                    @else
                       <a class="btn btn-success waves-effect waves-light" href="{{route('unloading.gate.entry.proceed.index')}}">Back </a>

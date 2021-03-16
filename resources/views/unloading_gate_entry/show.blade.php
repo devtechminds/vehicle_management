@@ -257,7 +257,8 @@
                   <div class="card-block height">
                   <div class="row" >
                   <div class="col-sm-12" style="text-align: center;">
-                     <button class="btn btn-success waves-effect waves-light btnSubmitClick" id="myButton" >Save & Print <i class="fa fa-print"></i></button>
+                  <a href="{{route('unloading.entry.index')}}" class="btn btn-success waves-effect waves-light">Back</a>
+                  <a class="btn btn-success waves-effect waves-light" target="_blank" href="{{route('unloading.gate.entry.print',base64_encode($unloadingGateEntry->id))}}">Print <i class="fa fa-print"></i></a>
                   </div>
                   </div>
                   </div>

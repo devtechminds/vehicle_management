@@ -49,233 +49,356 @@
                                  <div class="form-group row" style="margin-bottom: 5px;">
                                     <div class="col-sm-3 " style="margin-bottom: -12px;">
                                        <p style="font-weight: 700;font-size: 12px">Date: 
-                                       {{ isset($loadingGateEntry->date)?$loadingGateEntry->date:'N/A'}}
+                                       {{ isset($unloadingGateEntry->date)?$unloadingGateEntry->date:'N/A'}}
                                        </p>
                                     </div>
                                     <div class="col-sm-5" style="margin-bottom: 5px;">
                                     </div>
                                     <div class="col-sm-4" style="margin-bottom: -12px;">
-                                       <p style="font-weight: 700;font-size: 12px">Token No: {{ isset($loadingGateEntry->ref_no)?$loadingGateEntry->ref_no:'N/A'}}</p>
+                                       <p style="font-weight: 700;font-size: 12px">Token No: {{ isset($unloadingGateEntry->ref_no)?$unloadingGateEntry->ref_no:'N/A'}}</p>
                                     </div>
                                  </div>
                                  <div class="form-group row" style="margin-bottom: 5px; text-align: center!important;display: block;margin-left: auto;margin-right: auto;width: 90%;">
                                     <img src="{{asset('print/jpg/truck-512.png')}}" alt="Trulli" width="40" height="40" >
                                  </div>
                                  <div class="form-group row" style="margin-bottom: 5px;text-align: center!important;display: block;margin-left: auto;margin-right: auto;width: 90%;">
-                                    <h6 style="font-weight: 700;font-size: 12px;text-align: center;">ETC CARGO LIMITED - AUTHORIZATION LOADING DETAILS</h6>
+                                    <h6 style="font-weight: 700;font-size: 12px;text-align: center;">ETC CARGO LIMITED - TRUCK PARKING NOTE (LOADING) SECURITY GATE NO1 COPY</h6>
                                  </div>
                                  <hr>
                                  <div class="form-group row " style="margin-bottom: -8px;">
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Customer Name</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->getCustomer->customer_name)?$loadingGateEntry->getCustomer->customer_name:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->getCustomer->customer_name)?$unloadingGateEntry->getCustomer->customer_name:'N/A'}}</p>
                                     </div>
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Commodity</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->getCommodity->commodity_name)?$loadingGateEntry->getCommodity->commodity_name:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->getCommodity->commodity_name)?$unloadingGateEntry->getCommodity->commodity_name:'N/A'}}</p>
                                     </div>
                                  </div>
                                  <div class="form-group row " style="margin-bottom: -8px;">
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Truck No</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->truck_no)?$loadingGateEntry->truck_no:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->truck_no)?$unloadingGateEntry->truck_no:'N/A'}}</p>
                                     </div>
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Trailer No</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->trailer_no)?$loadingGateEntry->trailer_no:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->trailer_no)?$unloadingGateEntry->trailer_no:'N/A'}}</p>
                                     </div>
                                  </div>
                                  <div class="form-group row " style="margin-bottom: -8px;">
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Transporter</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->getTransporter->transport_name)?$loadingGateEntry->getTransporter->transport_name:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->getTransporter->transport_name)?$unloadingGateEntry->getTransporter->transport_name:'N/A'}}</p>
                                     </div>
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Driver Name</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->driver_name)?$loadingGateEntry->driver_name:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->driver_name)?$unloadingGateEntry->driver_name:'N/A'}}</p>
                                     </div>
                                  </div>
                                  <div class="form-group row " style="margin-bottom: -8px;">
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Driver Ph</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->driver_ph_no)?$loadingGateEntry->driver_ph_no:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->driver_ph_no)?$unloadingGateEntry->driver_ph_no:'N/A'}}</p>
                                     </div>
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">
                                     Driver Lic</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->driver_lic_no)?$loadingGateEntry->driver_lic_no:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->driver_lic_no)?$unloadingGateEntry->driver_lic_no:'N/A'}}</p>
                                     </div>
                                  </div>
                                  <div class="form-group row " style="margin-bottom: -8px;">
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Time In</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->time_in)?$loadingGateEntry->time_in:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->time_in)?$unloadingGateEntry->time_in:'N/A'}}</p>
                                     </div>
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Desitination (TO)</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->destination)?$loadingGateEntry->destination:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->destination)?$unloadingGateEntry->destination:'N/A'}}</p>
                                     </div>
                                  </div>
                                  <div class="form-group row " style="margin-bottom: -8px;">
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Container No</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->container_no)?$loadingGateEntry->container_no:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->container_no)?$unloadingGateEntry->container_no:'N/A'}}</p>
                                     </div>
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">
                                     Bl No</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->bl_no)?$loadingGateEntry->bl_no:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->bl_no)?$unloadingGateEntry->bl_no:'N/A'}}</p>
                                     </div>
                                  </div>
                                  <div class="form-group row " style="margin-bottom: -8px;">
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Do No </label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->dn_no)?$loadingGateEntry->dn_no:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->dn_no)?$unloadingGateEntry->dn_no:'N/A'}}</p>
                                     </div>
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Bl Qty</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->bl_qty)?$loadingGateEntry->bl_qty:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->bl_qty)?$unloadingGateEntry->bl_qty:'N/A'}}</p>
                                     </div>
                                  </div>
                                  <div class="form-group row " style="margin-bottom: -8px;">
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">DO Qty</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->dn_qty)?$loadingGateEntry->dn_qty:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->dn_qty)?$unloadingGateEntry->dn_qty:'N/A'}}</p>
                                     </div>
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Shipping Line </label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->shipping_line)?$loadingGateEntry->shipping_line:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->shipping_line)?$unloadingGateEntry->shipping_line:'N/A'}}</p>
                                     </div>
                                  </div>
                                  <div class="form-group row " style="margin-bottom: -8px;">
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Interchange No </label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->interchange_no)?$loadingGateEntry->interchange_no:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->interchange_no)?$unloadingGateEntry->interchange_no:'N/A'}}</p>
                                     </div>
                                     <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">TRA Seal No</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->tra_seal_no)?$loadingGateEntry->tra_seal_no:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->tra_seal_no)?$unloadingGateEntry->tra_seal_no:'N/A'}}</p>
+                                    </div>
+                                 </div>
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="pagebreak"> </div>
+                  <div class="row">
+                     <div class="col-sm-12">
+                        <div class="card">
+                           <div class="card-block">
+                              <form>
+                                 <div class="form-group row" style="margin-bottom: 5px;">
+                                    <div class="col-sm-3 " style="margin-bottom: -12px;">
+                                       <p style="font-weight: 700;font-size: 12px">Date: 
+                                       {{ isset($unloadingGateEntry->date)?$unloadingGateEntry->date:'N/A'}}
+                                       </p>
+                                    </div>
+                                    <div class="col-sm-5" style="margin-bottom: 5px;">
+                                    </div>
+                                    <div class="col-sm-4" style="margin-bottom: -12px;">
+                                       <p style="font-weight: 700;font-size: 12px">Token No: {{ isset($unloadingGateEntry->ref_no)?$unloadingGateEntry->ref_no:'N/A'}}</p>
+                                    </div>
+                                 </div>
+                                 <div class="form-group row" style="margin-bottom: 5px; text-align: center!important;display: block;margin-left: auto;margin-right: auto;width: 90%;">
+                                    <img src="{{asset('print/jpg/truck-512.png')}}" alt="Trulli" width="40" height="40" >
+                                 </div>
+                                 <div class="form-group row" style="margin-bottom: 5px;text-align: center!important;display: block;margin-left: auto;margin-right: auto;width: 90%;">
+                                    <h6 style="font-weight: 700;font-size: 12px;text-align: center;">ETC CARGO LIMITED - TRUCK PARKING NOTE (LOADING) TRUCK DRIVER COPY</h6>
+                                 </div>
+                                 <hr>
+                                 <div class="form-group row " style="margin-bottom: -8px;">
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Customer Name</label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->getCustomer->customer_name)?$unloadingGateEntry->getCustomer->customer_name:'N/A'}}</p>
+                                    </div>
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Commodity</label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->getCommodity->commodity_name)?$unloadingGateEntry->getCommodity->commodity_name:'N/A'}}</p>
                                     </div>
                                  </div>
                                  <div class="form-group row " style="margin-bottom: -8px;">
-                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Quantity </label>
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Truck No</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->quantity)?$loadingGateEntry->quantity:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->truck_no)?$unloadingGateEntry->truck_no:'N/A'}}</p>
                                     </div>
-                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Metric Ton</label>
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Trailer No</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->metric_ton)?$loadingGateEntry->metric_ton:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->trailer_no)?$unloadingGateEntry->trailer_no:'N/A'}}</p>
                                     </div>
                                  </div>
                                  <div class="form-group row " style="margin-bottom: -8px;">
-                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Authorized by </label>
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Transporter</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;"></p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->getTransporter->transport_name)?$unloadingGateEntry->getTransporter->transport_name:'N/A'}}</p>
                                     </div>
-                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">WB Ticket No</label>
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Driver Name</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->getLuWeightBridge->wb_ticket_no)?$loadingGateEntry->getLuWeightBridge->wb_ticket_no:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->driver_name)?$unloadingGateEntry->driver_name:'N/A'}}</p>
                                     </div>
                                  </div>
                                  <div class="form-group row " style="margin-bottom: -8px;">
-                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">WB Gross Wt</label>
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Driver Ph</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->getLuWeightBridge->wb_gross_wt)?$loadingGateEntry->getLuWeightBridge->wb_gross_wt:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->driver_ph_no)?$unloadingGateEntry->driver_ph_no:'N/A'}}</p>
                                     </div>
-                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Container Tare Wt</label>
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">
+                                    Driver Lic</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->getLuWeightBridge->container_tare_wt)?$loadingGateEntry->getLuWeightBridge->container_tare_wt:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->driver_lic_no)?$unloadingGateEntry->driver_lic_no:'N/A'}}</p>
                                     </div>
                                  </div>
                                  <div class="form-group row " style="margin-bottom: -8px;">
-                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">WB Tare Wt</label>
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Time In</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->getLuWeightBridge->wb_tare_wt)?$loadingGateEntry->getLuWeightBridge->wb_tare_wt:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->time_in)?$unloadingGateEntry->time_in:'N/A'}}</p>
                                     </div>
-                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">WB Net Wt</label>
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Desitination (TO)</label>
                                     <div class="col-sm-4">
-                                       <p style="font-size: 14px !important;">{{ isset($loadingGateEntry->getLuWeightBridge->wb_net_wt)?$loadingGateEntry->getLuWeightBridge->wb_net_wt:'N/A'}}</p>
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->destination)?$unloadingGateEntry->destination:'N/A'}}</p>
                                     </div>
                                  </div>
-                                 <div class="col-sm-12">
-                                    <div class="row " style="margin-top: 5px;">
-                                       <hr>
-                                       <div style="margin-left: auto; margin-right: auto;">
-                                          <table class="table table1 table-bordered" >
-                                             <thead>
-                                                <tr>
-                                                   <th style="width: 250px;font-size: 12px;font-weight: 700;padding: 2px!important;padding-left: 2px !important;">Loaded By</th>
-                                                   <th style="width: 250px;font-size: 12px;font-weight: 700;padding: 2px!important;padding-left: 2px !important;">Quantity Loaded</th>
-                                                   <th style="width: 250px;font-size: 12px;font-weight: 700;padding: 2px!important;padding-left: 2px !important;">Name</th>
-                                                   <th style="width: 250px;font-size: 12px;font-weight: 700;padding: 2px!important;padding-left: 2px !important;">Quantity Short</th>
-                                                   <th style="width: 250px;font-size: 12px;font-weight: 700;padding: 2px!important;padding-left: 2px !important;">KGS</th>
-                                                </tr>
-                                             </thead>
-                                             <tbody>
-                                                <tr>
-                                                   <td style="font-size: 12px !important;padding: 1rem 1rem !important;"></td>
-                                                   <td style="font-size: 12px !important;padding: 1rem 1rem  !important;"></td>
-                                                   <td style="font-size: 12px !important;padding: 1rem 1rem  !important;"></td>
-                                                   <td style="font-size: 12px !important;padding: 1rem 1rem  !important;"></td>
-                                                   <td style="font-size: 12px !important;padding: 1rem 1rem  !important;"></td>
-                                                </tr>
-                                             </tbody>
-                                          </table>
-                                       </div>
+                                 <div class="form-group row " style="margin-bottom: -8px;">
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Container No</label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->container_no)?$unloadingGateEntry->container_no:'N/A'}}</p>
+                                    </div>
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">
+                                    Bl No</label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->bl_no)?$unloadingGateEntry->bl_no:'N/A'}}</p>
                                     </div>
                                  </div>
-                                 <div class="col-sm-12">
-                                    <div class="row " style="margin-top: 5px;">
-                                       <div class="form-group row  " style="margin-bottom: -12px;text-align:center !important;display: block;margin-left: auto;margin-right: auto;width: 90%;">
-                                          <h6  style="font-weight: 700;font-size: 12px;text-align: center;" >Commodity Details</h6>
-                                       </div>
-                                       <hr>
-                                       <div style="margin-left: auto; margin-right: auto;">
-                                          <table class="table table1 table-bordered" >
-                                             <thead>
-                                                <tr>
-                                                   <th style="width: 250px;font-size: 12px;font-weight: 700;padding: 2px!important;padding-left: 2px !important;">Material Name</th>
-                                                   <th style="width: 250px;font-size: 12px;font-weight: 700;padding: 2px!important;padding-left: 2px !important;">UOM</th>
-                                                   <th style="width: 250px;font-size: 12px;font-weight: 700;padding: 2px!important;padding-left: 2px !important;">Quantity</th>
-                                                   <th style="width: 250px;font-size: 12px;font-weight: 700;padding: 2px!important;padding-left: 2px !important;">Total Weight</th>
-                                                </tr>
-                                             </thead>
-                                             <tbody>
-                                             @foreach($loadingGateEntry->getLuCommodityDetail as $key=>$value)
-                                                <tr>
-                                                   <td style="font-size: 12px !important;padding: .5rem .5rem !important;">{{ isset($value->getMaterial->material_name)?$value->getMaterial->material_name:'N/A'}}</td>
-                                                   <td style="font-size: 12px !important;padding: .5rem .5rem !important;">{{ isset($value->getUOM->unit_entry_filed)?$value->getUOM->unit_entry_filed:'N/A'}}</td>
-                                                   <td style="font-size: 12px !important;padding: .5rem .5rem !important;">{{ isset($value->commodity_quantity)?$value->commodity_quantity:'N/A'}}</td>
-                                                   <td style="font-size: 12px !important;padding: .5rem .5rem !important;">{{ isset($value->total_weight)?$value->total_weight:'N/A'}}</td>
-                                                </tr>
-                                                @endforeach
-                                             </tbody>
-                                          </table>
-                                       </div>
+                                 <div class="form-group row " style="margin-bottom: -8px;">
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Do No </label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->dn_no)?$unloadingGateEntry->dn_no:'N/A'}}</p>
+                                    </div>
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Bl Qty</label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->bl_qty)?$unloadingGateEntry->bl_qty:'N/A'}}</p>
                                     </div>
                                  </div>
-                                 <div class="row" style = "margin-top: 2rem;">
-                                    <div class="col-sm-5 col-md-5 col-lg-5">
-                                       <label class="col-form-label  sig" style="display: block;font-weight: 700;font-size: 12px;">WAREHOUSE MANAGER</label>
-                                       <label class="col-sm-6 col-form-label " style="padding-left:0px !important;font-weight: 700;font-size: 12px;">
-                                          NAME: 
-                                          <hr size="8" width="95%" color="black" style = "margin-top: 0rem;
-                                             margin-bottom: 1px;margin-left:40px;">
-                                       </label>
-                                       <br>
-                                       <label>DATE: 10/1/2021 10:17:44 AM</label>
+                                 <div class="form-group row " style="margin-bottom: -8px;">
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">DO Qty</label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->dn_qty)?$unloadingGateEntry->dn_qty:'N/A'}}</p>
                                     </div>
-                                    <div class="col-sm-2 col-md-2 col-lg-2">
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Shipping Line </label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->shipping_line)?$unloadingGateEntry->shipping_line:'N/A'}}</p>
                                     </div>
-                                    <div class="col-sm-5 col-md-5 col-lg-5">
-                                       <label class="col-form-label  sig" style="display: block;font-weight: 700;font-size: 12px;">WAREHOUSE SUPERVISOR/INCHARGE</label>
-                                       <label class="col-sm-6 col-form-label " style="padding-left:0px !important;font-weight: 700;font-size: 12px;">
-                                          NAME: 
-                                          <hr size="8" width="95%" color="black" style = "margin-top: 0rem;
-                                             margin-bottom: 1px;margin-left:40px;">
-                                       </label>
-                                       <br>
-                                       <label>DATE: 10/1/2021 10:17:44 AM</label>
+                                 </div>
+                                 <div class="form-group row " style="margin-bottom: -8px;">
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Interchange No </label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->interchange_no)?$unloadingGateEntry->interchange_no:'N/A'}}</p>
+                                    </div>
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">TRA Seal No</label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->tra_seal_no)?$unloadingGateEntry->tra_seal_no:'N/A'}}</p>
+                                    </div>
+                                 </div>
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="pagebreak"> </div>
+                  <div class="row">
+                     <div class="col-sm-12">
+                        <div class="card">
+                           <div class="card-block">
+                              <form>
+                                 <div class="form-group row" style="margin-bottom: 5px;">
+                                    <div class="col-sm-3 " style="margin-bottom: -12px;">
+                                       <p style="font-weight: 700;font-size: 12px">Date: 
+                                       {{ isset($unloadingGateEntry->date)?$unloadingGateEntry->date:'N/A'}}
+                                       </p>
+                                    </div>
+                                    <div class="col-sm-5" style="margin-bottom: 5px;">
+                                    </div>
+                                    <div class="col-sm-4" style="margin-bottom: -12px;">
+                                       <p style="font-weight: 700;font-size: 12px">Token No: {{ isset($unloadingGateEntry->ref_no)?$unloadingGateEntry->ref_no:'N/A'}}</p>
+                                    </div>
+                                 </div>
+                                 <div class="form-group row" style="margin-bottom: 5px; text-align: center!important;display: block;margin-left: auto;margin-right: auto;width: 90%;">
+                                    <img src="{{asset('print/jpg/truck-512.png')}}" alt="Trulli" width="40" height="40" >
+                                 </div>
+                                 <div class="form-group row" style="margin-bottom: 5px;text-align: center!important;display: block;margin-left: auto;margin-right: auto;width: 90%;">
+                                    <h6 style="font-weight: 700;font-size: 12px;text-align: center;">ETC CARGO LIMITED - TRUCK PARKING NOTE (LOADING) OFFICE COPY</h6>
+                                 </div>
+                                 <hr>
+                                 <div class="form-group row " style="margin-bottom: -8px;">
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Customer Name</label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->getCustomer->customer_name)?$unloadingGateEntry->getCustomer->customer_name:'N/A'}}</p>
+                                    </div>
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Commodity</label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->getCommodity->commodity_name)?$unloadingGateEntry->getCommodity->commodity_name:'N/A'}}</p>
+                                    </div>
+                                 </div>
+                                 <div class="form-group row " style="margin-bottom: -8px;">
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Truck No</label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->truck_no)?$unloadingGateEntry->truck_no:'N/A'}}</p>
+                                    </div>
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Trailer No</label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->trailer_no)?$unloadingGateEntry->trailer_no:'N/A'}}</p>
+                                    </div>
+                                 </div>
+                                 <div class="form-group row " style="margin-bottom: -8px;">
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Transporter</label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->getTransporter->transport_name)?$unloadingGateEntry->getTransporter->transport_name:'N/A'}}</p>
+                                    </div>
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Driver Name</label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->driver_name)?$unloadingGateEntry->driver_name:'N/A'}}</p>
+                                    </div>
+                                 </div>
+                                 <div class="form-group row " style="margin-bottom: -8px;">
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Driver Ph</label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->driver_ph_no)?$unloadingGateEntry->driver_ph_no:'N/A'}}</p>
+                                    </div>
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">
+                                    Driver Lic</label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->driver_lic_no)?$unloadingGateEntry->driver_lic_no:'N/A'}}</p>
+                                    </div>
+                                 </div>
+                                 <div class="form-group row " style="margin-bottom: -8px;">
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Time In</label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->time_in)?$unloadingGateEntry->time_in:'N/A'}}</p>
+                                    </div>
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Desitination (TO)</label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->destination)?$unloadingGateEntry->destination:'N/A'}}</p>
+                                    </div>
+                                 </div>
+                                 <div class="form-group row " style="margin-bottom: -8px;">
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Container No</label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->container_no)?$unloadingGateEntry->container_no:'N/A'}}</p>
+                                    </div>
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">
+                                    Bl No</label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->bl_no)?$unloadingGateEntry->bl_no:'N/A'}}</p>
+                                    </div>
+                                 </div>
+                                 <div class="form-group row " style="margin-bottom: -8px;">
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Do No </label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->dn_no)?$unloadingGateEntry->dn_no:'N/A'}}</p>
+                                    </div>
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Bl Qty</label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->bl_qty)?$unloadingGateEntry->bl_qty:'N/A'}}</p>
+                                    </div>
+                                 </div>
+                                 <div class="form-group row " style="margin-bottom: -8px;">
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">DO Qty</label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->dn_qty)?$unloadingGateEntry->dn_qty:'N/A'}}</p>
+                                    </div>
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Shipping Line </label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->shipping_line)?$unloadingGateEntry->shipping_line:'N/A'}}</p>
+                                    </div>
+                                 </div>
+                                 <div class="form-group row " style="margin-bottom: -8px;">
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">Interchange No </label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->interchange_no)?$unloadingGateEntry->interchange_no:'N/A'}}</p>
+                                    </div>
+                                    <label class="col-sm-2 col-form-label" style="padding-top: 2px;font-weight: 700;font-size: 14px;">TRA Seal No</label>
+                                    <div class="col-sm-4">
+                                       <p style="font-size: 14px !important;">{{ isset($unloadingGateEntry->tra_seal_no)?$unloadingGateEntry->tra_seal_no:'N/A'}}</p>
                                     </div>
                                  </div>
                               </form>

@@ -65,8 +65,9 @@
                         <div class="form-group row">
                            <div class="col-sm-2">
                               <p class="bigf">Token No:</p>
-                              <input type="text" name="ref_no" id="ref_no" class="form-control bld sdt" value="{{ $loadingGateEntry->ref_no}}" placeholder="">
-                              <input type="hidden" name="id" id="id" class="form-control bld" value="{{$loadingGateEntry->id}}" placeholder="" readonly="">
+                              <input type="text" name="ref_no" id="ref_no" class="form-control bld sdt" value="{{ $loadingGateEntry->ref_no}}">
+                              <input type="hidden" name="id" id="id" class="form-control bld" value="{{$loadingGateEntry->id}}">
+                              <input type="hidden" name="time_out" id="time_out" class="form-control" placeholder="" value="{{  date('h:i A', strtotime(now())) }}">
                               <input type="hidden" name="gate_pass_no" id="gate_pass_no" class="form-control bld" value="{{ isset($loadingGateEntry->gate_pass_no)?$loadingGateEntry->gate_pass_no:$gate_pass_no}}" placeholder="" readonly="">
                            </div>
                            <div class="col-sm-8">
@@ -194,7 +195,7 @@
                         <div class="form-group row">
                            <label class="col-sm-2 col-form-label">Authorized by  </label>
                            <div class="col-sm-4">
-                              <input type="text" name="authorized_by" id="authorized_by" class="form-control" value="" placeholder="" readonly>
+                              <input type="text" name="authorized_by" id="authorized_by" class="form-control" value="{{ Auth::user()->name }}" placeholder="" >
                            </div>
                         </div>
                      </div>

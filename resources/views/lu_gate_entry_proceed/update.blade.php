@@ -295,7 +295,7 @@
                      <div class="card-block height">
                         <div class="form-group row dwn" >
                            <div class="col-sm-12" style="text-align: center;">
-                             @if($loadingGateEntry->status=='3')
+                             @if($loadingGateEntry->status=='4' and $loadingGateEntry->out_process_status=='0')
                               <button class="btn btn-warning waves-effect waves-light" name="action" value="Proceed">Proceed</button>
                              @else
                               <a class="btn btn-success waves-effect waves-light" href="{{route('loading.gate.entry.proceed.index')}}">Back </a>

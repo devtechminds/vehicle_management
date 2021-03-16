@@ -281,12 +281,20 @@
                               </form>
                            </div>
                         </div>
+                        <button  class="btn btn-info" id="btnPrint" style="margin-left:50%;"> Print</button>
                      </div>
                   </div>
                </div>
             </div>
          </div>
       </div>
+      <style type="text/css">
+       @media print {
+          #btnPrint {
+            display :  none;
+         }
+      }
+      </style>
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
       <script>
          $('#btnPrint').click(function(){

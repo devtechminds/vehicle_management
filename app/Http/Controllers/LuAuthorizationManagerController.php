@@ -14,6 +14,7 @@ use App\UserLog;
 use App\Notifications;
 use App\LuCommodityDetail;
 use App\LuWeightBridge;
+use App\LuTimeTracking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,15 +29,10 @@ class LuAuthorizationManagerController extends Controller
         $loading_entry_data = LuGateEntrie::with('getCustomer','getCommodity');
         if($request->status)
         {
-            $serch_status= 1;
-            if($request->status==2){
-                $serch_status = 0;
-            }
-            $loading_entry_data->where('status','=',$serch_status);
-            if($request->status==3){
-                $loading_entry_data->where('status','=',$request->status);
-                $loading_entry_data->Orwhere('status','=',$request->status);
-            }
+            $loading_entry_data->where('status','=',$request->status);
+            
+        }else{
+            $loading_entry_data->where('status','=',2);
         }
         if($request->ref_no)
         {
@@ -78,12 +74,10 @@ class LuAuthorizationManagerController extends Controller
             })
             ->editColumn('status', function($row){
                  $status= '';
-                 if($row->status==0){
+                 if($row->status==3){
                     $status="Pending";
-                }elseif($row->status==2 || $row->status==3){
+                }elseif($row->status==4){
                     $status="Approve";
-                }elseif($row->status==10){
-                    $status="Rejected";
                 }
               return $status;
 
@@ -150,14 +144,14 @@ class LuAuthorizationManagerController extends Controller
                 'shipping_line' => $data['shipping_line']? $data['shipping_line']:'',
                 'interchange_no' => $data['interchange_no']? $data['interchange_no']:'',
                 'tra_seal_no' => $data['tra_seal_no']? $data['tra_seal_no']:'',
-                'status' => 3,
+                'status' => 4,
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );
                 $weigh_bridge_data =array(
                     'wb_ticket_no' => isset($data['wb_ticket_no'])?$data['wb_ticket_no']:NULL,
                     'wb_tare_wt' => isset($data['wb_tare_wt'])?$data['wb_tare_wt']:NULL,
-                    'status' => 1,
+                    'status' => 2,
                     'updated_at' => now(),
                     'updated_by' => auth()->user()->id
                     );
@@ -177,6 +171,21 @@ class LuAuthorizationManagerController extends Controller
                      $commodity_detail->save();
                     }
                  }
+
+                 $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $data['id'])->where("new_status", "=", 3)->where("in_or_out", "=", 1)->first();
+                 $start_time = strtotime($loading_gate_time->new_status_time);
+                 $end_time   = strtotime(date('h:i A', strtotime(now())));
+                 $secs       = ($end_time-$start_time);
+                 $loading_time_track_entry = new LuTimeTracking();
+                 $loading_time_track_entry->lu_gate_entry_id = $data['id'];
+                 $loading_time_track_entry->in_or_out = 1;
+                 $loading_time_track_entry->old_status = 3;
+                 $loading_time_track_entry->new_status = 4;
+                 $loading_time_track_entry->new_status_time = date('h:i A', strtotime(now()));
+                 $loading_time_track_entry->time_diff = $secs;
+                 $loading_time_track_entry->is_loading = 1;
+                 $loading_time_track_entry->updated_by = auth()->user()->id;
+                 $loading_time_track_entry->save();
              
             DB::commit();
             //Send Notification
@@ -254,12 +263,10 @@ class LuAuthorizationManagerController extends Controller
             })
             ->editColumn('status', function($row){
                  $status= '';
-                 if($row->status==0){
+                 if($row->status==3){
                     $status="Pending";
-                }elseif($row->status==2 || $row->status==3){
+                }elseif($row->status==4){
                     $status="Approve";
-                }elseif($row->status==10){
-                    $status="Rejected";
                 }
               return $status;
 
@@ -325,7 +332,7 @@ class LuAuthorizationManagerController extends Controller
                 'shipping_line' => $data['shipping_line']? $data['shipping_line']:'',
                 'interchange_no' => $data['interchange_no']? $data['interchange_no']:'',
                 'tra_seal_no' => $data['tra_seal_no']? $data['tra_seal_no']:'',
-                'status' => 3,
+                'status' => 4,
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );
@@ -352,6 +359,21 @@ class LuAuthorizationManagerController extends Controller
                      $commodity_detail->save();
                     }
                  }
+
+                 $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $data['id'])->where("new_status", "=", 3)->where("in_or_out", "=", 1)->first();
+                 $start_time = strtotime($loading_gate_time->new_status_time);
+                 $end_time   = strtotime(date('h:i A', strtotime(now())));
+                 $secs       = ($end_time-$start_time);
+                 $loading_time_track_entry = new LuTimeTracking();
+                 $loading_time_track_entry->lu_gate_entry_id = $data['id'];
+                 $loading_time_track_entry->in_or_out = 1;
+                 $loading_time_track_entry->old_status = 3;
+                 $loading_time_track_entry->new_status = 4;
+                 $loading_time_track_entry->new_status_time = date('h:i A', strtotime(now()));
+                 $loading_time_track_entry->time_diff = $secs;
+                 $loading_time_track_entry->is_loading = 2;
+                 $loading_time_track_entry->updated_by = auth()->user()->id;
+                 $loading_time_track_entry->save();
              
             DB::commit();
             //Send Notification
@@ -378,15 +400,12 @@ class LuAuthorizationManagerController extends Controller
         $loading_entry_data = LuGateEntrie::with('getCustomer','getCommodity');
         if($request->status)
         {
-            $serch_status= 1;
-            if($request->status==2){
-                $serch_status = 0;
-            }
-            $loading_entry_data->where('status','=',$serch_status);
-            if($request->status==3){
-                $loading_entry_data->where('status','=',$request->status);
-                $loading_entry_data->Orwhere('status','=',$request->status);
-            }
+                $loading_entry_data->where('status','=',4);
+                $loading_entry_data->where('out_process_status','=',$request->status);
+
+        }else{
+            $loading_entry_data->where('status','=',4);
+            $loading_entry_data->where('out_process_status','=',3);
         }
         if($request->ref_no)
         {
@@ -428,12 +447,10 @@ class LuAuthorizationManagerController extends Controller
             })
             ->editColumn('status', function($row){
                  $status= '';
-                 if($row->status==0){
+                 if($row->out_process_status==3){
                     $status="Pending";
-                }elseif($row->status==2 || $row->status==3){
+                }elseif($row->out_process_status==4){
                     $status="Approve";
-                }elseif($row->status==10){
-                    $status="Rejected";
                 }
               return $status;
 
@@ -509,7 +526,9 @@ class LuAuthorizationManagerController extends Controller
                 'interchange_no' => $data['interchange_no']? $data['interchange_no']:'',
                 'tra_seal_no' => $data['tra_seal_no']? $data['tra_seal_no']:'',
                 'gate_pass_no' => $data['gate_pass_no']? $data['gate_pass_no']:'',
-                'status' => 7,
+                'time_out' => $data['time_out']? $data['time_out']:'',
+                'authorized_by' => $data['authorized_by']? $data['authorized_by']:'',
+                'out_process_status' => 4,
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );
@@ -544,6 +563,21 @@ class LuAuthorizationManagerController extends Controller
                      $commodity_detail->save();
                     }
                  }
+
+                 $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $data['id'])->where("new_status", "=", 3)->where("in_or_out", "=", 2)->first();
+                 $start_time = strtotime($loading_gate_time->new_status_time);
+                 $end_time   = strtotime(date('h:i A', strtotime(now())));
+                 $secs       = ($end_time-$start_time);
+                 $loading_time_track_entry = new LuTimeTracking();
+                 $loading_time_track_entry->lu_gate_entry_id = $data['id'];
+                 $loading_time_track_entry->in_or_out = 2;
+                 $loading_time_track_entry->old_status = 3;
+                 $loading_time_track_entry->new_status = 4;
+                 $loading_time_track_entry->new_status_time = date('h:i A', strtotime(now()));
+                 $loading_time_track_entry->time_diff = $secs;
+                 $loading_time_track_entry->is_loading = 1;
+                 $loading_time_track_entry->updated_by = auth()->user()->id;
+                 $loading_time_track_entry->save();
              
             DB::commit();
             //Send Notification
@@ -584,15 +618,12 @@ class LuAuthorizationManagerController extends Controller
         $unloading_entry_data = LuGateEntrie::with('getCustomer','getCommodity');
         if($request->status)
         {
-            $serch_status= 1;
-            if($request->status==2){
-                $serch_status = 0;
-            }
-            $unloading_entry_data->where('status','=',$serch_status);
-            if($request->status==3){
-                $unloading_entry_data->where('status','=',$request->status);
-                $unloading_entry_data->Orwhere('status','=',$request->status);
-            }
+                $unloading_entry_data->where('status','=',4);
+                $unloading_entry_data->where('out_process_status','=',$request->status);
+
+        }else{
+            $unloading_entry_data->where('status','=',4);
+            $unloading_entry_data->where('out_process_status','=',3);
         }
         if($request->ref_no)
         {
@@ -634,12 +665,10 @@ class LuAuthorizationManagerController extends Controller
             })
             ->editColumn('status', function($row){
                  $status= '';
-                 if($row->status==0){
+                 if($row->out_process_status==3){
                     $status="Pending";
-                }elseif($row->status==2 || $row->status==3){
+                }elseif($row->out_process_status==4){
                     $status="Approve";
-                }elseif($row->status==10){
-                    $status="Rejected";
                 }
               return $status;
 
@@ -714,7 +743,10 @@ class LuAuthorizationManagerController extends Controller
                 'shipping_line' => $data['shipping_line']? $data['shipping_line']:'',
                 'interchange_no' => $data['interchange_no']? $data['interchange_no']:'',
                 'tra_seal_no' => $data['tra_seal_no']? $data['tra_seal_no']:'',
-                'status' => 7,
+                'gate_pass_no' => $data['gate_pass_no']? $data['gate_pass_no']:'',
+                'time_out' => $data['time_out']? $data['time_out']:'',
+                'authorized_by' => $data['authorized_by']? $data['authorized_by']:'',
+                'out_process_status' => 4,
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );
@@ -749,6 +781,21 @@ class LuAuthorizationManagerController extends Controller
                      $commodity_detail->save();
                     }
                  }
+                 
+                 $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $data['id'])->where("new_status", "=", 3)->where("in_or_out", "=", 2)->first();
+                 $start_time = strtotime($loading_gate_time->new_status_time);
+                 $end_time   = strtotime(date('h:i A', strtotime(now())));
+                 $secs       = ($end_time-$start_time);
+                 $loading_time_track_entry = new LuTimeTracking();
+                 $loading_time_track_entry->lu_gate_entry_id = $data['id'];
+                 $loading_time_track_entry->in_or_out = 2;
+                 $loading_time_track_entry->old_status = 3;
+                 $loading_time_track_entry->new_status = 4;
+                 $loading_time_track_entry->new_status_time = date('h:i A', strtotime(now()));
+                 $loading_time_track_entry->time_diff = $secs;
+                 $loading_time_track_entry->is_loading = 2;
+                 $loading_time_track_entry->updated_by = auth()->user()->id;
+                 $loading_time_track_entry->save();
              
             DB::commit();
             //Send Notification
@@ -776,7 +823,7 @@ class LuAuthorizationManagerController extends Controller
         // $consignment_details_count= ConsignmentDetails::getGateEntryNo($gate_entry->manifesto_entry_id);
         }
          // return view('proceed_vehilce.print_proceed_vehilce')->with('gate_entry',$gate_entry)->with('consignment_details_count',$consignment_details_count)->with('msg','Main Gate1 Entry Proceed ');
-          return view('unloading_gate_entry_after_return_update.print_proceed_vehilce_new')->with('loadingGateEntry',$unloadingGateEntry)->with('msg','Main Gate1 Loading Entry Proceed ');
+          return view('unloading_gate_entry_after_return_update.print_proceed_vehilce_new')->with('unloadingGateEntry',$unloadingGateEntry)->with('msg','Main Gate1 Loading Entry Proceed ');
     }
 
 

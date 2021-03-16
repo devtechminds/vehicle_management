@@ -141,7 +141,7 @@ class LuWeightBridgeController extends Controller
                 );
             LuGateEntrie::where("id", "=",$data['loading_gate_entry_id'])->update($update_data);
             
-            $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $data['loading_gate_entry_id'])->where("new_status", "=", 1)->first();
+            $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $data['loading_gate_entry_id'])->where("new_status", "=", 1)->where("in_or_out", "=", 1)->first();
             $start_time = strtotime($loading_gate_time->new_status_time);
             $end_time   = strtotime(date('h:i A', strtotime(now())));
             $secs       = ($end_time-$start_time);
@@ -317,7 +317,7 @@ class LuWeightBridgeController extends Controller
                 );
             LuGateEntrie::where("id", "=",$data['loading_gate_entry_id'])->update($update_data);
 
-            $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $data['loading_gate_entry_id'])->where("new_status", "=", 1)->first();
+            $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $data['loading_gate_entry_id'])->where("new_status", "=", 1)->where("in_or_out", "=", 1)->first();
             $start_time = strtotime($loading_gate_time->new_status_time);
             $end_time   = strtotime(date('h:i A', strtotime(now())));
             $secs       = ($end_time-$start_time);
@@ -356,15 +356,19 @@ class LuWeightBridgeController extends Controller
         $loading_entry_data = LuGateEntrie::with('getCustomer','getCommodity');
         if($request->status)
         {
-            $serch_status= 1;
+            
+                $loading_entry_data->where('status','=',4);
+                $loading_entry_data->where('out_process_status','=',$request->status);
+            
+            
             if($request->status==2){
-                $serch_status = 0;
+                $loading_entry_data->where('out_process_status','=',$request->status);
+                $loading_entry_data->Orwhere('out_process_status','=',3);
+                $loading_entry_data->Orwhere('out_process_status','=',4);
             }
-            $loading_entry_data->where('status','=',$serch_status);
-            if($request->status==3){
-                $loading_entry_data->where('status','=',$request->status);
-                $loading_entry_data->Orwhere('status','=',$request->status);
-            }
+        }else{
+            $loading_entry_data->where('status','=',4);
+            $loading_entry_data->where('out_process_status','=',1);
         }
         if($request->ref_no)
         {
@@ -406,12 +410,10 @@ class LuWeightBridgeController extends Controller
             })
             ->editColumn('status', function($row){
                  $status= '';
-                 if($row->status==0){
+                 if($row->out_process_status==1){
                     $status="Pending";
-                }elseif($row->status==2 || $row->status==3){
+                }elseif($row->out_process_status==2 || $row->out_process_status==3 || $row->out_process_status==4){
                     $status="Approve";
-                }elseif($row->status==10){
-                    $status="Rejected";
                 }
               return $status;
 
@@ -457,7 +459,7 @@ class LuWeightBridgeController extends Controller
             $data = $request->all();  
             
             $update_data =array(
-                'status' => 5,
+                'out_process_status' => 2,
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );
@@ -476,6 +478,21 @@ class LuWeightBridgeController extends Controller
                     );
                 LuGateEntrie::where("id", "=",$data['id'])->update($update_data);
                 LuWeightBridge::where("lu_gate_entry_id", "=",$data['id'])->update($weigh_bridge_data);
+
+                $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $data['id'])->where("new_status", "=", 1)->where("in_or_out", "=", 2)->first();
+                 $start_time = strtotime($loading_gate_time->new_status_time);
+                 $end_time   = strtotime(date('h:i A', strtotime(now())));
+                 $secs       = ($end_time-$start_time);
+                 $loading_time_track_entry = new LuTimeTracking();
+                 $loading_time_track_entry->lu_gate_entry_id = $data['id'];
+                 $loading_time_track_entry->in_or_out = 2;
+                 $loading_time_track_entry->old_status = 1;
+                 $loading_time_track_entry->new_status = 2;
+                 $loading_time_track_entry->new_status_time = date('h:i A', strtotime(now()));
+                 $loading_time_track_entry->time_diff = $secs;
+                 $loading_time_track_entry->is_loading = 1;
+                 $loading_time_track_entry->updated_by = auth()->user()->id;
+                 $loading_time_track_entry->save();
              
             DB::commit();
             //Send Notification
@@ -503,15 +520,19 @@ class LuWeightBridgeController extends Controller
         $unloading_entry_data = LuGateEntrie::with('getCustomer','getCommodity');
         if($request->status)
         {
-            $serch_status= 1;
+            
+                $unloading_entry_data->where('status','=',4);
+                $unloading_entry_data->where('out_process_status','=',$request->status);
+            
+            
             if($request->status==2){
-                $serch_status = 0;
+                $unloading_entry_data->where('out_process_status','=',$request->status);
+                $unloading_entry_data->Orwhere('out_process_status','=',3);
+                $unloading_entry_data->Orwhere('out_process_status','=',4);
             }
-            $unloading_entry_data->where('status','=',$serch_status);
-            if($request->status==3){
-                $unloading_entry_data->where('status','=',$request->status);
-                $unloading_entry_data->Orwhere('status','=',$request->status);
-            }
+        }else{
+            $unloading_entry_data->where('status','=',4);
+            $unloading_entry_data->where('out_process_status','=',1);
         }
         if($request->ref_no)
         {
@@ -553,12 +574,10 @@ class LuWeightBridgeController extends Controller
             })
             ->editColumn('status', function($row){
                  $status= '';
-                 if($row->status==0){
+                 if($row->out_process_status==1){
                     $status="Pending";
-                }elseif($row->status==2 || $row->status==3){
+                }elseif($row->out_process_status==2 || $row->out_process_status==3 || $row->out_process_status==4){
                     $status="Approve";
-                }elseif($row->status==10){
-                    $status="Rejected";
                 }
               return $status;
 
@@ -603,7 +622,7 @@ class LuWeightBridgeController extends Controller
             $data = $request->all();  
             
             $update_data =array(
-                'status' => 5,
+                'out_process_status' => 2,
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );
@@ -622,6 +641,21 @@ class LuWeightBridgeController extends Controller
                     );
                 LuGateEntrie::where("id", "=",$data['id'])->update($update_data);
                 LuWeightBridge::where("lu_gate_entry_id", "=",$data['id'])->update($weigh_bridge_data);
+
+                $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $data['id'])->where("new_status", "=", 1)->where("in_or_out", "=", 2)->first();
+                 $start_time = strtotime($loading_gate_time->new_status_time);
+                 $end_time   = strtotime(date('h:i A', strtotime(now())));
+                 $secs       = ($end_time-$start_time);
+                 $loading_time_track_entry = new LuTimeTracking();
+                 $loading_time_track_entry->lu_gate_entry_id = $data['id'];
+                 $loading_time_track_entry->in_or_out = 2;
+                 $loading_time_track_entry->old_status = 1;
+                 $loading_time_track_entry->new_status = 2;
+                 $loading_time_track_entry->new_status_time = date('h:i A', strtotime(now()));
+                 $loading_time_track_entry->time_diff = $secs;
+                 $loading_time_track_entry->is_loading = 2;
+                 $loading_time_track_entry->updated_by = auth()->user()->id;
+                 $loading_time_track_entry->save();
              
             DB::commit();
             //Send Notification

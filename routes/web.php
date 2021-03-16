@@ -195,7 +195,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/loading-entry-show/{id}','LuGateEntrieController@show')->name('loading.entry.show')->middleware('role:gate1_entry_officer');
     Route::get('/loading-entry-edit/{id}','LuGateEntrieController@edit')->name('loading.entry.edit')->middleware('role:gate1_entry_officer');
     Route::put('/loading-entry-update','LuGateEntrieController@update')->name('loading.entry.update')->middleware('role:gate1_entry_officer');
-
+    Route::get('/loading-gate-entry-print/{id}','LuGateEntrieController@gateEntryPrint')->name('loading.gate.entry.print')->middleware('role:gate1_entry_officer');
 
     //Unloading GateEntry CSF Gate Officer
     Route::get('/unloading-entry-list','LuGateEntrieController@unloadingIndex')->name('unloading.entry.index')->middleware('role:gate1_entry_officer');
@@ -205,6 +205,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/unloading-entry-show/{id}','LuGateEntrieController@unloadingShow')->name('unloading.entry.show')->middleware('role:gate1_entry_officer');
     Route::get('/unloading-entry-edit/{id}','LuGateEntrieController@unloadingEdit')->name('unloading.entry.edit')->middleware('role:gate1_entry_officer');
     Route::put('/unloading-entry-update','LuGateEntrieController@unloadingUpdate')->name('unloading.entry.update')->middleware('role:gate1_entry_officer');
+    Route::get('/unloading-gate-entry-print/{id}','LuGateEntrieController@unloadingGateEntryPrint')->name('unloading.gate.entry.print')->middleware('role:gate1_entry_officer');
     Route::get('/material-by-comodity/{id}','LuGateEntrieController@getMaterialByComodity')->name('material-by-comodity');
     Route::get('/uom-by-material/{id}','LuGateEntrieController@getUomByMaterial')->name('uom-by-material');
 
@@ -467,6 +468,9 @@ Route::group(['middleware' => ['auth']], function () {
          Route::post('/datewise/report/download','DatewiseReportController@download')->name('datewise.report.download');
          Route::get('/token/report','TokenWiseReportsController@index')->name('token.report');
          Route::post('/token/report/download','TokenWiseReportsController@download')->name('token.report.download');
+
+         //LoadingUnloadingReport
+         //Route::get('/customer/report','ReportsController@customerReport')->name('customer.report');
 
         //AdminUpdate
         Route::get('/update-entry','AdminUpdateController@entryIndex')->name('update.entry')->middleware('role:admin');
