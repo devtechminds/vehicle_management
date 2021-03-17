@@ -90,8 +90,8 @@
                               <thead>
                                  <tr>
                                     <th class="hd">Id </th>
-                                    <th class="hd"> Ref No</th>
-                                    <th class="hd"> Cargo Ref No</th>
+                                    <th class="hd">Gate Entry Date</th>
+                                    <th class="hd">Cargo Ref No</th>
                                     <th class="hd">Type of Cargo</th>
                                     <th class="hd">Type of Consignment</th>
                                     <th class="hd">Date & Time</th>
@@ -124,15 +124,9 @@
                type: 'GET',
                data: function (d) {
                    d.report_type = $('#report_type').val();
-                   d.status = $('#status').val();
-                   d.gate_entry_no = $('#gate_entry_no').val();
                    d.to_date = $('#to_date').val();
-                   d.commodity = $('#commodity').val();
                    d.from_date = $('#from_date').val();
-                   d.material = $('#material').val();
                    d.customer = $('#customer').val();
-                   
-                   
                }
            },
            columns: [
@@ -142,16 +136,6 @@
                return meta.row + meta.settings._iDisplayStart + 1;
                }
                },
-               
-               // {data: 'gate_entry_no', name: 'gate_entry_no',render:function(data, type, row){
-               //       if(row.get_gate_entry.gate_entry_no){
-               //         return row.get_gate_entry.gate_entry_no;
-               //     }else{
-               //         return '';
-               //     }
-                   
-               // }},
-   
                {data: 'manifesto_entry_id', name: 'manifesto_entry_id',render:function(data, type, row){
                      if(row.get_manifesto_entry.ref_no){
                        return row.get_manifesto_entry.ref_no;
@@ -168,15 +152,6 @@
                    }
                    
                }},
-               // {data: 'consignment_details_id', name: 'consignment_details_id',render:function(data, type, row){
-               //       if(row.get_consignment_details.container_no){
-               //         return row.get_consignment_details.container_no;
-               //     }else{
-               //         return '';
-               //     }
-                   
-               // }},
-             
                {data: 'cargo_type', name: 'cargo_type',render:function(data, type, row){
                      if(row.cargo_type){
                        return row.cargo_type;
@@ -216,33 +191,12 @@
    
    });
    
-   $(document).on("change", "#commodity", function () {
-   var id = $(this).val(); //get the current value's option
-   var thisObj = $(this);
-   $.ajax({
-   type:'GET',
-   url:'/get-material-by-comodity/'+id,
-   success:function(data){
-      $('#material').html(data);
-   }
-   });
-   });
+  
    
    
    $(document).on("change", "#report_type", function () {
    var id = $(this).val(); //get the current value's option
    $('#report_type_submit').val(id);
-   
-   });
-   
-   $(document).on("change", "#commodity", function () {
-   var id = $(this).val(); //get the current value's option
-   $('#commodity_id').val(id);
-   
-   });
-   $(document).on("change", "#material", function () {
-   var id = $(this).val(); //get the current value's option
-   $('#material_id').val(id);
    
    });
    
@@ -256,7 +210,6 @@
    $('#to_date_submit').val(id);
    
    });
-   
    
    $(document).on("change", "#customer", function () {
    var id = $(this).val(); //get the current value's option

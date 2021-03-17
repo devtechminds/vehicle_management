@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Customers;
+use App\LuGateEntrie;
 use Illuminate\Http\Request;
 
 class LuCustomerWiseReportController extends Controller
@@ -11,48 +12,31 @@ class LuCustomerWiseReportController extends Controller
     {
         if($request->ajax()){
 
-            $gate_entry_data = UploadDocuments::with(['getGateEntry','getManifestoEntry','getManifestoEntry.getCargo','getManifestoEntry.getConsignment','getConsignmentDetails' => function($q) use($request) {
-                // Query the name field in status table
-               
-                if(isset($request->commodity)){
-                    $q->where('commodity', '=', $request->commodity);
-                }
-                if(isset($request->material)){
-                    $q->where('material', '=', $request->material);
-                }
-                
-                // '=' is optional
-             }]);
-            if(isset($request->customer)){
-             $gate_entry_data->whereHas('getManifestoEntry', function($q) use($request){
-                $q->where('customer_name','=',$request->customer);
-            });
-           }
-            if($request->status)
-            {
-                $serch_status= 1;
-                if($request->status==2){
-                    $serch_status = 0;
-                }
-                $gate_entry_data->where('status','=',$serch_status);
-            }else{
-                $gate_entry_data->where('status','=',3);
+            $loading_gate_entry = LuGateEntrie::with('getCustomer','getCommodity','getTransporter','getLuWeightBridge','getLuCommodityDetail','getLuCommodityDetail.getMaterial','getLuCommodityDetail.getUOM');
+
+            if(isset($request->report_type)){
+
+                $loading_gate_entry->where('is_loading','=',$request->report_type);
+
             }
+
+            if(isset($request->customer)){
+
+             $loading_gate_entry->where('customer_name','=',$request->customer);
+
+             }
+        
             if(isset($request->from_date) && isset($request->to_date))
             {
-                $gate_entry_data->whereBetween('created_at', [$request->from_date, $request->to_date]);
+                $loading_gate_entry->whereBetween('created_at', [$request->from_date, $request->to_date]);
 
-
-                // $created_date = date('Y-m-d',strtotime($request->created_date));
-                // $gate_entry_data->whereDate('created_at',$created_date);
             }
-           
-            
-            $gate_entry_data_list = $gate_entry_data->get();
+        
+            $loading_gate_entry_list = $loading_gate_entry->get();
 
-            return datatables()->of($gate_entry_data_list)
-                ->addColumn('action', function ($gate_entry_data_list) {
-                    $return_action = '<a href="' . route('gate.pass.show',base64_encode($gate_entry_data_list->id)) . '"  class="btn btn-sm btn-clean btn-icon mr-2" title="View details">
+            return datatables()->of($loading_gate_entry_list)
+                ->addColumn('action', function ($loading_gate_entry_list) {
+                    $return_action = '<a href="' . route('gate.pass.show',base64_encode($loading_gate_entry_list->id)) . '"  class="btn btn-sm btn-clean btn-icon mr-2" title="View details">
                     <span class="svg-icon svg-icon-md svg-icon-primary">
                     <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -65,22 +49,22 @@ class LuCustomerWiseReportController extends Controller
                     <!--end::Svg Icon-->
                     </span>
                     </a>';
-                    $return_action .= '<a target="_blank" href="' . route('gate.pass.print',base64_encode($gate_entry_data_list->id)) . '"  class="btn-clean btn-icon" title="Print"><i class="fa fa-print"></i></a>';
+                    $return_action .= '<a target="_blank" href="' . route('gate.pass.print',base64_encode($loading_gate_entry_list->id)) . '"  class="btn-clean btn-icon" title="Print"><i class="fa fa-print"></i></a>';
 
 
                 return $return_action;
                 })
-                ->editColumn('cargo_type', function($row){
-                    return  str_replace('_',' ',ucwords($row->getManifestoEntry->getCargo->cargo_name));
+                ->editColumn('customer_name', function($row){
+                    return  $row->getCustomer->customer_name;
                 })
-                ->rawColumns(['cargo_type','action'])
+                ->rawColumns(['customer_name','action'])
                
                 ->make(true);
        
 
             }else{
                  $customers = Customers::getAllCustomers();
-                return view('reports.customer_report')->with('customers',$customers);
+                return view('lu_reports.customer_report')->with('customers',$customers);
             }
     }
 }
