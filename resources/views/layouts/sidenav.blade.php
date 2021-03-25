@@ -604,6 +604,44 @@
                </ul>
             </li>
          </ul>
+
+         <ul class="pcoded-item pcoded-left-item">
+            <li class="pcoded-hasmenu">
+               <a href="javascript:void(0)" class="waves-effect waves-dark">
+               <span class="pcoded-micon">
+               <i class="feather icon-clipboard"></i>
+               </span>
+               <span class="pcoded-mtext">LU Reports</span>
+               </a>
+               <ul class="pcoded-submenu">
+                  <li class="">
+                     <a href="{{route('loading.customer.report')}}" class="waves-effect waves-dark">
+                     <span class="pcoded-mtext">Customer Wise</span>
+                     </a>
+                  </li>
+                  <li class="">
+                     <a href="{{route('loading.transport.report')}}" class="waves-effect waves-dark">
+                     <span class="pcoded-mtext">Transporter Wise</span>
+                     </a>
+                  </li>
+                  <li class="">
+                     <a href="{{route('loading.commodity.report')}}" class="waves-effect waves-dark">
+                     <span class="pcoded-mtext">Commodity Wise</span>
+                     </a>
+                  </li>
+                  <li class="">
+                     <a href="{{route('loading.token.report')}}" class="waves-effect waves-dark">
+                     <span class="pcoded-mtext">Token / Ticket No Wise</span>
+                     </a>
+                  </li>
+                  <li class="">
+                     <a href="{{route('loading.period.report')}}" class="waves-effect waves-dark">
+                     <span class="pcoded-mtext">Period Wise</span>
+                     </a>
+                  </li>
+               </ul>
+            </li>
+         </ul>
          @endif
       </div>
    </div>

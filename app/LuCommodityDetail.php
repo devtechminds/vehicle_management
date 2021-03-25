@@ -15,4 +15,9 @@ class LuCommodityDetail extends Model
     {
         return $this->hasOne('App\UOM', 'id', 'uom');
     }
+
+    public function getLuGateEntry()
+    {
+        return $this->hasOne('App\LuGateEntrie', 'id', 'lu_gate_entry_id');
+    }
 }

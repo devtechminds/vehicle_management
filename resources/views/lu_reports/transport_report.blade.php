@@ -12,7 +12,7 @@
          <div class="page-header-title">
             <i class="feather icon-clipboard bg-c-blue"></i>
             <div class="d-inline">
-               <h2>Customer Wise Report</h2>
+               <h2>Transporter Wise Report</h2>
             </div>
          </div>
       </div>
@@ -26,7 +26,7 @@
                   </a>
                </li>
                <li class="breadcrumb-item">
-                  <a href="#!">Customer Wise Report </a>
+                  <a href="#!">Transporter Wise Report</a>
                </li>
             </ul>
          </div>
@@ -58,10 +58,10 @@
                               </select>
                            </div>
                            <div class="col boxspace">
-                              <select name="customer" id="customer" class="form-control boxbrd hgt">
-                                 <option value="">Select Customer</option>
-                                 @foreach($customers as $customer)
-                                 <option value="{{$customer['customer_code']}}">{{ ucfirst($customer['customer_name']) }}</option>
+                              <select name="transporter" id="transporter" class="form-control boxbrd hgt">
+                                 <option value="">Select Transporter</option>
+                                 @foreach($transports as $transport)
+                                 <option value="{{$transport['transport_code']}}">{{ ucfirst($transport['transport_name']) }}</option>
                                  @endforeach
                               </select>
                            </div>
@@ -75,11 +75,11 @@
                               <button  id="filter" class="btn btn-info waves-effect waves-light btnspace">Filter</button>
                            </div>
                            <div class="col-sm-1 boxspace">
-                              <form action="{{route('loading.customer.report.download')}}" method="post">
+                              <form action="{{route('loading.transport.report.download')}}" method="post">
                                  {{ csrf_field() }}
                                  <input type="hidden" name="report_type_submit" id="report_type_submit">
                                  <input type="hidden" name="from_date_submit" id="from_date_submit">
-                                 <input type="hidden" name="customer" id="customer_id">
+                                 <input type="hidden" name="transporter" id="transporter_id">
                                  <input type="hidden" name="to_date_submit" id="to_date_submit">
                                  <button  id="download" class="btn btn-info waves-effect waves-light btnspace"><i class="fa fa-download"></i></button>
                               </form>
@@ -151,13 +151,13 @@
            processing: true,
            serverSide: true,
            ajax: {
-               url: "{{ route('loading.customer.report') }}",
+               url: "{{ route('loading.transport.report') }}",
                type: 'GET',
                data: function (d) {
                    d.report_type = $('#report_type').val();
                    d.to_date = $('#to_date').val();
                    d.from_date = $('#from_date').val();
-                   d.customer = $('#customer').val();
+                   d.transporter = $('#transporter').val();
                }
            },
            columns: [
@@ -236,9 +236,9 @@
    
    });
    
-   $(document).on("change", "#customer", function () {
+   $(document).on("change", "#transporter", function () {
    var id = $(this).val(); //get the current value's option
-   $('#customer_id').val(id);
+   $('#transporter_id').val(id);
    
    });
    
@@ -246,7 +246,7 @@
    $('#report_type_submit').val($('#report_type').val());
    $('#from_date_submit').val($('#from_date').val());
    $('#to_date_submit').val($('#to_date').val());
-   $('#customer').val($('#customer_id').val());
+   $('#transporter').val($('#transporter_id').val());
    
    });
    

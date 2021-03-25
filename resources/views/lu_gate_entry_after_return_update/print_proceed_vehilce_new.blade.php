@@ -999,7 +999,7 @@
                                           <table class="table table1 table-bordered" >
                                              <thead>
                                                 <tr>
-                                                   <th style="width: 250px;font-size: 12px;font-weight: 700;padding: 2px!important;padding-left: 2px !important;">Material Namesss</th>
+                                                   <th style="width: 250px;font-size: 12px;font-weight: 700;padding: 2px!important;padding-left: 2px !important;">Material Name</th>
                                                    <th style="width: 250px;font-size: 12px;font-weight: 700;padding: 2px!important;padding-left: 2px !important;">UOM</th>
                                                    <th style="width: 250px;font-size: 12px;font-weight: 700;padding: 2px!important;padding-left: 2px !important;">Quantity</th>
                                                    <th style="width: 250px;font-size: 12px;font-weight: 700;padding: 2px!important;padding-left: 2px !important;">Total Weight</th>

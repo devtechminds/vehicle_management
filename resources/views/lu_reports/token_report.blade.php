@@ -12,7 +12,7 @@
          <div class="page-header-title">
             <i class="feather icon-clipboard bg-c-blue"></i>
             <div class="d-inline">
-               <h2>Customer Wise Report</h2>
+               <h2>Token/Ticket No Wise Report</h2>
             </div>
          </div>
       </div>
@@ -26,7 +26,7 @@
                   </a>
                </li>
                <li class="breadcrumb-item">
-                  <a href="#!">Customer Wise Report </a>
+                  <a href="#!">Token/Ticket No Wise Report </a>
                </li>
             </ul>
          </div>
@@ -52,35 +52,19 @@
                               <a href="{{ route('proceed.vehilce')}}" title="Clear filter"><i class="fa fa-filter flt"></i></a>
                            </div>
                            <div class="col boxspace">
-                              <select name="report_type" id="report_type" class="form-control boxbrd hgt">
-                                 <option value="1">Loading</option>
-                                 <option value="2">Unloading</option>
-                              </select>
+                           <input type="text" name="token_no" id="token_no" class="form-control" value="" placeholder="Tocken No">
                            </div>
                            <div class="col boxspace">
-                              <select name="customer" id="customer" class="form-control boxbrd hgt">
-                                 <option value="">Select Customer</option>
-                                 @foreach($customers as $customer)
-                                 <option value="{{$customer['customer_code']}}">{{ ucfirst($customer['customer_name']) }}</option>
-                                 @endforeach
-                              </select>
-                           </div>
-                           <div class="col-sm-2 boxspace">
-                              <input type="date" id="from_date" name="from_date" value="{{date('Y-m-d')}}" onkeydown="return false"  class="form-control hgt"  placeholder="Date">
-                           </div>
-                           <div class="col-sm-2 boxspace">
-                              <input type="date" id="to_date" name="to_date" value="{{date('Y-m-d')}}" onkeydown="return false"  class="form-control hgt"  placeholder="Date">
+                           <input type="text" name="wb_ticket_no" id="wb_ticket_no" value="" class="form-control" placeholder="Weighbridge Ticket No">
                            </div>
                            <div class="col-sm-1 boxspace">
                               <button  id="filter" class="btn btn-info waves-effect waves-light btnspace">Filter</button>
                            </div>
                            <div class="col-sm-1 boxspace">
-                              <form action="{{route('loading.customer.report.download')}}" method="post">
+                              <form action="{{route('loading.token.report.download')}}" method="post">
                                  {{ csrf_field() }}
-                                 <input type="hidden" name="report_type_submit" id="report_type_submit">
-                                 <input type="hidden" name="from_date_submit" id="from_date_submit">
-                                 <input type="hidden" name="customer" id="customer_id">
-                                 <input type="hidden" name="to_date_submit" id="to_date_submit">
+                                 <input type="hidden" name="token_no" id="token_id">
+                                 <input type="hidden" name="wb_ticket_no" id="wb_ticket_id">
                                  <button  id="download" class="btn btn-info waves-effect waves-light btnspace"><i class="fa fa-download"></i></button>
                               </form>
                            </div>
@@ -151,13 +135,11 @@
            processing: true,
            serverSide: true,
            ajax: {
-               url: "{{ route('loading.customer.report') }}",
+               url: "{{ route('loading.token.report') }}",
                type: 'GET',
                data: function (d) {
-                   d.report_type = $('#report_type').val();
-                   d.to_date = $('#to_date').val();
-                   d.from_date = $('#from_date').val();
-                   d.customer = $('#customer').val();
+                   d.token_no = $('#token_no').val();
+                   d.wb_ticket_no = $('#wb_ticket_no').val();
                }
            },
            columns: [
@@ -216,39 +198,25 @@
    
    });
    
-  
-   
-   
-   $(document).on("change", "#report_type", function () {
+ 
+   $(document).on("change", "#token_no", function () {
    var id = $(this).val(); //get the current value's option
-   $('#report_type_submit').val(id);
+   $('#token_id').val(id);
    
    });
-   
-   $(document).on("change", "#from_date", function () {
+
+   $(document).on("change", "#wb_ticket_no", function () {
    var id = $(this).val(); //get the current value's option
-   $('#from_date_submit').val(id);
-   
-   });
-   $(document).on("change", "#to_date", function () {
-   var id = $(this).val(); //get the current value's option
-   $('#to_date_submit').val(id);
-   
-   });
-   
-   $(document).on("change", "#customer", function () {
-   var id = $(this).val(); //get the current value's option
-   $('#customer_id').val(id);
+   $('#wb_ticket_id').val(id);
    
    });
    
    $(document).ready(function() {
-   $('#report_type_submit').val($('#report_type').val());
-   $('#from_date_submit').val($('#from_date').val());
-   $('#to_date_submit').val($('#to_date').val());
-   $('#customer').val($('#customer_id').val());
-   
+   $('#token_no').val($('#token_id').val());
+   $('#wb_ticket_no').val($('#wb_ticket_id').val());
    });
+
+   
    
 </script>
 @endsection

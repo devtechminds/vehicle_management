@@ -470,7 +470,16 @@ Route::group(['middleware' => ['auth']], function () {
          Route::post('/token/report/download','TokenWiseReportsController@download')->name('token.report.download');
 
          //LoadingUnloadingReport
-         //Route::get('/customer/report','ReportsController@customerReport')->name('customer.report');
+         Route::get('/loading-customer/report','LuCustomerWiseReportController@luCustomerReport')->name('loading.customer.report');
+         Route::post('/loading-customer/report/download','LuCustomerWiseReportController@customerdownload')->name('loading.customer.report.download');
+         Route::get('/loading-transport/report','LuTransportWiseReportController@luTransportReport')->name('loading.transport.report');
+         Route::post('/loading-transport/report/download','LuTransportWiseReportController@transportdownload')->name('loading.transport.report.download');
+         Route::get('/loading-commodity/report','LuCommodityWiseReportController@luCommodityReport')->name('loading.commodity.report');
+         Route::post('/loading-commodity/report/download','LuCommodityWiseReportController@commodityDownload')->name('loading.commodity.report.download');
+         Route::get('/loading-period/report','LuPeriodWiseReportController@luPeriodReport')->name('loading.period.report');
+         Route::post('/loading-period/report/download','LuPeriodWiseReportController@periodDownload')->name('loading.period.report.download');
+         Route::get('/loading-token/report','LuTokenWiseReportController@luTokenReport')->name('loading.token.report');
+         Route::post('/loading-token/report/download','LuTokenWiseReportController@tokenDownload')->name('loading.token.report.download');
 
         //AdminUpdate
         Route::get('/update-entry','AdminUpdateController@entryIndex')->name('update.entry')->middleware('role:admin');
