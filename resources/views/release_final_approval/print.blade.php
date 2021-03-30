@@ -175,7 +175,7 @@
 </div>
 <label class="col-sm-2 col-form-label" style="padding-top: 0px;font-weight: 700;font-size: 12px;">CFS Release No </label>
 <div class="col-sm-4">
-<p style="font-size: 12px !important;">{{ isset($gate_entry->getManifestoEntry->getReleaseApprovalFinacialOfficerEntryLatest->cfs_release_no)?$gate_entry->getManifestoEntry->getReleaseApprovalFinacialOfficerEntryLatest->cfs_release_no:'N/A'}}</p>
+<p style="font-size: 12px !important;">{{ isset($gate_entry->cfs_release_no)?$gate_entry->cfs_release_no:'N/A'}}</p>
 </div>
 </div>
 
@@ -183,22 +183,22 @@
 <div class="form-group row " style="margin-bottom: -12px;">
 <label class="col-sm-2 col-form-label" style="padding-top: 0px;font-weight: 700;font-size: 12px;">Invoice No:</label>
 <div class="col-sm-4">
-<p style="font-size: 12px !important;">{{ isset($gate_entry->getManifestoEntry->getReleaseApprovalFinacialOfficerEntryLatest->invoice_no)?$gate_entry->getManifestoEntry->getReleaseApprovalFinacialOfficerEntryLatest->invoice_no:'N/A'}}</p>
+<p style="font-size: 12px !important;">{{ isset($gate_entry->invoice_no)?$gate_entry->invoice_no:'N/A'}}</p>
 </div>
 <label class="col-sm-2 col-form-label" style="padding-top: 0px;font-weight: 700;font-size: 12px;">Invoice Date:</label>
 <div class="col-sm-4">
-<p style="font-size: 12px !important;">{{ isset($gate_entry->getManifestoEntry->getReleaseApprovalFinacialOfficerEntryLatest->invoice_date)?$gate_entry->getManifestoEntry->getReleaseApprovalFinacialOfficerEntryLatest->invoice_date:'N/A'}}</p>
+<p style="font-size: 12px !important;">{{ isset($gate_entry->invoice_date)?$gate_entry->invoice_date:'N/A'}}</p>
 </div>
 </div>
 
 <div class="form-group row " style="margin-bottom: -12px;">
 <label class="col-sm-2 col-form-label" style="padding-top: 0px;font-weight: 700;font-size: 12px;">CFS Release Date</label>
 <div class="col-sm-4">
-<p style="font-size: 12px !important;">{{ isset($gate_entry->getManifestoEntry->getReleaseApprovalFinacialOfficerEntryLatest->cfs_release_date)?$gate_entry->getManifestoEntry->getReleaseApprovalFinacialOfficerEntryLatest->cfs_release_date:'N/A'}}</p>
+<p style="font-size: 12px !important;">{{ isset($gate_entry->cfs_release_date)?$gate_entry->cfs_release_date:'N/A'}}</p>
 </div>
 <label class="col-sm-2 col-form-label" style="padding-top: 0px;font-weight: 700;font-size: 12px;">CFS Release Exp Date</label>
 <div class="col-sm-4">
-<p style="font-size: 12px !important;">{{ isset($gate_entry->getManifestoEntry->getReleaseApprovalFinacialOfficerEntryLatest->cfs_release_exp_date)?$gate_entry->getManifestoEntry->getReleaseApprovalFinacialOfficerEntryLatest->cfs_release_exp_date:'N/A'}}</p>
+<p style="font-size: 12px !important;">{{ isset($gate_entry->cfs_release_exp_date)?$gate_entry->cfs_release_exp_date:'N/A'}}</p>
 </div>
 </div>
 

@@ -225,13 +225,15 @@ class ContainerReleaseFinalApprovalController extends Controller
      */
     public function print($id)
     {
+        //echo base64_decode($id);
+        //die;
         $gate_entry = ReleaseApprovalFinacialOfficerEntry::with('getGateEntry','getManifestoEntry','getManifestoEntry.getCargo','getManifestoEntry.getConsignment','getConsignmentDetails','getWeighBridge','getLocation','getConsignmentDetails.getCommodity',
         'getConsignmentDetails.getMaterial','getConsignmentDetails.getUOM'
         )
         ->where("id", "=", base64_decode($id))
         ->first();
-        // echo "<pre>";
-        // print_r($gate_entry)
+       // echo "<pre>";
+        //print_r($gate_entry->cfs_release_no);
         return view('release_final_approval.print')->with('gate_entry',$gate_entry);
     }
 }
