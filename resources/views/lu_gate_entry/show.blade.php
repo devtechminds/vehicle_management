@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master',['header' => 'Loading & Unloading'])
 @section('content')
 <div class="page-header card">
    <div class="row align-items-end">
@@ -182,14 +182,70 @@
                            </div>
                            </div>
                      </div>
-                     <div class="card-block height">
-                        <div class="row">
-                           <div class="col-sm-12" style="text-align: center;">
-                           <a href="{{route('loading.entry.index')}}" class="btn btn-success waves-effect waves-light">Back</a>
-                           <a class="btn btn-success waves-effect waves-light" target="_blank" href="{{route('loading.gate.entry.print',base64_encode($loadingGateEntry->id))}}">Print <i class="fa fa-print"></i></a>
-                           </div>
-                        </div>
-                     </div>
+                  </div>
+
+                  <div class="card">
+                  <div class="card-block">
+                  <div class="row" >
+                  <div class="col-sm-12">
+                  <div class="form-group row tblrw" style="border-bottom: 1px solid;
+                     padding-bottom: 8px;">
+                  <div class="col-sm-8">	
+                  <h3 class="title">Commodity Details</h3>
+                  </div>
+                  <div class="card-right">	
+                  <button 
+                  onclick="if (!window.__cfRLUnblockHandlers) return false; javascript:toggleFullScreen()" class=" waves-effect waves-light btn waves-effect waves-dark btn-primary btn-outline-primary btn-icon" data-cf-modified-41c5a08083d3d25c74495efb-="">
+                  <i class="full-screen feather icon-maximize"></i>
+                  </button>	
+                  <span id="addMoreCommodity" class="btn waves-effect waves-dark btn-primary btn-outline-primary btn-icon"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                  </div>
+                  </div>
+                  <div class="card-block">
+                  <div class="table-responsive">
+                  <table id="tableExample"  class="table tableExample m-b-0">
+                  <thead>
+                  <tr>
+                  <th>Material Name</th>
+                  <th>UOM</th>
+                  <th>Quantity</th>
+                  <th>Total Weight </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  @foreach($loadingGateEntry->getLuCommodityDetail as $key=>$value)
+                  <tr class="line">
+                  <td class="material-data">
+                  <select disabled name="material[0]" id="material" class="form-control boxbrd required clone_input material_select">
+                  <option value="">{{$value->getMaterial->material_name}}</option>
+                  </select></td>
+                  <td >
+                  <select disabled name="uom[0]" id="uom" class="form-control boxbrd clone_input">
+                  <option value="">{{ isset($value->getUOM->unit_entry_filed)?$value->getUOM->unit_entry_filed:''}}</option>
+                  </select></td>
+                  <td><input type="text" name="commodity_quantity[0]" id="commodity_quantity" value="{{$value->commodity_quantity}}" class="form-control boxbrd required clone_input "  placeholder="" readonly></td>
+                  <td><input type="text" name="total_weight[0]" id="total_weight" value="{{$value->total_weight}}" class="form-control boxbrd clone_input"  placeholder="" readonly></td>
+                  </tr>
+                  @endforeach
+                  </tbody>
+                  </table>
+                  <input type="hidden" id="counter" value="1">
+                  </div>
+                  </div>
+                  </div>
+                  </div>
+                  </div>
+                  </div>
+
+                  <div class="card">
+                  <div class="card-block height">
+                  <div class="row" >
+                  <div class="col-sm-12" style="text-align: center;">
+                  <a href="{{route('loading.entry.index')}}" class="btn btn-success waves-effect waves-light">Back</a>
+                  <a class="btn btn-success waves-effect waves-light" target="_blank" href="{{route('loading.gate.entry.print',base64_encode($loadingGateEntry->id))}}">Print <i class="fa fa-print"></i></a>
+                  </div>
+                  </div>
+                  </div>
                   </div>
                  
                </div>

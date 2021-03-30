@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master',['header' => 'Loading & Unloading'])
 @section('content')
 <div class="page-header card">
    <div class="row align-items-end">
@@ -294,7 +294,7 @@
                                  </button>	
                                  <span id="addMoreCommodity" class="btn waves-effect waves-dark btn-primary btn-outline-primary btn-icon"><i class="fa fa-plus" aria-hidden="true"></i></span>
                               </div>
-                           </div>
+                           </div>                         
                            <div class="card-block">
                               <div class="table-responsive">
                                  <table id="tableExample"  class="table tableExample m-b-0">
@@ -310,8 +310,9 @@
                                  @foreach($loadingGateEntry->getLuCommodityDetail as $key=>$value)
                                     <tr class="line">
                                        <td class="material-data">
-                                       <select name="material[0]" id="material" class="form-control boxbrd required clone_input material_select">
+                                       <select name="material[0]" id="material {{$value->material}}" class="form-control boxbrd required clone_input material_select">
                                           <option value="">Select Material</option>
+                                       
                                           @foreach($materials as $material)
                                              <option {{ $material['id'] == $value->material?'selected':'' }} data-unit_weight="{{ $material['unit_weight'] }}" value="{{ $material['id'] }}">{{ucwords( str_replace('_',' ',$material['material_name'])) }}</option>
                                           @endforeach
@@ -436,21 +437,27 @@ $('#myform').validate({ // initialize the plugin
 });
 
 
-$(document).on("change", ".commodity_select", function () {
+$(document).on("change", ".commodity_select", function () {   
     var id = $(this).val(); //get the current value's option
     var thisObj = $(this);
-    if(id){
+    commodity_select(id, thisObj);
+    
+});
+
+var commodity_select = function(id, thisObj =null){
+   if(id){
       $.ajax({
         type:'GET',
         url:'/material-by-comodity/'+id,
-        success:function(data){
+        success:function(data){           
            $("td.material-data select").html(data);
         }
       });
     }    
-});
+}
 
 $(document).on("change", ".material_select", function () {
+   
    calculateWeight($(this));
     var id = $(this).val(); //get the current value's option
     var thisObj = $(this);
@@ -512,7 +519,7 @@ $("#addMoreCommodity").click(function(){
       $clone.find('.clone_input').each(function() {
       this.name= this.name.replace('[0]', '['+counter+']');
    });
-    $clone.append("<td><div class='rmv' ><i class='btn-danger fa fa-minus-circle' aria-hidden='true'></i></div></td>");
+    //$clone.append("<td><div class='rmv' ><i class='btn-danger fa fa-minus-circle' aria-hidden='true'></i></div></td>");
     $('table.tableExample').append($clone);
     $('#counter').val( counter + 1 );
 });

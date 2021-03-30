@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master',['header' => 'Loading & Unloading'])
 @section('content')
 <div class="page-header card">
 <div class="row align-items-end">
@@ -67,7 +67,7 @@
 <select name="status" id="status" class="form-control boxbrd hgt">
 <option value="">Status</option>
 <option value="1">Pending</option>
-<option value="3">Approve</option>
+<option value="2">Approve</option>
 </select>
 
 </div>

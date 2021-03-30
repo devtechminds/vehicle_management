@@ -93,7 +93,7 @@ class LuGateEntrieController extends Controller
                  $status= '';
                  if($row->status==1){
                     $status="Pending";
-                }elseif($row->status==3){
+                }elseif($row->status==2){
                     $status="Approve";
                 }
               return $status;
@@ -113,9 +113,12 @@ class LuGateEntrieController extends Controller
         $customers    = Customers::getAllCustomers();
         $commoditys   = Commodity::getCommodity();
         $transports   = Transports::getTransports();
+        $materials    = Material::getAllMaterial();
+        $uoms         = UOM::getAllUOM();
         $ref_no       = LuGateEntrie::getRefNo();
         return view('lu_gate_entry.create')->with('customers',$customers)
         ->with('commoditys',$commoditys)->with('transports',$transports)
+        ->with('materials',$materials)->with('uoms',$uoms)
         ->with('ref_no',$ref_no);
     }
 
@@ -142,7 +145,8 @@ class LuGateEntrieController extends Controller
         try {
             DB::beginTransaction();
             $data = $request->all();
-            
+            $data['ref_no'] = LuGateEntrie::getRefNo();
+
             $loading_gate_entry = new LuGateEntrie();
             $loading_gate_entry->ref_no = $data['ref_no']?$data['ref_no']:'';
             $loading_gate_entry->date = $data['date']? date('Y-m-d',strtotime($data['date'])):'';
@@ -161,6 +165,8 @@ class LuGateEntrieController extends Controller
             $loading_gate_entry->dn_no = $data['dn_no']?$data['dn_no']:'';
             $loading_gate_entry->bl_qty = $data['bl_qty']?$data['bl_qty']:'';
             $loading_gate_entry->dn_qty = $data['dn_qty']?$data['dn_qty']:'';
+            $loading_gate_entry->quantity = isset($data['quantity'])?$data['quantity']:NULL;
+            $loading_gate_entry->metric_ton = isset($data['metric_ton'])?$data['metric_ton']:NULL;
             $loading_gate_entry->shipping_line = $data['shipping_line']?$data['shipping_line']:'';
             $loading_gate_entry->interchange_no = $data['interchange_no']?$data['interchange_no']:'';
             $loading_gate_entry->tra_seal_no = $data['tra_seal_no']?$data['tra_seal_no']:'';
@@ -169,6 +175,20 @@ class LuGateEntrieController extends Controller
             $loading_gate_entry->created_by  = auth()->user()->id;
             $loading_gate_entry->updated_by  = auth()->user()->id;
             $loading_gate_entry->save();
+
+            if(count($data['material'])>0){
+                foreach($data['material'] as $key=>$value){
+                 $commodity_detail = new LuCommodityDetail();
+                 $commodity_detail->lu_gate_entry_id= $loading_gate_entry->id;
+                 $commodity_detail->material= $data['material'][$key];
+                 $commodity_detail->uom= $data['uom'][$key];
+                 $commodity_detail->commodity_quantity= isset($data['commodity_quantity'][$key])?$data['commodity_quantity'][$key]:NULL;
+                 $commodity_detail->total_weight= isset($data['total_weight'][$key])?$data['total_weight'][$key]:NULL;
+                 $commodity_detail->created_by= auth()->user()->id;
+                 $commodity_detail->updated_by= auth()->user()->id;
+                 $commodity_detail->save();
+                }
+             }
 
             $loading_time_track_entry = new LuTimeTracking();
             $loading_time_track_entry->lu_gate_entry_id = $loading_gate_entry->id;
@@ -183,7 +203,7 @@ class LuGateEntrieController extends Controller
            
             DB::commit();
             //Send Notification
-            Notifications::sendNotification(auth()->user()->user_type,'weigh_bridge_officer','New Loading Truck Parking Note Added','','/manifesto-list-finance-officer');
+            Notifications::sendNotification(auth()->user()->user_type,'authorization_manager','New Loading Truck Parking Note Added','','/loading-gate-entry-approval-list');
             UserLog::AddLog('New Loading Truck Parking Note Added By');
             //return redirect()->route('loading.entry.index')->with('create', 'Loading Truck Parking Note Added successfully!');
             $loadingGateEntry = LuGateEntrie::with('getCustomer','getCommodity','getTransporter','getLuWeightBridge','getLuCommodityDetail','getLuCommodityDetail.getMaterial','getLuCommodityDetail.getUOM')
@@ -209,7 +229,7 @@ class LuGateEntrieController extends Controller
      */
     public function show($id)
     {
-        $loadingGateEntry = LuGateEntrie::with('getCustomer','getCommodity','getTransporter')
+        $loadingGateEntry = LuGateEntrie::with('getCustomer','getCommodity','getTransporter','getLuCommodityDetail','getLuCommodityDetail.getMaterial','getLuCommodityDetail.getUOM')
         ->where("id", "=", base64_decode($id))
         ->first();
         
@@ -224,7 +244,7 @@ class LuGateEntrieController extends Controller
      */
     public function edit($id)
     {
-        $loadingGateEntry = LuGateEntrie::with('getCustomer','getCommodity','getTransporter')
+        $loadingGateEntry = LuGateEntrie::with('getCustomer','getCommodity','getTransporter','getLuCommodityDetail','getLuCommodityDetail.getMaterial','getLuCommodityDetail.getUOM')
         ->where("id", "=", base64_decode($id))
         ->first();
         // echo "<pre>";
@@ -232,11 +252,16 @@ class LuGateEntrieController extends Controller
         $customers  = Customers::getAllCustomers();
         $commoditys  = Commodity::getCommodity();
         $transports = Transports::getTransports();
+        $materials = Material::select('id','material_name','unit_weight')
+                                ->where('status','=','1')
+                                ->where('commodity_id', '=', (int)$loadingGateEntry->commodity)
+                                ->get()->toArray();
+        $uoms = UOM::getAllUOM();
         
         return view('lu_gate_entry.update')->with('loadingGateEntry',$loadingGateEntry)
          ->with('customers',$customers)
-         ->with('commoditys',$commoditys)
-         ->with('transports',$transports);
+         ->with('commoditys',$commoditys)->with('transports',$transports)
+         ->with('materials',$materials)->with('uoms',$uoms);
     }
 
     /**
@@ -280,18 +305,34 @@ class LuGateEntrieController extends Controller
                 'dn_no' => $data['dn_no']? $data['dn_no']:'',
                 'bl_qty' => $data['bl_qty']? $data['bl_qty']:'',
                 'dn_qty' => $data['dn_qty']? $data['dn_qty']:'',
+                'quantity' => isset($data['quantity'])?$data['quantity']:NULL,
+                'metric_ton' => isset($data['metric_ton'])?$data['metric_ton']:NULL,
                 'shipping_line' => $data['shipping_line']? $data['shipping_line']:'',
                 'interchange_no' => $data['interchange_no']? $data['interchange_no']:'',
                 'tra_seal_no' => $data['tra_seal_no']? $data['tra_seal_no']:'',
-                'status' => 0,
+                'status' => 1,
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );
                 LuGateEntrie::where("id", "=",$data['id'])->update($update_data);
+                LuCommodityDetail::where('lu_gate_entry_id',$data['id'])->delete();
+                 if(count($data['material'])>0){
+                foreach($data['material'] as $key=>$value){
+                 $commodity_detail = new LuCommodityDetail();
+                 $commodity_detail->lu_gate_entry_id= $data['id'];
+                 $commodity_detail->material= $data['material'][$key];
+                 $commodity_detail->uom= $data['uom'][$key];
+                 $commodity_detail->commodity_quantity= isset($data['commodity_quantity'][$key])?$data['commodity_quantity'][$key]:NULL;
+                 $commodity_detail->total_weight= isset($data['total_weight'][$key])?$data['total_weight'][$key]:NULL;
+                 $commodity_detail->created_by= auth()->user()->id;
+                 $commodity_detail->updated_by= auth()->user()->id;
+                 $commodity_detail->save();
+                }
+             }
              
             DB::commit();
             //Send Notification
-            Notifications::sendNotification(auth()->user()->user_type,'weigh_bridge_officer','New Loading Truck Parking Note Updated','','/manifesto-list-finance-officer');
+            Notifications::sendNotification(auth()->user()->user_type,'authorization_manager','New Loading Truck Parking Note Updated','','/loading-gate-entry-approval-list');
             UserLog::AddLog('New Loading Truck Parking Note Updated By');
             return redirect()->route('loading.entry.index')->with('create', 'Loading Truck Parking Note Updated successfully!');
         } catch (\Exception $e) {
@@ -391,7 +432,7 @@ class LuGateEntrieController extends Controller
                  $status= '';
                  if($row->status==1){
                     $status="Pending";
-                }elseif($row->status==3){
+                }elseif($row->status==2){
                     $status="Approve";
                 }
               return $status;
@@ -460,6 +501,8 @@ class LuGateEntrieController extends Controller
         try {
             DB::beginTransaction();
             $data = $request->all();
+            $data['ref_no'] = LuGateEntrie::getRefNo();
+            
             $unloading_gate_entry = new LuGateEntrie();
             $unloading_gate_entry->ref_no = $data['ref_no']?$data['ref_no']:'';
             $unloading_gate_entry->date = $data['date']? date('Y-m-d',strtotime($data['date'])):'';
@@ -516,7 +559,7 @@ class LuGateEntrieController extends Controller
              
             DB::commit();
             //Send Notification
-            Notifications::sendNotification(auth()->user()->user_type,'weigh_bridge_officer','New Unloading Truck Parking Note Added','','/manifesto-list-finance-officer');
+            Notifications::sendNotification(auth()->user()->user_type,'authorization_manager','New Unloading Truck Parking Note Added','','/unloading-gate-entry-approval-list');
             UserLog::AddLog('New Unloading Truck Parking Note Added By');
             //return redirect()->route('unloading.entry.index')->with('create', 'Unloading Truck Parking Note Added successfully!');
             $unloadingGateEntry = LuGateEntrie::with('getCustomer','getCommodity','getTransporter','getLuWeightBridge','getLuCommodityDetail','getLuCommodityDetail.getMaterial','getLuCommodityDetail.getUOM')
@@ -555,7 +598,10 @@ class LuGateEntrieController extends Controller
         $customers  = Customers::getAllCustomers();
         $commoditys  = Commodity::getCommodity();
         $transports = Transports::getTransports();
-        $materials = Material::getAllMaterialData();
+        $materials = Material::select('id','material_name','unit_weight')
+                                ->where('status','=','1')
+                                ->where('commodity_id', '=', (int)$unloadingGateEntry->commodity)
+                                ->get()->toArray();
         $uoms = UOM::getAllUOM();
         return view('unloading_gate_entry.update')->with('unloadingGateEntry',$unloadingGateEntry)
          ->with('customers',$customers)
@@ -603,7 +649,7 @@ class LuGateEntrieController extends Controller
                 'shipping_line' => $data['shipping_line']? $data['shipping_line']:'',
                 'interchange_no' => $data['interchange_no']? $data['interchange_no']:'',
                 'tra_seal_no' => $data['tra_seal_no']? $data['tra_seal_no']:'',
-                'status' => 0,
+                'status' => 1,
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );
@@ -625,7 +671,7 @@ class LuGateEntrieController extends Controller
              
             DB::commit();
             //Send Notification
-            Notifications::sendNotification(auth()->user()->user_type,'weigh_bridge_officer','New Unloading Truck Parking Note Updated','','/manifesto-list-finance-officer');
+            Notifications::sendNotification(auth()->user()->user_type,'authorization_manager','New Unloading Truck Parking Note Updated','','/unloading-gate-entry-approval-list');
             UserLog::AddLog('New Unloading Truck Parking Note Updated By');
             return redirect()->route('unloading.entry.index')->with('create', 'Unloading Truck Parking Note Updated successfully!');
         } catch (\Exception $e) {

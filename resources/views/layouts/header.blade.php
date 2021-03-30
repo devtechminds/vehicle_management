@@ -21,7 +21,7 @@
                            </a>
                         </li>
                         <li>
-                           <h4 class="mxtxt">Vehicle Management System (CFS Module)</h4>
+                           <h4 class="mxtxt">{{strlen(trim($header)) > 0 ? $header : 'Vehicle Management System (CFS Module)'}}</h4>
                         </li>
                      </ul>
                      <ul class="nav-right">

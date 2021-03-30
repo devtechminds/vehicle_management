@@ -32,7 +32,7 @@ class LuAuthorizationManagerController extends Controller
             $loading_entry_data->where('status','=',$request->status);
             
         }else{
-            $loading_entry_data->where('status','=',2);
+            $loading_entry_data->where('status','=',1);
         }
         if($request->ref_no)
         {
@@ -74,9 +74,9 @@ class LuAuthorizationManagerController extends Controller
             })
             ->editColumn('status', function($row){
                  $status= '';
-                 if($row->status==3){
+                 if($row->status==1){
                     $status="Pending";
-                }elseif($row->status==4){
+                }elseif($row->status==2){
                     $status="Approve";
                 }
               return $status;
@@ -88,7 +88,7 @@ class LuAuthorizationManagerController extends Controller
 
       public function edit($id)
     {
-        $loadingGateEntry = LuGateEntrie::with('getCustomer','getCommodity','getTransporter','getLuWeightBridge')
+        $loadingGateEntry = LuGateEntrie::with('getCustomer','getCommodity','getTransporter','getLuCommodityDetail','getLuCommodityDetail.getMaterial','getLuCommodityDetail.getUOM')
         ->where("id", "=", base64_decode($id))
         ->first();
         // echo "<pre>";
@@ -96,7 +96,10 @@ class LuAuthorizationManagerController extends Controller
         $customers  = Customers::getAllCustomers();
         $commoditys  = Commodity::getCommodity();
         $transports = Transports::getTransports();
-        $materials = Material::getAllMaterialData();
+        $materials = Material::select('id','material_name','unit_weight')
+                                ->where('status','=','1')
+                                ->where('commodity_id', '=', (int)$loadingGateEntry->commodity)
+                                ->get()->toArray();
         $uoms = UOM::getAllUOM();
         
         return view('lu_gate_entry_approval.update')->with('loadingGateEntry',$loadingGateEntry)
@@ -144,19 +147,11 @@ class LuAuthorizationManagerController extends Controller
                 'shipping_line' => $data['shipping_line']? $data['shipping_line']:'',
                 'interchange_no' => $data['interchange_no']? $data['interchange_no']:'',
                 'tra_seal_no' => $data['tra_seal_no']? $data['tra_seal_no']:'',
-                'status' => 4,
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );
-                $weigh_bridge_data =array(
-                    'wb_ticket_no' => isset($data['wb_ticket_no'])?$data['wb_ticket_no']:NULL,
-                    'wb_tare_wt' => isset($data['wb_tare_wt'])?$data['wb_tare_wt']:NULL,
-                    'status' => 2,
-                    'updated_at' => now(),
-                    'updated_by' => auth()->user()->id
-                    );
+                
                 LuGateEntrie::where("id", "=",$data['id'])->update($update_data);
-                LuWeightBridge::where("lu_gate_entry_id", "=",$data['id'])->update($weigh_bridge_data);
                 LuCommodityDetail::where('lu_gate_entry_id',$data['id'])->delete();
                 if(count($data['material'])>0){
                     foreach($data['material'] as $key=>$value){
@@ -172,15 +167,45 @@ class LuAuthorizationManagerController extends Controller
                     }
                  }
 
-                 $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $data['id'])->where("new_status", "=", 3)->where("in_or_out", "=", 1)->first();
+                  
+            DB::commit();
+            //Send Notification
+           // Notifications::sendNotification(auth()->user()->user_type,'gate1_entry_officer','New Loading Gate Entry Updated','','/manifesto-list-finance-officer');
+            UserLog::AddLog('New Loading Gate Entry Updated By');
+            return redirect()->route('loading.gate.entry.approval.index')->with('create', 'Loading Gate Entry Updated Successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $e->getMessage();
+            return redirect()->route('loading.gate.entry.approval.index')->with('create',$e->getMessage());
+            
+        }
+      } 
+
+    }
+
+    public function gateEntryAuthorize($id)
+    {
+        try {
+            DB::beginTransaction();
+            
+            
+            $update_data =array(
+                'status' => 2,
+                'updated_at' => now(),
+                'updated_by' => auth()->user()->id
+                );
+                
+                LuGateEntrie::where("id", "=",$id)->update($update_data);
+
+                 $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $id)->where("new_status", "=", 1)->where("is_loading", "=", 1)->where("in_or_out", "=", 1)->first();
                  $start_time = strtotime($loading_gate_time->new_status_time);
                  $end_time   = strtotime(date('h:i A', strtotime(now())));
                  $secs       = ($end_time-$start_time);
                  $loading_time_track_entry = new LuTimeTracking();
-                 $loading_time_track_entry->lu_gate_entry_id = $data['id'];
+                 $loading_time_track_entry->lu_gate_entry_id = $id;
                  $loading_time_track_entry->in_or_out = 1;
-                 $loading_time_track_entry->old_status = 3;
-                 $loading_time_track_entry->new_status = 4;
+                 $loading_time_track_entry->old_status = 1;
+                 $loading_time_track_entry->new_status = 2;
                  $loading_time_track_entry->new_status_time = date('h:i A', strtotime(now()));
                  $loading_time_track_entry->time_diff = $secs;
                  $loading_time_track_entry->is_loading = 1;
@@ -189,7 +214,7 @@ class LuAuthorizationManagerController extends Controller
              
             DB::commit();
             //Send Notification
-            Notifications::sendNotification(auth()->user()->user_type,'gate1_entry_officer','New Loading Gate Entry Authorized','','/manifesto-list-finance-officer');
+            Notifications::sendNotification(auth()->user()->user_type,'weigh_bridge_officer','New Loading Gate Entry Authorized','','/loading-weigh-bridge-entry-list');
             UserLog::AddLog('New Loading Gate Entry Authorized By');
             return redirect()->route('loading.gate.entry.approval.index')->with('create', 'Loading Gate Entry Authorized Successfully!');
         } catch (\Exception $e) {
@@ -198,7 +223,6 @@ class LuAuthorizationManagerController extends Controller
             return redirect()->route('loading.gate.entry.approval.index')->with('create',$e->getMessage());
             
         }
-      } 
 
     }
 
@@ -213,15 +237,10 @@ class LuAuthorizationManagerController extends Controller
         $unloading_entry_data = LuGateEntrie::with('getCustomer','getCommodity');
         if($request->status)
         {
-            $serch_status= 1;
-            if($request->status==2){
-                $serch_status = 0;
-            }
-            $unloading_entry_data->where('status','=',$serch_status);
-            if($request->status==3){
-                $unloading_entry_data->where('status','=',$request->status);
-                $unloading_entry_data->Orwhere('status','=',$request->status);
-            }
+            $unloading_entry_data->where('status','=',$request->status);
+            
+        }else{
+            $unloading_entry_data->where('status','=',1);
         }
         if($request->ref_no)
         {
@@ -263,9 +282,9 @@ class LuAuthorizationManagerController extends Controller
             })
             ->editColumn('status', function($row){
                  $status= '';
-                 if($row->status==3){
+                 if($row->status==1){
                     $status="Pending";
-                }elseif($row->status==4){
+                }elseif($row->status==2){
                     $status="Approve";
                 }
               return $status;
@@ -277,7 +296,7 @@ class LuAuthorizationManagerController extends Controller
 
     public function unloadingEdit($id)
     {
-        $unloadingGateEntry = LuGateEntrie::with('getCustomer','getCommodity','getTransporter','getLuCommodityDetail','getLuCommodityDetail.getMaterial','getLuCommodityDetail.getUOM','getLuWeightBridge')
+        $unloadingGateEntry = LuGateEntrie::with('getCustomer','getCommodity','getTransporter','getLuCommodityDetail','getLuCommodityDetail.getMaterial','getLuCommodityDetail.getUOM')
         ->where("id", "=", base64_decode($id))
         ->first();
         // echo "<pre>";
@@ -285,7 +304,10 @@ class LuAuthorizationManagerController extends Controller
         $customers  = Customers::getAllCustomers();
         $commoditys  = Commodity::getCommodity();
         $transports = Transports::getTransports();
-        $materials = Material::getAllMaterialData();
+        $materials = Material::select('id','material_name','unit_weight')
+        ->where('status','=','1')
+        ->where('commodity_id', '=', (int)$unloadingGateEntry->commodity)
+        ->get()->toArray();
         $uoms = UOM::getAllUOM();
         return view('unloading_gate_entry_approval.update')->with('unloadingGateEntry',$unloadingGateEntry)
          ->with('customers',$customers)
@@ -332,19 +354,10 @@ class LuAuthorizationManagerController extends Controller
                 'shipping_line' => $data['shipping_line']? $data['shipping_line']:'',
                 'interchange_no' => $data['interchange_no']? $data['interchange_no']:'',
                 'tra_seal_no' => $data['tra_seal_no']? $data['tra_seal_no']:'',
-                'status' => 4,
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );
-                $weigh_bridge_data =array(
-                    'wb_ticket_no' => isset($data['wb_ticket_no'])?$data['wb_ticket_no']:NULL,
-                    'wb_tare_wt' => isset($data['wb_tare_wt'])?$data['wb_tare_wt']:NULL,
-                    'status' => 1,
-                    'updated_at' => now(),
-                    'updated_by' => auth()->user()->id
-                    );
                 LuGateEntrie::where("id", "=",$data['id'])->update($update_data);
-                LuWeightBridge::where("lu_gate_entry_id", "=",$data['id'])->update($weigh_bridge_data);
                 LuCommodityDetail::where('lu_gate_entry_id',$data['id'])->delete();
                 if(count($data['material'])>0){
                     foreach($data['material'] as $key=>$value){
@@ -360,24 +373,10 @@ class LuAuthorizationManagerController extends Controller
                     }
                  }
 
-                 $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $data['id'])->where("new_status", "=", 3)->where("in_or_out", "=", 1)->first();
-                 $start_time = strtotime($loading_gate_time->new_status_time);
-                 $end_time   = strtotime(date('h:i A', strtotime(now())));
-                 $secs       = ($end_time-$start_time);
-                 $loading_time_track_entry = new LuTimeTracking();
-                 $loading_time_track_entry->lu_gate_entry_id = $data['id'];
-                 $loading_time_track_entry->in_or_out = 1;
-                 $loading_time_track_entry->old_status = 3;
-                 $loading_time_track_entry->new_status = 4;
-                 $loading_time_track_entry->new_status_time = date('h:i A', strtotime(now()));
-                 $loading_time_track_entry->time_diff = $secs;
-                 $loading_time_track_entry->is_loading = 2;
-                 $loading_time_track_entry->updated_by = auth()->user()->id;
-                 $loading_time_track_entry->save();
-             
+                
             DB::commit();
             //Send Notification
-            Notifications::sendNotification(auth()->user()->user_type,'gate1_entry_officer','New Unloading Gate Entry Authorized','','/manifesto-list-finance-officer');
+            //Notifications::sendNotification(auth()->user()->user_type,'weigh_bridge_officer','New Unloading Gate Entry Authorized','','/unloading-weigh-bridge-entry-list');
             UserLog::AddLog('New Unloading Gate Entry Authorized By');
             return redirect()->route('unloading.gate.entry.approval.index')->with('create', 'Unloading Gate Entry Authorized Successfully!');
         } catch (\Exception $e) {
@@ -387,6 +386,48 @@ class LuAuthorizationManagerController extends Controller
             
         }
       } 
+
+    }
+
+    public function unloadingGateEntryAuthorize($id)
+    {
+        try {
+            DB::beginTransaction();
+         
+            $update_data =array(
+                'status' => 2,
+                'updated_at' => now(),
+                'updated_by' => auth()->user()->id
+                );
+                
+                LuGateEntrie::where("id", "=",$id)->update($update_data);
+
+                 $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $id)->where("new_status", "=", 1)->where("is_loading", "=", 2)->where("in_or_out", "=", 1)->first();
+                 $start_time = strtotime($loading_gate_time->new_status_time);
+                 $end_time   = strtotime(date('h:i A', strtotime(now())));
+                 $secs       = ($end_time-$start_time);
+                 $loading_time_track_entry = new LuTimeTracking();
+                 $loading_time_track_entry->lu_gate_entry_id = $id;
+                 $loading_time_track_entry->in_or_out = 1;
+                 $loading_time_track_entry->old_status = 1;
+                 $loading_time_track_entry->new_status = 2;
+                 $loading_time_track_entry->new_status_time = date('h:i A', strtotime(now()));
+                 $loading_time_track_entry->time_diff = $secs;
+                 $loading_time_track_entry->is_loading = 2;
+                 $loading_time_track_entry->updated_by = auth()->user()->id;
+                 $loading_time_track_entry->save();
+             
+            DB::commit();
+            //Send Notification
+            Notifications::sendNotification(auth()->user()->user_type,'weigh_bridge_officer','New Unloading Gate Entry Authorized','','/unloading-weigh-bridge-entry-list');
+            UserLog::AddLog('New Unloading Gate Entry Authorized By');
+            return redirect()->route('unloading.gate.entry.approval.index')->with('create', 'Unloading Gate Entry Authorized Successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $e->getMessage();
+            return redirect()->route('unloading.gate.entry.approval.index')->with('create',$e->getMessage());
+            
+        }
 
     }
 
@@ -469,10 +510,13 @@ class LuAuthorizationManagerController extends Controller
         $customers  = Customers::getAllCustomers();
         $commoditys  = Commodity::getCommodity();
         $transports = Transports::getTransports();
-        $materials = Material::getAllMaterialData();
+        $materials = Material::select('id','material_name','unit_weight')
+                                ->where('status','=','1')
+                                ->where('commodity_id', '=', (int)$loadingGateEntry->commodity)
+                                ->get()->toArray();
         $uoms = UOM::getAllUOM();
         $locations = Location::getAllLocation();
-        $gate_pass_no = LuGateEntrie::getGatePassNo();
+        $gate_pass_no = LuGateEntrie::getGatePassNo();       
         
         return view('lu_gate_entry_after_return_update.update')->with('loadingGateEntry',$loadingGateEntry)
          ->with('customers',$customers)->with('locations',$locations)

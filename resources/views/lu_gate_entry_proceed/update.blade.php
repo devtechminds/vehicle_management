@@ -331,31 +331,14 @@
 
 $('#myform').validate({ // initialize the plugin
     rules: {
-      customer_name: {
+      wb_ticket_no: {
             required: true,
             
         },
-        commodity: {
+        wb_tare_wt: {
             required: true,
             
         },
-        truck_no: {
-            required: true,
-            
-        },
-        container_no: {
-            required: true,
-            
-        },
-        driver_name: {
-            required: true,
-        },
-        transporter: {
-            required: true,
-           
-        },
-        
-
        
     },
     submitHandler: function (form) { // for demo

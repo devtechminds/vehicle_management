@@ -38,17 +38,16 @@
       </div>
       <div id="pcoded" class="pcoded">
          <div class="pcoded-overlay-box"></div>
-         <div class="pcoded-container navbar-wrapper">
-            @include('layouts.header')
+         <div class="pcoded-container navbar-wrapper">           
+            @include('layouts.header',['header' => $header ??'' ])
             <div class="pcoded-main-container">
                <div class="pcoded-wrapper">
                   @include('layouts.sidenav')
-                  <div class="pcoded-content">
-                     
+                  <div class="pcoded-content">                     
                      <div class="pcoded-inner-content">
                         <div class="main-body">
                            <div class="page-wrapper">
-                              <div class="page-body">
+                              <div class="page-body">                             
                                  @yield('content')
                               </div>
                            </div>

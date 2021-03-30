@@ -90,6 +90,8 @@
                               <option value="field_supervisor" {{ old('user_type')=='field_supervisor'?'selected':'' }}>Field Supervisor</option>
                               <option value="sfs_operation_manager" {{ old('user_type')=='sfs_operation_manager'?'selected':'' }}>Operation Manager</option>
                               <option value="finance_controller" {{ old('user_type')=='finance_controller'?'selected':'' }}>Finance Controller</option>
+                              <option value="authorization_manager" {{ old('user_type')=='authorization_manager'?'selected':'' }}>Authorization Manager</option>
+                              <option value="report_manager" {{ old('user_type')=='report_manager'?'selected':'' }}>Report Manager</option>
                               </select>
                               </div>
 

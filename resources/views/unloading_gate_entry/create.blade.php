@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master',['header' => 'Loading & Unloading'])
 @section('content')
 <div class="page-header card">
    <div class="row align-items-end">

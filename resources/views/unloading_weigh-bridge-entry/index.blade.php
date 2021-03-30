@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master',['header' => 'Loading & Unloading'])
 @section('content')
 <div class="page-header card">
 <div class="row align-items-end">
@@ -18,7 +18,7 @@
 <a href="index.html"><i class="feather icon-home"></i></a>
 </li>
 <li class="breadcrumb-item"><a href="#!">Weigh Bridge</a></li>
-<li class="breadcrumb-item"><a href="#!">Registered Vehicle</a></li>
+<li class="breadcrumb-item"><a href="#!">Weigh Bridge (Unloading)</a></li>
 </ul>
 </div>
 </div>
@@ -65,8 +65,8 @@
 <div class="col boxspace">
 <select name="status" id="status" class="form-control boxbrd hgt">
 <option value="">Status</option>
-<option value="1">Pending</option>
-<option value="2">Approve</option>
+<option value="2">Pending</option>
+<option value="1">Approve</option>
 </select>
 
 </div>

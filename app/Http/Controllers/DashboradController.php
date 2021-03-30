@@ -38,6 +38,12 @@ class DashboradController extends Controller
       }elseif( in_array("finance_controller", $user_type)){
         $gate_entry = GateEntry::getFinanceControllerData();
         return view('dashborad.finance_controller_dashborad')->with('gate_entry',$gate_entry);  
+      }elseif( in_array("authorization_manager", $user_type)){
+        $gate_entry = GateEntry::getFinanceControllerData();
+        return view('dashborad.authorization_manager_dashborad')->with('gate_entry',$gate_entry);  
+      }elseif( in_array("report_manager", $user_type)){
+        $gate_entry = GateEntry::getFinanceControllerData();
+        return view('dashborad.report_manager_dashborad')->with('gate_entry',$gate_entry);  
       }
        
     }

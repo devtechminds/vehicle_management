@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master',['header' => 'Loading & Unloading'])
 @section('content')
 <div class="page-header card">
    <div class="row align-items-end">
@@ -88,7 +88,7 @@
                            </div>
                            <label class="col-sm-2 col-form-label">Commodity</label>
                            <div class="col-sm-4">
-                              <select name="commodity" id="commodity" class="form-control boxbrd">
+                              <select name="commodity" id="commodity" class="form-control boxbrd commodity_select">
                                     <option value="">Select Commodity</option>
                                     @foreach($commoditys as $commodity)
                                        <option value="{{ $commodity['commodity_code'] }}">{{ucwords( str_replace('_',' ',$commodity['commodity_name'])) }}</option>
@@ -98,15 +98,26 @@
                            </div>
 
                            <div class="form-group row">
-                           <label class="col-sm-2 col-form-label">Truck No</label>
-                           <div class="col-sm-4">
-                           <input type="text" name="truck_no" id="truck_no" class="form-control" placeholder="">
+                              <label class="col-sm-2 col-form-label">Truck No</label>
+                              <div class="col-sm-4">
+                              <input type="text" name="truck_no" id="truck_no" class="form-control" placeholder="">
+                              </div>
+                              <label class="col-sm-2 col-form-label">Quantity</label>
+                              <div class="col-sm-4">
+                              <input type="text" name="quantity" id="quantity" class="form-control" placeholder="" readonly>
+                              </div>
                            </div>
-                           <label class="col-sm-2 col-form-label">Trailer No</label>
-                           <div class="col-sm-4">
-                           <input type="text" name="trailer_no" id="trailer_no" class="form-control" placeholder="">
-                           </div>
-                           </div>
+
+                           <div class="form-group row">
+                              <label class="col-sm-2 col-form-label">Trailer No</label>
+                              <div class="col-sm-4">
+                              <input type="text" name="trailer_no" id="trailer_no" class="form-control" placeholder="">
+                              </div>
+                              <label class="col-sm-2 col-form-label">Metric Ton</label>
+                              <div class="col-sm-4">
+                              <input type="text" name="metric_ton" id="metric_ton" class="form-control" placeholder="" readonly>
+                              </div>
+                          </div>
 
                            <div class="form-group row">
                            <label class="col-sm-2 col-form-label">Transporter</label>
@@ -190,15 +201,70 @@
                            <input type="text" name="tra_seal_no" id="tra_seal_no" class="form-control" placeholder="">
                            </div>
                            </div>
-                     </div>
-                     <div class="card-block height">
-                        <div class="row">
-                           <div class="col-sm-12" style="text-align: center;">
-                              <button class="btn btn-success waves-effect waves-light btnSubmitClick">Register</button>
-                           </div>
                         </div>
                      </div>
+                     <div class="card">
+              <div class="card-block">
+                <div class="row" >
+                  <div class="col-sm-12">
+                    <div class="form-group row tblrw" style="border-bottom: 1px solid;
+                      padding-bottom: 8px;">
+                      <div class="col-sm-8">
+                        <h3 class="title">Commodity Details</h3>
+                      </div>
+                      <div class="card-right">	
+                        <button 
+                          onclick="if (!window.__cfRLUnblockHandlers) return false; javascript:toggleFullScreen()" class=" waves-effect waves-light btn waves-effect waves-dark btn-primary btn-outline-primary btn-icon" data-cf-modified-41c5a08083d3d25c74495efb-="">
+                        <i class="full-screen feather icon-maximize"></i>
+                        </button>	
+                        <span id="addMoreCommodity" class="btn waves-effect waves-dark btn-primary btn-outline-primary btn-icon"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                      </div>
+                    </div>
+                    <div class="card-block">
+                      <div class="table-responsive">
+                        <table id="tableExample"  class="table tableExample m-b-0">
+                          <thead>
+                            <tr>
+                              <th>Material Name</th>
+                              <th>UOM</th>
+                              <th>Quantity</th>
+                              <th>Total Weight </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="line">
+                              <td class="material-data">
+                                <select name="material[0]" id="material" class="form-control boxbrd required clone_input material_select">
+                                  <option value="">Select Material</option>
+                                </select>
+                              </td>
+                              <td >
+                                <select name="uom[0]" id="uom" class="form-control boxbrd clone_input">
+                                  <option value="">Select UOM</option>
+                                </select>
+                              </td>
+                              <td><input type="text" name="commodity_quantity[0]" id="commodity_quantity" class="form-control boxbrd required clone_input "  placeholder=""></td>
+                              <td><input type="text" name="total_weight[0]" id="total_weight" class="form-control boxbrd clone_input"  placeholder="" readonly></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <input type="hidden" id="counter" value="1">
+                      </div>
+                    </div>
                   </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-block height">
+                <div class="row" >
+                  <div class="col-sm-12" style="text-align: center;">
+                    <button class="btn btn-success waves-effect waves-light btnSubmitClick" id="myButton" >Save & Print <i class="fa fa-print"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
                  
                </div>
             </div>
@@ -257,6 +323,102 @@ $('#myform').validate({ // initialize the plugin
 });
 
 
+$(document).on("change", ".commodity_select", function () {
+    var id = $(this).val(); //get the current value's option
+    var thisObj = $(this);
+    if(id){
+      $.ajax({
+        type:'GET',
+        url:'/material-by-comodity/'+id,
+        success:function(data){
+           $("td.material-data select").html(data);
+        }
+      });
+    }    
+});
+
+$(document).on("change", ".material_select", function () {
+   calculateWeight($(this));
+    var id = $(this).val(); //get the current value's option
+    var thisObj = $(this);
+    if(id){       
+      $.ajax({
+        type:'GET',
+        url:'/uom-by-material/'+id,
+        success:function(data){
+         thisObj.closest('td').next().find('select').html(data);
+        }
+      });
+    }
+   
+});
+
+$(document).on("keyup", "#commodity_quantity", function () {
+   calculateWeight($(this));
+});
+
+var calculateWeight = function(_this){
+   var tot_weight = 0;
+   var _parent = _this.parent().parent();   
+   var qty = _parent.find('td:eq(2)').find('input').val();
+   var weight = _parent.find('#material :selected').data('unit_weight');   
+   weight = (!weight)? 0 : parseFloat(weight);
+   qty = (!qty)? 0 : parseInt(qty);
+   tot_weight = weight*qty;
+   
+   _parent.find('#total_weight').val(tot_weight);
+   updateMetricTonQty();   
+}
+
+
+
+var updateMetricTonQty = function (){
+   var metric_ton = tot_qty = 0;
+   $('#tableExample tbody tr.line').each(function(k,v){
+      let totWeight = parseFloat($(this).find('#total_weight').val());
+      let qty = parseInt($(this).find('#commodity_quantity').val());
+      totWeight = !totWeight?0:totWeight;
+      qty = !qty?0:qty;      
+      metric_ton += totWeight;
+      tot_qty += qty;
+   });
+   $('#metric_ton').val(metric_ton);
+   $('#quantity').val(tot_qty);  
+}
+
+
+
+$("#addMoreCommodity").click(function(){
+   var counter = parseInt($('#counter').val());
+   var $clone = $('table.tableExample tr.line:first').clone();   
+    $clone.find("input").val("");
+    $clone.find('label.error').remove();
+    $clone.find('.error').removeClass('error');
+    var data_children_count = $clone.find('td').attr("data-children-count");
+    
+      $clone.find('.clone_input').each(function() {
+      this.name= this.name.replace('[0]', '['+counter+']');
+   });
+    $clone.append("<td><div class='rmv' ><i class='btn-danger fa fa-minus-circle' aria-hidden='true'></i></div></td>");
+    $('table.tableExample').append($clone);
+    $('#counter').val( counter + 1 );
+});
+
+$('.tableExample').on('click', '.rmv', function () { 
+   if (confirm('Do you want to delete this Commodity Details?')){    
+     $(this).closest('tr').remove();
+     updateMetricTonQty();
+   }else{
+         return false;
+   }
+});
+
+
+$('.required').each(function() {
+ $(this).rules('add', {
+    required: true,
+ });
+});
 
 </script>
 @endsection

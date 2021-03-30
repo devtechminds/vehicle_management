@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master',['header' => 'Loading & Unloading'])
 @section('content')
 <div class="page-header card">
    <div class="row align-items-end">
@@ -6,7 +6,7 @@
          <div class="page-header-title">
             <i class="feather icon-clipboard bg-c-blue"></i>
             <div class="d-inline">
-               <h3>VEHICLE SLIP RETURN FORM(AFTER LOADING)</h3>
+               <h3>VEHICLE AFTER LOADING</h3>
             </div>
          </div>
       </div>
@@ -18,7 +18,7 @@
                </li>
                <li class="breadcrumb-item"><a href="#!">Weigh Bridge</a></li>
                <li class="breadcrumb-item">
-                  <a href="#!">Vehicle return after loading</a>
+                  <a href="#!">Vehicle after loading</a>
                </li>
             </ul>
          </div>
@@ -127,7 +127,7 @@
                            </div>
                            <label class="col-sm-2 col-form-label">Quantity</label>
                            <div class="col-sm-4">
-                           <input type="text" name="quantity" id="quantity" class="form-control" placeholder="" readonly>
+                           <input type="text" name="quantity" id="quantity" value="{{ $loadingGateEntry->quantity }}"  class="form-control" placeholder="" readonly>
                            </div>
                         </div>
                         <div class="form-group row">
@@ -137,7 +137,7 @@
                            </div>
                            <label class="col-sm-2 col-form-label">Metric Ton</label>
                            <div class="col-sm-4">
-                           <input type="text" name="metric_ton" id="metric_ton" class="form-control" placeholder="" readonly>
+                           <input type="text" name="metric_ton" id="metric_ton" value="{{ round($loadingGateEntry->metric_ton,2) }}" class="form-control" placeholder="" readonly>
                            </div>
                         </div>
                         <div class="form-group row">
@@ -284,7 +284,7 @@
                                  onclick="if (!window.__cfRLUnblockHandlers) return false; javascript:toggleFullScreen()" class=" waves-effect waves-light btn waves-effect waves-dark btn-primary btn-outline-primary btn-icon" data-cf-modified-41c5a08083d3d25c74495efb-="">
                                  <i class="full-screen feather icon-maximize"></i>
                                  </button>	
-                                 <span id="addMoreCommodity" class="btn waves-effect waves-dark btn-primary btn-outline-primary btn-icon"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                 <!-- <span id="addMoreCommodity" class="btn waves-effect waves-dark btn-primary btn-outline-primary btn-icon"><i class="fa fa-plus" aria-hidden="true"></i></span> -->
                               </div>
                            </div>
                            <div class="card-block">
@@ -318,7 +318,7 @@
                                        </select>
                                        </td>
                                        <td><input type="text" name="commodity_quantity[0]" id="commodity_quantity" value="{{ $value->commodity_quantity}}" class="form-control boxbrd required clone_input "  placeholder="" readonly></td>
-                                       <td><input type="text" name="total_weight[0]" id="total_weight" value="{{ $value->total_weight}}" class="form-control boxbrd clone_input"  placeholder="" readonly></td>
+                                       <td><input type="text" name="total_weight[0]" id="total_weight" value="{{ round($value->total_weight,2) }}" class="form-control boxbrd clone_input"  placeholder="" readonly></td>
                                     </tr>
                                     @endforeach
                                  </tbody>
@@ -335,7 +335,7 @@
                      <div class="card-block height">
                         <div class="form-group row dwn" >
                            <div class="col-sm-12" style="text-align: center;">
-                           <button class="btn btn-warning waves-effect waves-light">Save</button>
+                           <button class="btn btn-warning waves-effect waves-light">Update</button>
                               
                            </div>
                         </div>

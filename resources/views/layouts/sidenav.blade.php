@@ -325,12 +325,12 @@
                   <ul class="pcoded-submenu" style="display: none;">
                   <li class="{{ request()->is('loading-weigh-bridge-entry-list')  ? 'active' : '' }}">
                   <a href="{{route('loading.weigh.bridge.entry.index')}}" class="waves-effect waves-dark">
-                  <span class="pcoded-mtext">Registered Vehicle</span>
+                  <span class="pcoded-mtext">Loading Vehicle</span>
                   </a>
                   </li>
                   <li class="{{ request()->is('loading-gate-entry-return-list')  ? 'active' : '' }}">
                   <a href="{{route('loading.gate.entry.return.index')}}" class="waves-effect waves-dark">
-                  <span class="pcoded-mtext">Vehicle Return After Loading</span>
+                  <span class="pcoded-mtext">Vehicle After Loading</span>
                   </a>
                   </li>
 
@@ -347,12 +347,12 @@
                   <ul class="pcoded-submenu">
                   <li class="{{ request()->is('unloading-weigh-bridge-entry-list')  ? 'active' : '' }}">
                   <a href="{{route('unloading.weigh.bridge.entry.index')}}" class="waves-effect waves-dark">
-                  <span class="pcoded-mtext">Registered Vehicle</span>
+                  <span class="pcoded-mtext">Unloading Vehicle</span>
                   </a>
                   </li>
                   <li class="{{ request()->is('unloading-gate-entry-return-list')  ? 'active' : '' }}">
                   <a href="{{route('unloading.gate.entry.return.index')}}" class="waves-effect waves-dark">
-                  <span class="pcoded-mtext">Vehicle Return After Unloading</span>
+                  <span class="pcoded-mtext">Vehicle After Unloading</span>
                   </a>
                   </li>
 
@@ -510,12 +510,12 @@
                      <ul class="pcoded-submenu">
                         <li class="{{ request()->is('loading-gate-entry-approval-list') ? 'active' : '' }}">
                            <a href="{{route('loading.gate.entry.approval.index')}}" class="waves-effect waves-dark">
-                           <span class="pcoded-mtext">Weigh Bridge Entry Updates</span>
+                           <span class="pcoded-mtext">Loading Authorization</span>
                            </a>
                         </li>
                         <li class="{{ request()->is('loading-weigh-bridge-return-update-list') ? 'active' : '' }}">
                            <a href="{{route('loading.weigh.bridge.return.update.index')}}" class="waves-effect waves-dark">
-                           <span class="pcoded-mtext">Weigh Bridge Entry Updates After Return</span>
+                           <span class="pcoded-mtext">Vehicle return after Loading</span>
                            </a>
                         </li>
                      </ul>
@@ -529,12 +529,12 @@
                      <ul class="pcoded-submenu {{ request()->is('unloading-gate-entry-approval-list') ? 'active' : '' }}">
                         <li class="{{ request()->is('unloading-gate-entry-approval-list') ? 'active' : '' }}">
                            <a href="{{route('unloading.gate.entry.approval.index')}}" class="waves-effect waves-dark">
-                           <span class="pcoded-mtext">Weigh Bridge Entry Updates</span>
+                           <span class="pcoded-mtext">Unloading Authorization</span>
                            </a>
                         </li>
                         <li class="{{ request()->is('unloading-weigh-bridge-return-update-list') ? 'active' : '' }}">
                            <a href="{{route('unloading.weigh.bridge.return.update.index')}}" class="waves-effect waves-dark">
-                           <span class="pcoded-mtext">Weigh Bridge Entry Updates After Return</span>
+                           <span class="pcoded-mtext">Vehicle return after Unloading</span>
                            </a>
                         </li>
                      </ul>
@@ -560,7 +560,7 @@
             </li>
             @endif
          </ul>
-         @if(in_array("admin", $user_type))
+         @if(in_array("admin", $user_type) || in_array("report_manager", $user_type))
          <div class="pcoded-navigation-label">All Reports</div>
          <ul class="pcoded-item pcoded-left-item">
             <li class="pcoded-hasmenu">

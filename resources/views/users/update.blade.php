@@ -95,6 +95,8 @@
                               <option value="field_supervisor" {{ in_array("field_supervisor", $type)?'selected':'' }}>Field Supervisor</option>
                               <option value="sfs_operation_manager" {{ in_array("sfs_operation_manager", $type)?'selected':'' }}>Operation Manager</option>
                               <option value="finance_controller" {{in_array("finance_controller", $type)?'selected':'' }}>Finance Controller</option>
+                              <option value="authorization_manager" {{in_array("authorization_manager", $type)?'selected':'' }}>Authorization Manager</option>
+                              <option value="report_manager" {{in_array("report_manager", $type)?'selected':'' }}>Report Manager</option>
                               </select>
                               </div>
 

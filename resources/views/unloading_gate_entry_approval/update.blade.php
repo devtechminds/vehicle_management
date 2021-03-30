@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master',['header' => 'Loading & Unloading'])
 @section('content')
 <div class="page-header card">
    <div class="row align-items-end">
@@ -18,7 +18,7 @@
                </li>
                <li class="breadcrumb-item"><a href="#!">Authorization Manager</a></li>
                <li class="breadcrumb-item">
-                  <a href="#!">Weigh bridge entry update</a>
+                  <a href="#!">Authorization Unloading</a>
                </li>
             </ul>
          </div>
@@ -132,7 +132,7 @@
                   </div>
                   <label class="col-sm-2 col-form-label">Metric Ton</label>
                   <div class="col-sm-4">
-                    <input type="text" name="metric_ton" id="metric_ton" value="{{ $unloadingGateEntry->metric_ton}}" class="form-control" placeholder="" readonly>
+                    <input type="text" name="metric_ton" id="metric_ton" value="{{ round($unloadingGateEntry->metric_ton,2) }}" class="form-control" placeholder="" readonly>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -193,42 +193,7 @@
               </div>
             </div>
 
-            <div class="card">
-                     <div class="card-block">
-                           <div class="form-group row tblrw" style="border-bottom: 1px solid;
-                              margin-bottom: 15px;">
-                              <div class="col-sm-12">
-                                 <h4>Weight Bridge Entry</h4>
-                              </div>
-                           </div>
-                           <div class="form-group row">
-                              <label class="col-sm-2 col-form-label">WB Ticket No </label>
-                              <div class="col-sm-4">
-                                 <input type="text" name="wb_ticket_no" id="wb_ticket_no" value="{{ $unloadingGateEntry->getLuWeightBridge->wb_ticket_no}}" class="form-control" value="" placeholder="">
-                              </div>
-                              <label class="col-sm-2 col-form-label">WB Gross Wt </label>
-                              <div class="col-sm-4">
-                                 <input type="text" name="wb_gross_wt" id="wb_gross_wt" class="form-control" value="" placeholder="" readonly>
-                              </div>
-                           </div>
-                           <div class="form-group row">
-                              <label class="col-sm-2 col-form-label">Container Tare Wt </label>
-                              <div class="col-sm-4">
-                                 <input type="text" name="container_tare_wt" id="container_tare_wt" class="form-control" value="" placeholder="" readonly>
-                              </div>
-                              <label class="col-sm-2 col-form-label">WB Tare Wt</label>
-                              <div class="col-sm-4">
-                                 <input type="text" name="wb_tare_wt" id="wb_tare_wt" value="{{ $unloadingGateEntry->getLuWeightBridge->wb_tare_wt}}" class="form-control" value="" placeholder="">
-                              </div>
-                           </div>
-                           <div class="form-group row">
-                              <label class="col-sm-2 col-form-label">WB Net Wt </label>
-                              <div class="col-sm-4">
-                                 <input type="text" name="wb_net_wt" id="wb_net_wt" class="form-control" value="" placeholder="" readonly >
-                              </div>
-                           </div>
-                     </div>
-                  </div>
+            
 
             <div class="card">
               <div class="card-block">
@@ -262,7 +227,7 @@
                           @foreach($unloadingGateEntry->getLuCommodityDetail as $key=>$value)
                             <tr class="line">
                               <td class="material-data">
-                                <select name="material[0]" id="material" class="form-control boxbrd required clone_input material_select">
+                                <select name="material[{{$key}}]" id="material" class="form-control boxbrd required clone_input material_select">
                                   <option value="">Select Material</option>
                                   @foreach($materials as $material)
                                     <option {{ $material['id'] == $value->material?'selected':'' }} data-unit_weight="{{ $material['unit_weight'] }}" value="{{ $material['id'] }}">{{ucwords( str_replace('_',' ',$material['material_name'])) }}</option>
@@ -270,15 +235,16 @@
                                 </select>
                               </td>
                               <td >
-                                <select name="uom[0]" id="uom" class="form-control boxbrd clone_input">
+                                <select name="uom[{{$key}}]" id="uom" class="form-control boxbrd clone_input">
                                   <option value="">Select UOM</option>
                                   @foreach($uoms as $uom)
                                     <option   {{ $uom['id'] == $value->uom?'selected':'' }} value="{{ $uom['id'] }}">{{ucwords( str_replace('_',' ',$uom['unit_entry_filed'])) }}</option>
                                   @endforeach
                                 </select>
                               </td>
-                              <td><input type="text" name="commodity_quantity[0]" id="commodity_quantity" value="{{ $value->commodity_quantity}}" class="form-control boxbrd required clone_input "  placeholder=""></td>
-                              <td><input type="text" name="total_weight[0]" id="total_weight" value="{{ $value->total_weight}}" class="form-control boxbrd clone_input"  placeholder="" readonly></td>
+                              <td><input type="text" name="commodity_quantity[{{$key}}]" id="commodity_quantity" value="{{ $value->commodity_quantity}}" class="form-control boxbrd required clone_input "  placeholder=""></td>
+                              <td><input type="text" name="total_weight[{{$key}}]" id="total_weight" value="{{ round($value->total_weight,2) }}" class="form-control boxbrd clone_input"  placeholder="" readonly></td>
+                              <td><div class='rmv' ><i class='btn-danger fa fa-minus-circle' aria-hidden='true'></i></div></td>
                             </tr>
                             @endforeach
                           </tbody>
@@ -294,7 +260,12 @@
               <div class="card-block height">
                 <div class="row" >
                   <div class="col-sm-12" style="text-align: center;">
-                    <button class="btn btn-success waves-effect waves-light">Authorize</button>
+                  @if($unloadingGateEntry->status == 1)
+                    <button class="btn btn-warning waves-effect waves-light">Update</button>
+                    <a href="{{route('unloading.gate.entry.authorize',$unloadingGateEntry->id)}}" class="btn btn-success waves-effect waves-light">Authorize</a>
+                  @else
+                    <a href="{{route('unloading.gate.entry.approval.index')}}" class="btn btn-success waves-effect waves-light">Back</a>
+                  @endif  
                   </div>
                 </div>
               </div>
@@ -433,7 +404,7 @@ $("#addMoreCommodity").click(function(){
       $clone.find('.clone_input').each(function() {
       this.name= this.name.replace('[0]', '['+counter+']');
    });
-    $clone.append("<td><div class='rmv' ><i class='btn-danger fa fa-minus-circle' aria-hidden='true'></i></div></td>");
+    //$clone.append("<td><div class='rmv' ><i class='btn-danger fa fa-minus-circle' aria-hidden='true'></i></div></td>");
     $('table.tableExample').append($clone);
     $('#counter').val( counter + 1 );
 });

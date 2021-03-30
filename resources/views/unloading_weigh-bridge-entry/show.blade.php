@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master',['header' => 'Loading & Unloading'])
 @section('content')
 <div class="page-header card">
    <div class="row align-items-end">
@@ -6,7 +6,7 @@
          <div class="page-header-title">
             <i class="feather icon-clipboard bg-c-blue"></i>
             <div class="d-inline">
-               <h3>AUTHORIZATION SELECTION WINDOW(UNLOADING)</h3>
+               <h3>UNLOADING VEHICLE</h3>
             </div>
          </div>
       </div>
@@ -18,7 +18,7 @@
                </li>
                <li class="breadcrumb-item"><a href="#!">Weigh Bridge</a></li>
                <li class="breadcrumb-item">
-                  <a href="#!">Registered Vehicle</a>
+                  <a href="#!">Unloading Vehicle</a>
                </li>
             </ul>
          </div>
@@ -127,7 +127,7 @@
                               </div>
                               <label class="col-sm-2 col-form-label">Metric Ton</label>
                               <div class="col-sm-4">
-                                 <input type="text" name="metric_ton" id="metric_ton" value="{{ $unloadingGateEntry->metric_ton}}" class="form-control" placeholder="" readonly>
+                                 <input type="text" name="metric_ton" id="metric_ton" value="{{ round($unloadingGateEntry->metric_ton,2) }}" class="form-control" placeholder="" readonly>
                               </div>
                            </div>
                            <div class="form-group row">
@@ -266,7 +266,7 @@
                                                 </select>
                                              </td>
                                              <td><input type="text" name="commodity_quantity[0]" id="commodity_quantity" value="{{$value->commodity_quantity}}" class="form-control boxbrd required clone_input "  placeholder="" readonly></td>
-                                             <td><input type="text" name="total_weight[0]" id="total_weight" value="{{$value->total_weight}}" class="form-control boxbrd clone_input"  placeholder="" readonly></td>
+                                             <td><input type="text" name="total_weight[0]" id="total_weight" value="{{round($value->total_weight,2)}}" class="form-control boxbrd clone_input"  placeholder="" readonly></td>
                                           </tr>
                                           @endforeach
                                        </tbody>
@@ -283,7 +283,12 @@
                      <div class="card-block height">
                         <div class="form-group row dwn" >
                            <div class="col-sm-12" style="text-align: center;">
-                              <button class="btn btn-warning waves-effect waves-light">Save</button>
+                           @if(isset($unloadingGateEntry->getLuWeightBridge->status))
+                              <a class="btn btn-success waves-effect waves-light" href="{{route('unloading.weigh.bridge.entry.index')}}">Back </a>
+                              <a class="btn btn-success waves-effect waves-light" target="_blank" href="{{route('unloading.proceed.form.gate.print',base64_encode($unloadingGateEntry->id))}}">Print <i class="fa fa-print"></i></a>
+                              @else
+                              <button class="btn btn-warning waves-effect waves-light">Proceed</button>
+                             @endif
                            </div>
                         </div>
                      </div>
@@ -316,31 +321,14 @@
 
 $('#myform').validate({ // initialize the plugin
     rules: {
-      customer_name: {
+      wb_ticket_no: {
             required: true,
             
         },
-        commodity: {
+        wb_tare_wt: {
             required: true,
             
         },
-        truck_no: {
-            required: true,
-            
-        },
-        container_no: {
-            required: true,
-            
-        },
-        driver_name: {
-            required: true,
-        },
-        transporter: {
-            required: true,
-           
-        },
-        
-
        
     },
     submitHandler: function (form) { // for demo
