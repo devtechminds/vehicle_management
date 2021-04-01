@@ -56,7 +56,7 @@ class LuTokenExport implements FromCollection ,WithMapping, WithHeadings
 
             if(isset($request['token_no']) || isset($request['wb_ticket_no'])){
                 $loading_gate_entry->whereHas('getLuGateEntry', function($q) use($request_data){
-                    $q->where('out_process_status','=',4);
+                    $q->where('out_process_status','=',2);
                 });
             }
         
@@ -73,9 +73,9 @@ class LuTokenExport implements FromCollection ,WithMapping, WithHeadings
     public function map($luCommodityDetail) : array {
 
         $ref_no =isset($luCommodityDetail->getLuGateEntry->ref_no)?$luCommodityDetail->getLuGateEntry->ref_no:'';
-        $gate_entry_date =isset($luCommodityDetail->getLuGateEntry->created_at)?Carbon::parse($luCommodityDetail->getLuGateEntry->created_at)->format('d-m-Y'):'';
-        $loading_date =isset($luCommodityDetail->getLuGateEntry->loading_date)?Carbon::parse($luCommodityDetail->getLuGateEntry->loading_date)->format('d-m-Y'):'';
-        $vehicle_exit_date =isset($luCommodityDetail->getLuGateEntry->vehicle_exit_date)?Carbon::parse($luCommodityDetail->getLuGateEntry->vehicle_exit_date)->format('d-m-Y'):'';
+        $gate_entry_date =isset($luCommodityDetail->getLuGateEntry->created_at)?date('d-m-Y', strtotime($luCommodityDetail->getLuGateEntry->created_at)):'';
+        $loading_date =isset($luCommodityDetail->getLuGateEntry->loading_date)?date('d-m-Y', strtotime($luCommodityDetail->getLuGateEntry->loading_date)):'';
+        $vehicle_exit_date =isset($luCommodityDetail->getLuGateEntry->vehicle_exit_date)?date('d-m-Y', strtotime($luCommodityDetail->getLuGateEntry->vehicle_exit_date)):'';
         $tra_seal_no =isset($luCommodityDetail->getLuGateEntry->tra_seal_no)?$luCommodityDetail->getLuGateEntry->tra_seal_no:'';
         $shipping_line =isset($luCommodityDetail->getLuGateEntry->shipping_line)?$luCommodityDetail->getLuGateEntry->shipping_line:'';
         $interchange_no =isset($luCommodityDetail->getLuGateEntry->interchange_no)?$luCommodityDetail->getLuGateEntry->interchange_no:'';

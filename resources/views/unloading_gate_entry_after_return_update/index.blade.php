@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master',['header' => 'Loading & Unloading'])
 @section('content')
 <div class="page-header card">
 <div class="row align-items-end">
@@ -6,7 +6,7 @@
 <div class="page-header-title">
 <i class="feather icon-clipboard bg-c-blue"></i>
 <div class="d-inline">
-<h4>AUTHORIZATION SELECTION WINDOW (UNLOADING)</h4>
+<h4>VEHICLE AFTER UNLOADING</h4>
 
 </div>
 </div>
@@ -18,7 +18,7 @@
 <a href="index.html"><i class="feather icon-home"></i></a>
 </li>
 <li class="breadcrumb-item"><a href="#!">Authorization Manager</a></li>
-<li class="breadcrumb-item"><a href="#!">Weigh bridge entry</a></li>
+<li class="breadcrumb-item"><a href="#!">Vehicle After unloading</a></li>
 </ul>
 </div>
 </div>
@@ -65,8 +65,8 @@
 <div class="col boxspace">
 <select name="status" id="status" class="form-control boxbrd hgt">
 <option value="">Status</option>
-<option value="3">Pending</option>
-<option value="4">Approve</option>
+<option value="1">Pending</option>
+<option value="2">Approve</option>
 </select>
 
 </div>

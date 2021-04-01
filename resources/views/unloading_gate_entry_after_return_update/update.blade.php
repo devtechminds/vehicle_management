@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master',['header' => 'Loading & Unloading'])
 @section('content')
 <div class="page-header card">
    <div class="row align-items-end">
@@ -6,7 +6,7 @@
          <div class="page-header-title">
             <i class="feather icon-clipboard bg-c-blue"></i>
             <div class="d-inline">
-               <h3>AUTHORIZATION SELECTION WINDOW(UNLOADING)</h3>
+               <h3>VEHICLE RETURN FORM(AFTER UNLOADING)</h3>
             </div>
          </div>
       </div>
@@ -18,7 +18,7 @@
                </li>
                <li class="breadcrumb-item"><a href="#!">Authorization Manager</a></li>
                <li class="breadcrumb-item">
-                  <a href="#!">Weigh bridge entry update</a>
+                  <a href="#!">Weighbridge return After unloading</a>
                </li>
             </ul>
          </div>
@@ -134,7 +134,7 @@
                   </div>
                   <label class="col-sm-2 col-form-label">Metric Ton</label>
                   <div class="col-sm-4">
-                    <input type="text" name="metric_ton" id="metric_ton" value="{{ $unloadingGateEntry->metric_ton}}" class="form-control" placeholder="" readonly>
+                    <input type="text" name="metric_ton" id="metric_ton" value="{{ round($unloadingGateEntry->metric_ton,2) }}" class="form-control" placeholder="" readonly>
                   </div>
                 </div>
                 <div class="form-group row">
@@ -292,7 +292,7 @@
                           onclick="if (!window.__cfRLUnblockHandlers) return false; javascript:toggleFullScreen()" class=" waves-effect waves-light btn waves-effect waves-dark btn-primary btn-outline-primary btn-icon" data-cf-modified-41c5a08083d3d25c74495efb-="">
                         <i class="full-screen feather icon-maximize"></i>
                         </button>	
-                        <span id="addMoreCommodity" class="btn waves-effect waves-dark btn-primary btn-outline-primary btn-icon"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                        <!-- <span id="addMoreCommodity" class="btn waves-effect waves-dark btn-primary btn-outline-primary btn-icon"><i class="fa fa-plus" aria-hidden="true"></i></span> -->
                       </div>
                     </div>
                     <div class="card-block">
@@ -310,7 +310,7 @@
                           @foreach($unloadingGateEntry->getLuCommodityDetail as $key=>$value)
                             <tr class="line">
                               <td class="material-data">
-                                <select name="material[0]" id="material" class="form-control boxbrd required clone_input material_select">
+                                <select name="material[{{$key}}]" id="material" class="form-control boxbrd required clone_input material_select">
                                   <option value="">Select Material</option>
                                   @foreach($materials as $material)
                                     <option {{ $material['id'] == $value->material?'selected':'' }} data-unit_weight="{{ $material['unit_weight'] }}" value="{{ $material['id'] }}">{{ucwords( str_replace('_',' ',$material['material_name'])) }}</option>
@@ -318,15 +318,15 @@
                                 </select>
                               </td>
                               <td >
-                                <select name="uom[0]" id="uom" class="form-control boxbrd clone_input">
+                                <select name="uom[{{$key}}]" id="uom" class="form-control boxbrd clone_input">
                                   <option value="">Select UOM</option>
                                   @foreach($uoms as $uom)
                                     <option   {{ $uom['id'] == $value->uom?'selected':'' }} value="{{ $uom['id'] }}">{{ucwords( str_replace('_',' ',$uom['unit_entry_filed'])) }}</option>
                                   @endforeach
                                 </select>
                               </td>
-                              <td><input type="text" name="commodity_quantity[0]" id="commodity_quantity" value="{{ $value->commodity_quantity}}" class="form-control boxbrd required clone_input "  placeholder="" ></td>
-                              <td><input type="text" name="total_weight[0]" id="total_weight" value="{{ $value->total_weight}}" class="form-control boxbrd clone_input"  placeholder="" readonly></td>
+                              <td><input type="text" name="commodity_quantity[{{$key}}]" id="commodity_quantity" value="{{ $value->commodity_quantity}}" class="form-control boxbrd required clone_input "  placeholder="" ></td>
+                              <td><input type="text" name="total_weight[{{$key}}]" id="total_weight" value="{{ round($value->total_weight,2) }}" class="form-control boxbrd clone_input"  placeholder="" readonly></td>
                               <td><div class='rmv' ><i class='btn-danger fa fa-minus-circle' aria-hidden='true'></i></div></td>
                             </tr>
                             @endforeach
@@ -343,7 +343,7 @@
               <div class="card-block height">
                 <div class="row" >
                   <div class="col-sm-12" style="text-align: center;">
-                  @if($unloadingGateEntry->status=='6')
+                  @if($unloadingGateEntry->out_process_status=='1')
                   <button class="btn btn-success waves-effect waves-light">Update</button>
                   @else
                   <a class="btn btn-warning waves-effect waves-light" target="_blank" href="{{route('unloading.weigh.bridge.return.update.print',base64_encode($unloadingGateEntry->id))}}">Print <i class="fa fa-print"></i></a>

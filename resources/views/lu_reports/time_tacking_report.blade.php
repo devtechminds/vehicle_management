@@ -12,7 +12,7 @@
          <div class="page-header-title">
             <i class="feather icon-clipboard bg-c-blue"></i>
             <div class="d-inline">
-               <h2>Token/Ticket No Wise Report</h2>
+               <h2>Time Tacking Report</h2>
             </div>
          </div>
       </div>
@@ -26,7 +26,7 @@
                   </a>
                </li>
                <li class="breadcrumb-item">
-                  <a href="#!">Token/Ticket No Wise Report </a>
+                  <a href="#!">Time Tacking Report </a>
                </li>
             </ul>
          </div>
@@ -49,22 +49,38 @@
                      <div class="card-header flthd">
                         <div class="form-group row">
                            <div class="col boxspace">
-                              <a href="{{ route('loading.token.report')}}" title="Clear filter"><i class="fa fa-filter flt"></i></a>
+                              <a href="{{ route('loading.time.tracking.list.report')}}" title="Clear filter"><i class="fa fa-filter flt"></i></a>
                            </div>
                            <div class="col boxspace">
-                           <input type="text" name="token_no" id="token_no" class="form-control" value="" placeholder="Tocken No">
+                              <select name="report_type" id="report_type" class="form-control boxbrd hgt">
+                                 <option value="1">Loading</option>
+                                 <option value="2">Unloading</option>
+                              </select>
                            </div>
                            <div class="col boxspace">
-                           <input type="text" name="wb_ticket_no" id="wb_ticket_no" value="" class="form-control" placeholder="Weighbridge Ticket No">
+                              <select name="customer" id="customer" class="form-control boxbrd hgt">
+                                 <option value="">Select Customer</option>
+                                 @foreach($customers as $customer)
+                                 <option value="{{$customer['customer_code']}}">{{ ucfirst($customer['customer_name']) }}</option>
+                                 @endforeach
+                              </select>
+                           </div>
+                           <div class="col-sm-2 boxspace">
+                              <input type="date" id="from_date" name="from_date" value="{{date('Y-m-d')}}" onkeydown="return false"  class="form-control hgt"  placeholder="Date">
+                           </div>
+                           <div class="col-sm-2 boxspace">
+                              <input type="date" id="to_date" name="to_date" value="{{date('Y-m-d')}}" onkeydown="return false"  class="form-control hgt"  placeholder="Date">
                            </div>
                            <div class="col-sm-1 boxspace">
                               <button  id="filter" class="btn btn-info waves-effect waves-light btnspace">Filter</button>
                            </div>
                            <div class="col-sm-1 boxspace">
-                              <form action="{{route('loading.token.report.download')}}" method="post">
+                              <form action="{{route('loading.customer.report.download')}}" method="post">
                                  {{ csrf_field() }}
-                                 <input type="hidden" name="token_no" id="token_id">
-                                 <input type="hidden" name="wb_ticket_no" id="wb_ticket_id">
+                                 <input type="hidden" name="report_type_submit" id="report_type_submit">
+                                 <input type="hidden" name="from_date_submit" id="from_date_submit">
+                                 <input type="hidden" name="customer" id="customer_id">
+                                 <input type="hidden" name="to_date_submit" id="to_date_submit">
                                  <button  id="download" class="btn btn-info waves-effect waves-light btnspace"><i class="fa fa-download"></i></button>
                               </form>
                            </div>
@@ -80,36 +96,11 @@
                               <thead>
                                  <tr>
                                     <th class="hd">Id </th>
-                                    <th class="hd">Gate Entry Date</th>
-                                    <th class="hd">Loading Date</th>
-                                    <th class="hd">Vehicle Exit Date</th>
                                     <th class="hd">Token No</th>
-                                    <th class="hd">WB Ticket No</th>
-                                    <th class="hd">Container Tare Wt(Kg)</th>
-                                    <th class="hd">TRA Seal No</th>
-                                    <th class="hd">Shipping Line No</th>
-                                    <th class="hd">Interchange No</th>
-                                    <th class="hd">Container No</th>
-                                    <th class="hd">Customer</th>
-                                    <th class="hd">Transporter</th>
                                     <th class="hd">Truck No</th>
-                                    <th class="hd">Trailor No</th>
-                                    <th class="hd">Destination To</th>
-                                    <th class="hd">DO NO</th>
-                                    <th class="hd">DO QTY</th>
-                                    <th class="hd">BL NO</th>
-                                    <th class="hd">BL QTY</th>
-                                    <th class="hd">Commodity</th>
-                                    <th class="hd">Material Name</th>
-                                    <th class="hd">Unit</th>
-                                    <th class="hd">Despatch QTY</th>
-                                    <th class="hd">Total Weight</th>
-                                    <th class="hd">Gross Weight</th>
-                                    <th class="hd">Tare Weight</th>
-                                    <th class="hd">Net Weight</th>
-                                    <th class="hd">Total Despatch QTY</th>
-                                    <th class="hd">Remarks</th>
-                                    <th class="hd">Status</th>
+                                    <th class="hd">Customer</th>
+                                    <th class="hd">Gate Entry Date</th>
+                                    <th class="hd">Actions</th>
                                  </tr>
                               </thead>
                               <tbody>
@@ -135,11 +126,13 @@
            processing: true,
            serverSide: true,
            ajax: {
-               url: "{{ route('loading.token.report') }}",
+               url: "{{ route('loading.time.tracking.list.report') }}",
                type: 'GET',
                data: function (d) {
-                   d.token_no = $('#token_no').val();
-                   d.wb_ticket_no = $('#wb_ticket_no').val();
+                   d.report_type = $('#report_type').val();
+                   d.to_date = $('#to_date').val();
+                   d.from_date = $('#from_date').val();
+                   d.customer = $('#customer').val();
                }
            },
            columns: [
@@ -149,36 +142,11 @@
                return meta.row + meta.settings._iDisplayStart + 1;
                }
                },
-               {data: 'created_at', name: 'created_at'},
-               {data: 'loading_date', name: 'loading_date'},
-               {data: 'vehicle_exit_date', name: 'vehicle_exit_date'},
                {data: 'ref_no', name: 'ref_no'},
-               {data: 'wb_ticket_no', name: 'wb_ticket_no'},
-               {data: 'container_tare_wt', name: 'container_tare_wt'},
-               {data: 'tra_seal_no', name: 'tra_seal_no'},
-               {data: 'shipping_line', name: 'shipping_line'},
-               {data: 'interchange_no', name: 'interchange_no'},
-               {data: 'container_no', name: 'container_no'},
-               {data: 'customer_name', name: 'customer_name'},
-               {data: 'transport_name', name: 'transport_name'},
                {data: 'truck_no', name: 'truck_no'},
-               {data: 'trailer_no', name: 'trailer_no'},
-               {data: 'destination', name: 'destination'}, 
-               {data: 'dn_no', name: 'dn_no'},
-               {data: 'dn_qty', name: 'dn_qty'},
-               {data: 'bl_no', name: 'bl_no'},
-               {data: 'bl_qty', name: 'bl_qty'},
-               {data: 'commodity_name', name: 'commodity_name'},
-               {data: 'material_name', name: 'material_name'},
-               {data: 'unit_entry_filed', name: 'unit_entry_filed'},
-               {data: 'commodity_quantity', name: 'commodity_quantity'},
-               {data: 'total_weight', name: 'total_weight'},
-               {data: 'wb_gross_wt', name: 'wb_gross_wt'},
-               {data: 'wb_tare_wt', name: 'wb_tare_wt'},
-               {data: 'wb_net_wt', name: 'wb_net_wt'},
-               {data: 'metric_ton', name: 'metric_ton'},
-               {data: 'remarks', name: 'remarks'},
-               {data: 'status', name: 'status'}, 
+               {data: 'customer_name', name: 'customer_name'},
+               {data: 'created_at', name: 'created_at'},
+               {data: 'action', name: 'action'}
            ],
            'order': [[ 1, "desc" ]],
            'columnDefs': [{
@@ -198,25 +166,39 @@
    
    });
    
- 
-   $(document).on("change", "#token_no", function () {
+  
+   
+   
+   $(document).on("change", "#report_type", function () {
    var id = $(this).val(); //get the current value's option
-   $('#token_id').val(id);
+   $('#report_type_submit').val(id);
    
    });
-
-   $(document).on("change", "#wb_ticket_no", function () {
+   
+   $(document).on("change", "#from_date", function () {
    var id = $(this).val(); //get the current value's option
-   $('#wb_ticket_id').val(id);
+   $('#from_date_submit').val(id);
+   
+   });
+   $(document).on("change", "#to_date", function () {
+   var id = $(this).val(); //get the current value's option
+   $('#to_date_submit').val(id);
+   
+   });
+   
+   $(document).on("change", "#customer", function () {
+   var id = $(this).val(); //get the current value's option
+   $('#customer_id').val(id);
    
    });
    
    $(document).ready(function() {
-   $('#token_no').val($('#token_id').val());
-   $('#wb_ticket_no').val($('#wb_ticket_id').val());
-   });
-
+   $('#report_type_submit').val($('#report_type').val());
+   $('#from_date_submit').val($('#from_date').val());
+   $('#to_date_submit').val($('#to_date').val());
+   $('#customer').val($('#customer_id').val());
    
+   });
    
 </script>
 @endsection

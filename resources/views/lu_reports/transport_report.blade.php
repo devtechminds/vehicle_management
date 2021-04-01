@@ -49,7 +49,7 @@
                      <div class="card-header flthd">
                         <div class="form-group row">
                            <div class="col boxspace">
-                              <a href="{{ route('proceed.vehilce')}}" title="Clear filter"><i class="fa fa-filter flt"></i></a>
+                              <a href="{{ route('loading.transport.report')}}" title="Clear filter"><i class="fa fa-filter flt"></i></a>
                            </div>
                            <div class="col boxspace">
                               <select name="report_type" id="report_type" class="form-control boxbrd hgt">

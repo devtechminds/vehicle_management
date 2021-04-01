@@ -46,7 +46,7 @@ class LuCustomerWiseReportController extends Controller
             }
 
             $loading_gate_entry->whereHas('getLuGateEntry', function($q) use($request){
-                $q->where('out_process_status','=',4);
+                $q->where('out_process_status','=',2);
             });
         
             $loading_gate_entry_list = $loading_gate_entry->get();
@@ -56,13 +56,16 @@ class LuCustomerWiseReportController extends Controller
                     return  $row->getLuGateEntry->ref_no;
                 })
                 ->editColumn('created_at', function($row){
-                    return  isset($row->getLuGateEntry->created_at)?Carbon::parse($row->getLuGateEntry->created_at)->format('d-m-Y'):'';
+                    $created_at = date('d-m-Y', strtotime($row->getLuGateEntry->created_at) );
+                    return  isset($row->getLuGateEntry->created_at)?$created_at:'';
                 })
                 ->editColumn('loading_date', function($row){
-                    return  isset($row->getLuGateEntry->loading_date)?Carbon::parse($row->getLuGateEntry->loading_date)->format('d-m-Y'):'';
+                    $loading_date = date('d-m-Y', strtotime($row->getLuGateEntry->loading_date) );
+                    return  isset($row->getLuGateEntry->loading_date)?$loading_date:'';
                 })
                 ->editColumn('vehicle_exit_date', function($row){
-                    return  isset($row->getLuGateEntry->vehicle_exit_date)?Carbon::parse($row->getLuGateEntry->vehicle_exit_date)->format('d-m-Y'):'';
+                    $vehicle_exit_date = date('d-m-Y', strtotime($row->getLuGateEntry->vehicle_exit_date) );
+                    return  isset($row->getLuGateEntry->vehicle_exit_date)?$vehicle_exit_date:'';
                 })
                 ->editColumn('tra_seal_no', function($row){
                     return  $row->getLuGateEntry->tra_seal_no;

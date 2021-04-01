@@ -6,7 +6,7 @@
 <div class="page-header-title">
 <i class="feather icon-clipboard bg-c-blue"></i>
 <div class="d-inline">
-<h3>VEHICLE RETURN SELECTION WINDOW(AFTER LOADING)</h3>
+<h3>LOADING AUTHORIZATION</h3>
 
 </div>
 </div>

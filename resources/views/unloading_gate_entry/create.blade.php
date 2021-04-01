@@ -16,9 +16,9 @@
                <li class="breadcrumb-item">
                   <a href="index.html"><i class="feather icon-home"></i></a>
                </li>
-               <li class="breadcrumb-item"><a href="#!">Gate1 Entry Officer</a></li>
+               <li class="breadcrumb-item"><a href="#!">Gate Entry</a></li>
                <li class="breadcrumb-item">
-                  <a href="#!">Loading Entry Screen</a>
+                  <a href="#!">Vehicle Entry Form</a>
                </li>
             </ul>
          </div>

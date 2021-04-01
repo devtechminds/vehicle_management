@@ -6,7 +6,7 @@
          <div class="page-header-title">
             <i class="feather icon-clipboard bg-c-blue"></i>
             <div class="d-inline">
-               <h3>TRUCK PARKING NOTE(LOADING)</h3>
+               <h3>TRUCK PARKING NOTE(UNLOADING)</h3>
             </div>
          </div>
       </div>
@@ -16,9 +16,9 @@
                <li class="breadcrumb-item">
                   <a href="index.html"><i class="feather icon-home"></i></a>
                </li>
-               <li class="breadcrumb-item"><a href="#!">Gate1 Entry Officer</a></li>
+               <li class="breadcrumb-item"><a href="#!">Gate Entry</a></li>
                <li class="breadcrumb-item">
-                  <a href="#!">Loading Entry Screen</a>
+                  <a href="#!">Unloading Gate Entry</a>
                </li>
             </ul>
          </div>

@@ -6,7 +6,7 @@
          <div class="page-header-title">
             <i class="feather icon-clipboard bg-c-blue"></i>
             <div class="d-inline">
-               <h3>VEHICLE SLIP RETURN FORM(AFTER LOADING)</h3>
+               <h3>Loading Authorization</h3>
             </div>
          </div>
       </div>
@@ -18,7 +18,7 @@
                </li>
                <li class="breadcrumb-item"><a href="#!">Authorization Manger</a></li>
                <li class="breadcrumb-item">
-                  <a href="#!">Authorization Loading</a>
+                  <a href="#!">Loading Authorization</a>
                </li>
             </ul>
          </div>

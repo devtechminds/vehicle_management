@@ -198,8 +198,8 @@ class LuAuthorizationManagerController extends Controller
                 LuGateEntrie::where("id", "=",$id)->update($update_data);
 
                  $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $id)->where("new_status", "=", 1)->where("is_loading", "=", 1)->where("in_or_out", "=", 1)->first();
-                 $start_time = strtotime($loading_gate_time->new_status_time);
-                 $end_time   = strtotime(date('h:i A', strtotime(now())));
+                 $start_time = strtotime($loading_gate_time->created_at);
+                 $end_time   = strtotime(date('Y-m-d h:i A', strtotime(now())));
                  $secs       = ($end_time-$start_time);
                  $loading_time_track_entry = new LuTimeTracking();
                  $loading_time_track_entry->lu_gate_entry_id = $id;
@@ -403,8 +403,8 @@ class LuAuthorizationManagerController extends Controller
                 LuGateEntrie::where("id", "=",$id)->update($update_data);
 
                  $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $id)->where("new_status", "=", 1)->where("is_loading", "=", 2)->where("in_or_out", "=", 1)->first();
-                 $start_time = strtotime($loading_gate_time->new_status_time);
-                 $end_time   = strtotime(date('h:i A', strtotime(now())));
+                 $start_time = strtotime($loading_gate_time->created_at);
+                 $end_time   = strtotime(date('Y-m-d h:i A', strtotime(now())));
                  $secs       = ($end_time-$start_time);
                  $loading_time_track_entry = new LuTimeTracking();
                  $loading_time_track_entry->lu_gate_entry_id = $id;
@@ -441,12 +441,12 @@ class LuAuthorizationManagerController extends Controller
         $loading_entry_data = LuGateEntrie::with('getCustomer','getCommodity');
         if($request->status)
         {
-                $loading_entry_data->where('status','=',4);
-                $loading_entry_data->where('out_process_status','=',$request->status);
+            $loading_entry_data->where('status','=',2);
+            $loading_entry_data->where('out_process_status','=',$request->status);
 
         }else{
-            $loading_entry_data->where('status','=',4);
-            $loading_entry_data->where('out_process_status','=',3);
+            $loading_entry_data->where('status','=',2);
+            $loading_entry_data->where('out_process_status','=',1);
         }
         if($request->ref_no)
         {
@@ -488,9 +488,9 @@ class LuAuthorizationManagerController extends Controller
             })
             ->editColumn('status', function($row){
                  $status= '';
-                 if($row->out_process_status==3){
+                 if($row->out_process_status==1){
                     $status="Pending";
-                }elseif($row->out_process_status==4){
+                }elseif($row->out_process_status==2){
                     $status="Approve";
                 }
               return $status;
@@ -546,6 +546,8 @@ class LuAuthorizationManagerController extends Controller
         try {
             DB::beginTransaction();
             $data = $request->all();
+            $data['gate_pass_no'] = LuGateEntrie::getGatePassNo();
+            
             $update_data =array(
                 'ref_no' => $data['ref_no']?$data['ref_no']:'',
                 'date' => $data['date']? date('Y-m-d',strtotime($data['date'])):'',
@@ -572,7 +574,8 @@ class LuAuthorizationManagerController extends Controller
                 'gate_pass_no' => $data['gate_pass_no']? $data['gate_pass_no']:'',
                 'time_out' => $data['time_out']? $data['time_out']:'',
                 'authorized_by' => $data['authorized_by']? $data['authorized_by']:'',
-                'out_process_status' => 4,
+                'out_process_status' => 2,
+                'vehicle_exit_date' => now(),
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );
@@ -608,15 +611,15 @@ class LuAuthorizationManagerController extends Controller
                     }
                  }
 
-                 $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $data['id'])->where("new_status", "=", 3)->where("in_or_out", "=", 2)->first();
-                 $start_time = strtotime($loading_gate_time->new_status_time);
-                 $end_time   = strtotime(date('h:i A', strtotime(now())));
+                 $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $data['id'])->where("new_status", "=", 1)->where("is_loading", "=", 1)->where("in_or_out", "=", 2)->first();
+                 $start_time = strtotime($loading_gate_time->created_at);
+                 $end_time   = strtotime(date('Y-m-d h:i A', strtotime(now())));
                  $secs       = ($end_time-$start_time);
                  $loading_time_track_entry = new LuTimeTracking();
                  $loading_time_track_entry->lu_gate_entry_id = $data['id'];
                  $loading_time_track_entry->in_or_out = 2;
-                 $loading_time_track_entry->old_status = 3;
-                 $loading_time_track_entry->new_status = 4;
+                 $loading_time_track_entry->old_status = 1;
+                 $loading_time_track_entry->new_status = 2;
                  $loading_time_track_entry->new_status_time = date('h:i A', strtotime(now()));
                  $loading_time_track_entry->time_diff = $secs;
                  $loading_time_track_entry->is_loading = 1;
@@ -625,7 +628,7 @@ class LuAuthorizationManagerController extends Controller
              
             DB::commit();
             //Send Notification
-            Notifications::sendNotification(auth()->user()->user_type,'authorization_manager','New Loading Weigh Bridge Entry Updates After Return Updated','','/manifesto-list-finance-officer');
+            //Notifications::sendNotification(auth()->user()->user_type,'authorization_manager','New Loading Weigh Bridge Entry Updates After Return Updated','','/manifesto-list-finance-officer');
             UserLog::AddLog('New Loading Weigh Bridge Entry Updates After Return Updated By');
             return redirect()->route('loading.weigh.bridge.return.update.index')->with('create', 'Loading Weigh Bridge Entry Updates After Return Updated Successfully!');
         } catch (\Exception $e) {
@@ -662,12 +665,12 @@ class LuAuthorizationManagerController extends Controller
         $unloading_entry_data = LuGateEntrie::with('getCustomer','getCommodity');
         if($request->status)
         {
-                $unloading_entry_data->where('status','=',4);
+                $unloading_entry_data->where('status','=',2);
                 $unloading_entry_data->where('out_process_status','=',$request->status);
 
         }else{
-            $unloading_entry_data->where('status','=',4);
-            $unloading_entry_data->where('out_process_status','=',3);
+            $unloading_entry_data->where('status','=',2);
+            $unloading_entry_data->where('out_process_status','=',1);
         }
         if($request->ref_no)
         {
@@ -709,9 +712,9 @@ class LuAuthorizationManagerController extends Controller
             })
             ->editColumn('status', function($row){
                  $status= '';
-                 if($row->out_process_status==3){
+                 if($row->out_process_status==1){
                     $status="Pending";
-                }elseif($row->out_process_status==4){
+                }elseif($row->out_process_status==2){
                     $status="Approve";
                 }
               return $status;
@@ -731,7 +734,10 @@ class LuAuthorizationManagerController extends Controller
         $customers  = Customers::getAllCustomers();
         $commoditys  = Commodity::getCommodity();
         $transports = Transports::getTransports();
-        $materials = Material::getAllMaterialData();
+        $materials = Material::select('id','material_name','unit_weight')
+                                ->where('status','=','1')
+                                ->where('commodity_id', '=', (int)$unloadingGateEntry->commodity)
+                                ->get()->toArray();
         $uoms = UOM::getAllUOM();
         $locations = Location::getAllLocation();
         $gate_pass_no = LuGateEntrie::getGatePassNo();
@@ -763,7 +769,7 @@ class LuAuthorizationManagerController extends Controller
         try {
             DB::beginTransaction();
             $data = $request->all();  
-            
+            $data['gate_pass_no'] = LuGateEntrie::getGatePassNo();
             $update_data =array(
                 'ref_no' => $data['ref_no']?$data['ref_no']:'',
                 'date' => $data['date']? date('Y-m-d',strtotime($data['date'])):'',
@@ -790,7 +796,8 @@ class LuAuthorizationManagerController extends Controller
                 'gate_pass_no' => $data['gate_pass_no']? $data['gate_pass_no']:'',
                 'time_out' => $data['time_out']? $data['time_out']:'',
                 'authorized_by' => $data['authorized_by']? $data['authorized_by']:'',
-                'out_process_status' => 4,
+                'out_process_status' => 2,
+                'vehicle_exit_date' => now(),
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );
@@ -826,15 +833,15 @@ class LuAuthorizationManagerController extends Controller
                     }
                  }
                  
-                 $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $data['id'])->where("new_status", "=", 3)->where("in_or_out", "=", 2)->first();
-                 $start_time = strtotime($loading_gate_time->new_status_time);
-                 $end_time   = strtotime(date('h:i A', strtotime(now())));
+                 $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $data['id'])->where("new_status", "=", 1)->where("is_loading", "=", 2)->where("in_or_out", "=", 2)->first();
+                 $start_time = strtotime($loading_gate_time->created_at);
+                 $end_time   = strtotime(date('Y-m-d h:i A', strtotime(now())));
                  $secs       = ($end_time-$start_time);
                  $loading_time_track_entry = new LuTimeTracking();
                  $loading_time_track_entry->lu_gate_entry_id = $data['id'];
                  $loading_time_track_entry->in_or_out = 2;
-                 $loading_time_track_entry->old_status = 3;
-                 $loading_time_track_entry->new_status = 4;
+                 $loading_time_track_entry->old_status = 1;
+                 $loading_time_track_entry->new_status = 2;
                  $loading_time_track_entry->new_status_time = date('h:i A', strtotime(now()));
                  $loading_time_track_entry->time_diff = $secs;
                  $loading_time_track_entry->is_loading = 2;
@@ -843,7 +850,7 @@ class LuAuthorizationManagerController extends Controller
              
             DB::commit();
             //Send Notification
-            Notifications::sendNotification(auth()->user()->user_type,'authorization_manager','New Unloading Weigh Bridge Entry Updates After Return Updated','','/manifesto-list-finance-officer');
+            //Notifications::sendNotification(auth()->user()->user_type,'authorization_manager','New Unloading Weigh Bridge Entry Updates After Return Updated','','/manifesto-list-finance-officer');
             UserLog::AddLog('New Unloading Weigh Bridge Entry Updates After Return Updated By');
             return redirect()->route('unloading.gate.entry.return.update.index')->with('create', 'Unloading Weigh Bridge Entry Updates After Return Updated Successfully!');
         } catch (\Exception $e) {

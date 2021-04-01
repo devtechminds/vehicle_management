@@ -6,7 +6,7 @@
          <div class="page-header-title">
             <i class="feather icon-clipboard bg-c-blue"></i>
             <div class="d-inline">
-               <h3>AUTHORIZATION SELECTION WINDOW(UNLOADING)</h3>
+               <h3>AUTHORIZATION UNLOADING</h3>
             </div>
          </div>
       </div>

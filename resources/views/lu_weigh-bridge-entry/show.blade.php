@@ -18,7 +18,7 @@
                </li>
                <li class="breadcrumb-item"><a href="#!">Weigh Bridge</a></li>
                <li class="breadcrumb-item">
-                  <a href="#!">Loading Vehicle</a>
+                  <a href="#!">Registered Vehicle</a>
                </li>
             </ul>
          </div>
@@ -235,7 +235,7 @@
                                        onclick="if (!window.__cfRLUnblockHandlers) return false; javascript:toggleFullScreen()" class=" waves-effect waves-light btn waves-effect waves-dark btn-primary btn-outline-primary btn-icon" data-cf-modified-41c5a08083d3d25c74495efb-="">
                                     <i class="full-screen feather icon-maximize"></i>
                                     </button>	
-                                    <span id="addMoreCommodity" class="btn waves-effect waves-dark btn-primary btn-outline-primary btn-icon"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                    <!-- <span id="addMoreCommodity" class="btn waves-effect waves-dark btn-primary btn-outline-primary btn-icon"><i class="fa fa-plus" aria-hidden="true"></i></span> -->
                                  </div>
                               </div>
                               <div class="card-block">

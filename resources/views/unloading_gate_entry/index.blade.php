@@ -17,8 +17,8 @@
 <li class="breadcrumb-item">
 <a href="index.html"><i class="feather icon-home"></i></a>
 </li>
-<li class="breadcrumb-item"><a href="#!">Gate1 Entry Officer</a></li>
-<li class="breadcrumb-item"><a href="#!">Unloading Gate1 Entry</a></li>
+<li class="breadcrumb-item"><a href="#!">Gate Entry</a></li>
+<li class="breadcrumb-item"><a href="#!">Unloading Gate Entry</a></li>
 <li class="breadcrumb-item"><a href="{{route('unloading.entry.create')}}" class="btn btn-info btn-sm waves-effect waves-light btnspace">Add Unloading Entry</a></li>
 </ul>
 </div>

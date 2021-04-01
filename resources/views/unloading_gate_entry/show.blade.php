@@ -16,9 +16,9 @@
                <li class="breadcrumb-item">
                   <a href="index.html"><i class="feather icon-home"></i></a>
                </li>
-               <li class="breadcrumb-item"><a href="#!">Gate1 Entry Officer</a></li>
+               <li class="breadcrumb-item"><a href="#!">Gate Entry</a></li>
                <li class="breadcrumb-item">
-                  <a href="#!">Unloading Entry Screen</a>
+                  <a href="#!">Unloading Gate Entry</a>
                </li>
             </ul>
          </div>
@@ -133,7 +133,7 @@
                   </div>
                   <label class="col-sm-2 col-form-label">Metric Ton</label>
                   <div class="col-sm-4">
-                  <input type="text" name="metric_ton" id="metric_ton" value="{{ $unloadingGateEntry->metric_ton}}" class="form-control" placeholder="" readonly>
+                  <input type="text" name="metric_ton" id="metric_ton" value="{{ round($unloadingGateEntry->metric_ton,2) }}" class="form-control" placeholder="" readonly>
                   </div>
                   </div>
 
@@ -214,7 +214,7 @@
                   onclick="if (!window.__cfRLUnblockHandlers) return false; javascript:toggleFullScreen()" class=" waves-effect waves-light btn waves-effect waves-dark btn-primary btn-outline-primary btn-icon" data-cf-modified-41c5a08083d3d25c74495efb-="">
                   <i class="full-screen feather icon-maximize"></i>
                   </button>	
-                  <span id="addMoreCommodity" class="btn waves-effect waves-dark btn-primary btn-outline-primary btn-icon"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                  <!-- <span id="addMoreCommodity" class="btn waves-effect waves-dark btn-primary btn-outline-primary btn-icon"><i class="fa fa-plus" aria-hidden="true"></i></span> -->
                   </div>
                   </div>
                   <div class="card-block">
@@ -240,7 +240,7 @@
                   <option value="">{{ isset($value->getUOM->unit_entry_filed)?$value->getUOM->unit_entry_filed:''}}</option>
                   </select></td>
                   <td><input type="text" name="commodity_quantity[0]" id="commodity_quantity" value="{{$value->commodity_quantity}}" class="form-control boxbrd required clone_input "  placeholder="" readonly></td>
-                  <td><input type="text" name="total_weight[0]" id="total_weight" value="{{$value->total_weight}}" class="form-control boxbrd clone_input"  placeholder="" readonly></td>
+                  <td><input type="text" name="total_weight[0]" id="total_weight" value="{{round($value->total_weight,2)}}" class="form-control boxbrd clone_input"  placeholder="" readonly></td>
                   </tr>
                   @endforeach
                   </tbody>

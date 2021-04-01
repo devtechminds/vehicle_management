@@ -153,7 +153,7 @@
             </li>
             @endif
             @if(in_array("admin", $user_type) || in_array("gate1_entry_officer", $user_type))
-            <li class="pcoded-hasmenu {{ request()->is('vehilce*') || request()->is('container-out-register-list') || request()->is('proceed-vehilce') || request()->is('cfs-out-proceed-list') || request()->is('cfs-out-proceed-list-cfsout') || request()->is('loading-entry-list') || request()->is('unloading-entry-list') || request()->is('loading-gate-entry-proceed-list') || request()->is('unloading-gate-entry-proceed-list') ? 'active pcoded-trigger' : '' }}">
+            <li class="pcoded-hasmenu {{ request()->is('vehilce*') || request()->is('container-out-register-list') || request()->is('proceed-vehilce') || request()->is('cfs-out-proceed-list') || request()->is('cfs-out-proceed-list-cfsout') || request()->is('loading-entry-list') || request()->is('unloading-entry-list') ? 'active pcoded-trigger' : '' }}">
                <a href="javascript:void(0)" class="waves-effect waves-dark">
                <span class="pcoded-micon">
                <i class="feather icon-layers"></i>
@@ -202,12 +202,6 @@
                   <span class="pcoded-mtext">Vehicle Registration</span>
                   </a>
                   </li>
-                  <li class="{{ request()->is('loading-gate-entry-proceed-list') ? 'active' : '' }}">
-                  <a href="{{route('loading.gate.entry.proceed.index')}}" class="waves-effect waves-dark">
-                  <span class="pcoded-mtext">Vehicle Allow Inside</span>
-                  </a>
-                  </li>
-
                   </ul>
                   </li>
 
@@ -224,12 +218,6 @@
                   <span class="pcoded-mtext">Vehicle Entry Form</span>
                   </a>
                   </li>
-                  <li class="{{ request()->is('unloading-gate-entry-proceed-list') ? 'active' : '' }}">
-                  <a href="{{route('unloading.gate.entry.proceed.index')}}" class="waves-effect waves-dark">
-                  <span class="pcoded-mtext">Vehicle Allow Inside</span>
-                  </a>
-                  </li>
-
                   </ul>
                   </li>
 
@@ -442,56 +430,7 @@
                </ul>
             </li>
             @endif
-            @if(in_array("admin", $user_type) || in_array("authorization_officer", $user_type))
-            <li class="pcoded-hasmenu {{ request()->is('loading-weigh-bridge-entry-update-list') || request()->is('unloading-weigh-bridge-entry-update-list') || request()->is('loading-gate-entry-return-update-list') || request()->is('unloading-gate-entry-return-update-list')? 'active pcoded-trigger' : '' }}" dropdown-icon="style1" subitem-icon="style1">
-               <a href="javascript:void(0)" class="waves-effect waves-dark">
-               <span class="pcoded-micon">
-               <i class="feather icon-layers"></i>
-               </span>
-               <span class="pcoded-mtext">Authorization Officer</span>
-               </a>
-               <ul class="pcoded-submenu">
-                  <li class="pcoded-hasmenu" dropdown-icon="style1" subitem-icon="style1">
-                     <a href="javascript:void(0)" class="waves-effect waves-dark">
-                     <span class="pcoded-micon">
-                     </span>
-                     <span class="pcoded-mtext">Loading</span>
-                     </a>
-                     <ul class="pcoded-submenu">
-                        <li class="{{ request()->is('loading-weigh-bridge-entry-update-list') ? 'active' : '' }}">
-                           <a href="{{route('loading.weigh.bridge.entry.update.index')}}" class="waves-effect waves-dark">
-                           <span class="pcoded-mtext">Weigh Bridge Entry Updates</span>
-                           </a>
-                        </li>
-                        <li class="{{ request()->is('loading-gate-entry-return-update-list') ? 'active' : '' }}">
-                           <a href="{{route('loading.gate.entry.return.update.index')}}" class="waves-effect waves-dark">
-                           <span class="pcoded-mtext">Weigh Bridge Entry Updates After Return</span>
-                           </a>
-                        </li>
-                     </ul>
-                  </li>
-                  <li class="pcoded-hasmenu" dropdown-icon="style1" subitem-icon="style1">
-                     <a href="javascript:void(0)" class="waves-effect waves-dark">
-                     <span class="pcoded-micon">
-                     </span>
-                     <span class="pcoded-mtext">Unloading</span>
-                     </a>
-                     <ul class="pcoded-submenu">
-                        <li class="{{ request()->is('unloading-weigh-bridge-entry-update-list') ? 'active' : '' }}">
-                           <a href="{{route('unloading.weigh.bridge.entry.update.index')}}" class="waves-effect waves-dark">
-                           <span class="pcoded-mtext">Weigh Bridge Entry Updates</span>
-                           </a>
-                        </li>
-                        <li class="{{ request()->is('unloading-gate-entry-return-update-list') ? 'active' : '' }}">
-                           <a href="{{route('unloading.gate.entry.return.update.index')}}" class="waves-effect waves-dark">
-                           <span class="pcoded-mtext">Weigh Bridge Entry Updates After Return</span>
-                           </a>
-                        </li>
-                     </ul>
-                  </li>
-               </ul>
-            </li>
-            @endif
+           
             @if(in_array("admin", $user_type) || in_array("authorization_manager", $user_type))
             <li class="pcoded-hasmenu {{ request()->is('loading-gate-entry-approval-list') || request()->is('unloading-gate-entry-approval-list')  ? 'active pcoded-trigger' : '' }}" dropdown-icon="style1" subitem-icon="style1">
                <a href="javascript:void(0)" class="waves-effect waves-dark">

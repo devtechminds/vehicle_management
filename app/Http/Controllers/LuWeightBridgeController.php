@@ -131,14 +131,15 @@ class LuWeightBridgeController extends Controller
             $loading_weigh_bridge->updated_by = auth()->user()->id;
             $loading_weigh_bridge->save();
             $update_data =array(
+                'loading_date' => now(),
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );
             LuGateEntrie::where("id", "=",$data['loading_gate_entry_id'])->update($update_data);
             
             $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $data['loading_gate_entry_id'])->where("new_status", "=", 2)->where("is_loading", "=", 1)->where("in_or_out", "=", 1)->first();
-            $start_time = strtotime($loading_gate_time->new_status_time);
-            $end_time   = strtotime(date('h:i A', strtotime(now())));
+            $start_time = strtotime($loading_gate_time->created_at);
+            $end_time   = strtotime(date('Y-m-d h:i A', strtotime(now())));
             $secs       = ($end_time-$start_time);
             $loading_time_track_entry = new LuTimeTracking();
             $loading_time_track_entry->lu_gate_entry_id = $data['loading_gate_entry_id'];
@@ -315,14 +316,15 @@ class LuWeightBridgeController extends Controller
             $loading_weigh_bridge->updated_by = auth()->user()->id;
             $loading_weigh_bridge->save();
             $update_data =array(
+                'loading_date' => now(),
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );
             LuGateEntrie::where("id", "=",$data['loading_gate_entry_id'])->update($update_data);
 
             $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $data['loading_gate_entry_id'])->where("new_status", "=", 2)->where("is_loading", "=", 2)->where("in_or_out", "=", 1)->first();
-            $start_time = strtotime($loading_gate_time->new_status_time);
-            $end_time   = strtotime(date('h:i A', strtotime(now())));
+            $start_time = strtotime($loading_gate_time->created_at);
+            $end_time   = strtotime(date('Y-m-d h:i A', strtotime(now())));
             $secs       = ($end_time-$start_time);
             $loading_time_track_entry = new LuTimeTracking();
             $loading_time_track_entry->lu_gate_entry_id = $data['loading_gate_entry_id'];
@@ -374,6 +376,7 @@ class LuWeightBridgeController extends Controller
         {
             if($request->status==1){
                 $loading_entry_data->where('out_process_status','=',$request->status);
+                $loading_entry_data->orWhere('out_process_status','=',2);
             }
             if($request->status==2){
                 $loading_entry_data->where('status','=',$request->status);
@@ -492,7 +495,6 @@ class LuWeightBridgeController extends Controller
                     'quantity_short' => isset($data['quantity_short'])?$data['quantity_short']:NULL,
                     'kgs' => isset($data['kgs'])?$data['kgs']:NULL,
                     'location' => isset($data['location'])?$data['location']:NULL,
-                    'status' => 2,
                     'updated_at' => now(),
                     'updated_by' => auth()->user()->id
                     );
@@ -500,8 +502,8 @@ class LuWeightBridgeController extends Controller
                 LuWeightBridge::where("lu_gate_entry_id", "=",$data['id'])->update($weigh_bridge_data);
 
                 $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $data['id'])->where("new_status", "=", 3)->where("is_loading", "=", 1)->where("in_or_out", "=", 1)->first();
-                 $start_time = strtotime($loading_gate_time->new_status_time);
-                 $end_time   = strtotime(date('h:i A', strtotime(now())));
+                $start_time = strtotime($loading_gate_time->created_at);
+                $end_time   = strtotime(date('Y-m-d h:i A', strtotime(now())));
                  $secs       = ($end_time-$start_time);
                  $loading_time_track_entry = new LuTimeTracking();
                  $loading_time_track_entry->lu_gate_entry_id = $data['id'];
@@ -542,6 +544,7 @@ class LuWeightBridgeController extends Controller
         {
             if($request->status==1){
                 $unloading_entry_data->where('out_process_status','=',$request->status);
+                $unloading_entry_data->orWhere('out_process_status','=',2);
             }
             if($request->status==2){
                 $unloading_entry_data->where('status','=',$request->status);
@@ -659,7 +662,6 @@ class LuWeightBridgeController extends Controller
                     'quantity_short' => isset($data['quantity_short'])?$data['quantity_short']:NULL,
                     'kgs' => isset($data['kgs'])?$data['kgs']:NULL,
                     'location' => isset($data['location'])?$data['location']:NULL,
-                    'status' => 2,
                     'updated_at' => now(),
                     'updated_by' => auth()->user()->id
                     );
@@ -667,8 +669,8 @@ class LuWeightBridgeController extends Controller
                 LuWeightBridge::where("lu_gate_entry_id", "=",$data['id'])->update($weigh_bridge_data);
 
                 $loading_gate_time = LuTimeTracking::where("lu_gate_entry_id", "=", $data['id'])->where("new_status", "=", 3)->where("is_loading", "=", 2)->where("in_or_out", "=", 1)->first();
-                 $start_time = strtotime($loading_gate_time->new_status_time);
-                 $end_time   = strtotime(date('h:i A', strtotime(now())));
+                 $start_time = strtotime($loading_gate_time->created_at);
+                 $end_time   = strtotime(date('Y-m-d h:i A', strtotime(now())));
                  $secs       = ($end_time-$start_time);
                  $loading_time_track_entry = new LuTimeTracking();
                  $loading_time_track_entry->lu_gate_entry_id = $data['id'];
