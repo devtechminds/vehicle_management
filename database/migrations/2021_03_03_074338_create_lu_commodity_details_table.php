@@ -20,7 +20,7 @@ class CreateLuCommodityDetailsTable extends Migration
             $table->Integer('material');
             $table->Integer('uom')->nullable();
             $table->Integer('commodity_quantity')->nullable();
-            $table->decimal('total_weight', 8, 5)->nullable();
+            $table->decimal('total_weight', 16, 6)->nullable();
             $table->boolean('status')->default('0');
             $table->Integer('created_by');
             $table->Integer('updated_by');

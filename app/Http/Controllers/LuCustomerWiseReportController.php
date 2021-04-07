@@ -40,7 +40,9 @@ class LuCustomerWiseReportController extends Controller
             if(isset($request->from_date) && isset($request->to_date))
             {
                 $loading_gate_entry->whereHas('getLuGateEntry', function($q) use($request){
-                    $q->whereBetween('created_at', [$request->from_date, $request->to_date]);
+                    $date_from = Carbon::parse($request->from_date)->startOfDay();
+                    $date_to   = Carbon::parse($request->to_date)->endOfDay();
+                    $q->whereBetween('created_at', [$date_from, $date_to]);
                 });
 
             }

@@ -44,13 +44,12 @@ class LuWeightBridgeController extends Controller
             }
             if($request->status==2){
                 $loading_entry_data->where('status','=',$request->status);
-                $loading_entry_data->whereHas('getLuWeightBridge', function($q) use($request){
-                    $q->where('status','=', 0);
-                 });
+                $loading_entry_data->where('loading_date','=',null);
             }
             
         }else{
             $loading_entry_data->where('status','=',2);
+            $loading_entry_data->where('loading_date','=',null);
         }
         if($request->ref_no)
         {
@@ -79,7 +78,7 @@ class LuWeightBridgeController extends Controller
             })
             ->editColumn('status', function($row){
                  $status= '';
-                 if($row->status==2){
+                 if($row->status==2 && $row->loading_date == null){
                     $status="Pending";
                 }elseif($row->getLuWeightBridge->status==1 ){
                     $status="Approve";
@@ -235,13 +234,12 @@ class LuWeightBridgeController extends Controller
             }
             if($request->status==2){
                 $unloading_entry_data->where('status','=',$request->status);
-                $unloading_entry_data->whereHas('getLuWeightBridge', function($q) use($request){
-                    $q->where('status','=', 0);
-                 });
+                $unloading_entry_data->where('loading_date','=',null);
             }
             
         }else{
             $unloading_entry_data->where('status','=',2);
+            $unloading_entry_data->where('loading_date','=',null);
         }
         if($request->ref_no)
         {
@@ -271,7 +269,7 @@ class LuWeightBridgeController extends Controller
             })
             ->editColumn('status', function($row){
                  $status= '';
-                 if($row->status==2){
+                 if($row->status==2 && $row->loading_date == null){
                     $status="Pending";
                 }elseif($row->getLuWeightBridge->status==1 ){
                     $status="Approve";
@@ -435,7 +433,7 @@ class LuWeightBridgeController extends Controller
                  $status= '';
                  if($row->out_process_status==0){
                     $status="Pending";
-                }elseif($row->out_process_status==1){
+                }elseif($row->out_process_status==1 || $row->out_process_status==2){
                     $status="Approve";
                 }
               return $status;
@@ -603,7 +601,7 @@ class LuWeightBridgeController extends Controller
                  $status= '';
                  if($row->out_process_status==0){
                     $status="Pending";
-                }elseif($row->out_process_status==1){
+                }elseif($row->out_process_status==1 || $row->out_process_status==2){
                     $status="Approve";
                 }
               return $status;

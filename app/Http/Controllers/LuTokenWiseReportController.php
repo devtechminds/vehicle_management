@@ -18,7 +18,7 @@ class LuTokenWiseReportController extends Controller
         
         if($request->ajax()){
 
-           // $loading_gate_entry = LuGateEntrie::with('getCustomer','getCommodity','getTransporter','getLuWeightBridge','getLuCommodityDetail','getLuCommodityDetail.getMaterial','getLuCommodityDetail.getUOM');
+          
            $loading_gate_entry = LuCommodityDetail::with('getLuGateEntry.getCustomer','getLuGateEntry.getCommodity','getLuGateEntry.getTransporter','getLuGateEntry.getLuWeightBridge','getLuGateEntry','getMaterial','getUOM');
            
 

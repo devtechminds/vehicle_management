@@ -46,14 +46,6 @@ class LuTokenExport implements FromCollection ,WithMapping, WithHeadings
    
             }
         
-            // if(isset($request->from_date) && isset($request->to_date))
-            // {
-            //     $loading_gate_entry->whereHas('getLuGateEntry', function($q) use($request){
-            //         $q->whereBetween('created_at', [$request->from_date, $request->to_date]);
-            //     });
-
-            // }
-
             if(isset($request['token_no']) || isset($request['wb_ticket_no'])){
                 $loading_gate_entry->whereHas('getLuGateEntry', function($q) use($request_data){
                     $q->where('out_process_status','=',2);

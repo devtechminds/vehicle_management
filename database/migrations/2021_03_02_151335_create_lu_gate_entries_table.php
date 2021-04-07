@@ -28,7 +28,7 @@ class CreateLuGateEntriesTable extends Migration
             $table->String('bl_no')->nullable();
             $table->Integer('bl_qty')->nullable();
             $table->Integer('quantity')->nullable();
-            $table->decimal('metric_ton', 8, 5)->nullable();
+            $table->decimal('metric_ton', 16, 6)->nullable();
             $table->String('driver_name')->nullable();
             $table->String('driver_lic_no')->nullable();
             $table->String('driver_ph_no')->nullable();

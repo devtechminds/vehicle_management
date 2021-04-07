@@ -54,16 +54,10 @@ class LuCustomerExport implements FromCollection ,WithMapping, WithHeadings
             if(isset($this->request['from_date_submit']) && isset($this->request['to_date_submit']))
             {
 
-                $start = Carbon::parse($this->request['from_date_submit'])
-                ->startOfDay()        // 2018-09-29 00:00:00.000000
-                ->toDateTimeString(); // 2018-09-29 00:00:00
-
-                $end    = Carbon::parse($this->request['to_date_submit'])
-                ->startOfDay()        // 2018-09-29 00:00:00.000000
-                ->toDateTimeString(); // 2018-09-29 00:00:00
-
-                $loading_gate_entry->whereHas('getLuGateEntry', function($q) use($start, $end){
-                    $q->whereBetween('created_at', [$start, $end]);
+                $loading_gate_entry->whereHas('getLuGateEntry', function($q) use($request_data){
+                    $date_from = Carbon::parse($request_data['from_date_submit'])->startOfDay();
+                    $date_to = Carbon::parse($request_data['to_date_submit'])->endOfDay();
+                    $q->whereBetween('created_at', [$date_from, $date_to]);
                 });
 
                // $gate_entry_data->whereBetween('created_at', [$this->request['from_date'], $this->request['to_date']]);

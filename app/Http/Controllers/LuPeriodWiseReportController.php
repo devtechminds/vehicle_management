@@ -29,7 +29,7 @@ class LuPeriodWiseReportController extends Controller
                 });
 
             }
-            \Log::info($request);
+            
             if(isset($request->commodity)){
                
              $loading_gate_entry->whereHas('getLuGateEntry', function($q) use($request){
@@ -41,7 +41,9 @@ class LuPeriodWiseReportController extends Controller
             if(isset($request->from_date) && isset($request->to_date))
             {
                 $loading_gate_entry->whereHas('getLuGateEntry', function($q) use($request){
-                    $q->whereBetween('created_at', [$request->from_date, $request->to_date]);
+                    $date_from = Carbon::parse($request->from_date)->startOfDay();
+                    $date_to   = Carbon::parse($request->to_date)->endOfDay();
+                    $q->whereBetween('created_at', [$date_from, $date_to]);
                 });
 
             }
@@ -178,7 +180,7 @@ class LuPeriodWiseReportController extends Controller
 
     public function periodDownload(Request $request){
        
-        return Excel::download(new LuPeriodExport($request->all()), 'Customer.xlsx');
+        return Excel::download(new LuPeriodExport($request->all()), 'Periodwise.xlsx');
         
           
     }

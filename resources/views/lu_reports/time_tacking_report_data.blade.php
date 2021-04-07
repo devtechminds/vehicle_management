@@ -12,7 +12,7 @@
          <div class="page-header-title">
             <i class="feather icon-clipboard bg-c-blue"></i>
             <div class="d-inline">
-               <h2>Time Tacking Reportsssssssssssss</h2>
+               <h2>Time Tacking Reports</h2>
             </div>
          </div>
       </div>
@@ -48,42 +48,6 @@
                   <div class="card table-card">
                      <div class="card-header flthd">
                         <div class="form-group row">
-                           <div class="col boxspace">
-                              <a href="{{ route('loading.time.tracking.list.report')}}" title="Clear filter"><i class="fa fa-filter flt"></i></a>
-                           </div>
-                           <div class="col boxspace">
-                              <select name="report_type" id="report_type" class="form-control boxbrd hgt">
-                                 <option value="1">Loading</option>
-                                 <option value="2">Unloading</option>
-                              </select>
-                           </div>
-                           <div class="col boxspace">
-                              <select name="customer" id="customer" class="form-control boxbrd hgt">
-                                 <option value="">Select Customer</option>
-                                 @foreach($customers as $customer)
-                                 <option value="{{$customer['customer_code']}}">{{ ucfirst($customer['customer_name']) }}</option>
-                                 @endforeach
-                              </select>
-                           </div>
-                           <div class="col-sm-2 boxspace">
-                              <input type="date" id="from_date" name="from_date" value="{{date('Y-m-d')}}" onkeydown="return false"  class="form-control hgt"  placeholder="Date">
-                           </div>
-                           <div class="col-sm-2 boxspace">
-                              <input type="date" id="to_date" name="to_date" value="{{date('Y-m-d')}}" onkeydown="return false"  class="form-control hgt"  placeholder="Date">
-                           </div>
-                           <div class="col-sm-1 boxspace">
-                              <button  id="filter" class="btn btn-info waves-effect waves-light btnspace">Filter</button>
-                           </div>
-                           <div class="col-sm-1 boxspace">
-                              <form action="{{route('loading.customer.report.download')}}" method="post">
-                                 {{ csrf_field() }}
-                                 <input type="hidden" name="report_type_submit" id="report_type_submit">
-                                 <input type="hidden" name="from_date_submit" id="from_date_submit">
-                                 <input type="hidden" name="customer" id="customer_id">
-                                 <input type="hidden" name="to_date_submit" id="to_date_submit">
-                                 <button  id="download" class="btn btn-info waves-effect waves-light btnspace"><i class="fa fa-download"></i></button>
-                              </form>
-                           </div>
                         </div>
                      </div>
                      <div class="col-lg-12 boxspace">
@@ -96,11 +60,10 @@
                               <thead>
                                  <tr>
                                     <th class="hd">Id </th>
-                                    <th class="hd">Token No</th>
-                                    <th class="hd">Truck No</th>
-                                    <th class="hd">Customer</th>
-                                    <th class="hd">Gate Entry Date</th>
-                                    <th class="hd">Actions</th>
+                                    <th class="hd">Process</th>
+                                    <th class="hd">Action Date/Time</th>
+                                    <th class="hd">Action Time Diff</th>
+                                    <th class="hd">Action By</th>
                                  </tr>
                               </thead>
                               <tbody>
@@ -143,13 +106,13 @@ var id = '{{ request()->get("id") }}'
                return meta.row + meta.settings._iDisplayStart + 1;
                }
                },
-               {data: 'ref_no', name: 'ref_no'},
-               {data: 'truck_no', name: 'truck_no'},
-               {data: 'customer_name', name: 'customer_name'},
-               {data: 'created_at', name: 'created_at'},
-               {data: 'action', name: 'action'}
+               {data: 'new_status', name: 'new_status'},
+               {data: 'action_time', name: 'action_time'},
+               {data: 'action_time_diff', name: 'action_time_diff'},
+               {data: 'action_by', name: 'action_by'},
+               
            ],
-           'order': [[ 1, "desc" ]],
+         //   'order': [[ 1, "desc" ]],
            'columnDefs': [{
                'targets': [], /* column index */
                'orderable'

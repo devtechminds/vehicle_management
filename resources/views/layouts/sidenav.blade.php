@@ -578,6 +578,11 @@
                      <span class="pcoded-mtext">Period Wise</span>
                      </a>
                   </li>
+                  <li class="">
+                     <a href="{{route('loading.time.tracking.list.report')}}" class="waves-effect waves-dark">
+                     <span class="pcoded-mtext">Time Track</span>
+                     </a>
+                  </li>
                </ul>
             </li>
          </ul>

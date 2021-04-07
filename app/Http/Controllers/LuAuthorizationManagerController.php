@@ -852,11 +852,11 @@ class LuAuthorizationManagerController extends Controller
             //Send Notification
             //Notifications::sendNotification(auth()->user()->user_type,'authorization_manager','New Unloading Weigh Bridge Entry Updates After Return Updated','','/manifesto-list-finance-officer');
             UserLog::AddLog('New Unloading Weigh Bridge Entry Updates After Return Updated By');
-            return redirect()->route('unloading.gate.entry.return.update.index')->with('create', 'Unloading Weigh Bridge Entry Updates After Return Updated Successfully!');
+            return redirect()->route('unloading.weigh.bridge.return.update.index')->with('create', 'Unloading Weigh Bridge Entry Updates After Return Updated Successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
             return $e->getMessage();
-            return redirect()->route('unloading.gate.entry.return.update.index')->with('create',$e->getMessage());
+            return redirect()->route('unloading.weigh.bridge.return.update.index')->with('create',$e->getMessage());
             
         }
       } 

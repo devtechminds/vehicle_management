@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Customers;
 use App\LuTimeTracking;
 use App\LuGateEntrie;
+use App\User;
 use App\LuCommodityDetail;
 use Illuminate\Http\Request;
 
@@ -82,26 +83,49 @@ class LuTimeTrackingController extends Controller
     {
         
         if($request->ajax()){
-            \Log::info(base64_decode($request->id));
 
             $loading_gate_entry_list = LuTimeTracking::where('lu_gate_entry_id','=',base64_decode($request->id))->get();
-
-
-            \Log::info($loading_gate_entry_list);
+            $msg='';
         
-           
-
             return datatables()->of($loading_gate_entry_list)
-                ->addColumn('action', function ($loading_gate_entry_list) {
-                   
-                    $return_action = '<a target="_blank" href="' . route('loading.time.tracking.report',['id'=>base64_encode($loading_gate_entry_list->id)]) . '"  class="btn-clean btn-icon" title="Print"><i class="fa fa-clock"></i></a>';
-
-
-                return $return_action;
-                })
+            ->editColumn('new_status', function($row) use($msg){
+                if($row->new_status == 1 && $row->in_or_out == 1 && $row->is_loading == 1){
+                    $msg = 'Loading Vehicle Registration';
+                }elseif($row->new_status == 2 && $row->in_or_out == 1 && $row->is_loading == 1){
+                    $msg = 'Loading Authorization';
+                }elseif($row->new_status == 3 && $row->in_or_out == 1 && $row->is_loading == 1){
+                    $msg = 'Loading Vehicle';
+                }elseif($row->new_status == 1 && $row->in_or_out == 2 && $row->is_loading == 1){
+                    $msg = 'Vehicle After Loading';
+                }elseif($row->new_status == 2 && $row->in_or_out == 2 && $row->is_loading == 1){
+                    $msg = 'Vehicle return after Loading';
+                }elseif($row->new_status == 1 && $row->in_or_out == 1 && $row->is_loading == 2){
+                    $msg = 'Unloading Vehicle Registration';
+                }elseif($row->new_status == 2 && $row->in_or_out == 1 && $row->is_loading == 2){
+                    $msg = 'Unloading Authorization';
+                }elseif($row->new_status == 3 && $row->in_or_out == 1 && $row->is_loading == 2){
+                    $msg = 'Unloading Vehicle';
+                }elseif($row->new_status == 1 && $row->in_or_out == 2 && $row->is_loading == 2){
+                    $msg = 'Vehicle After Unloading';
+                }elseif($row->new_status == 2 && $row->in_or_out == 2 && $row->is_loading == 2){
+                    $msg = 'Vehicle return after Unloading';
+                }
+                return  $msg;
+            })
+            ->editColumn('action_time', function($row){
+                $created_at = date('d-m-Y h:i A', strtotime($row->created_at) );
+                return  isset($row->created_at)?$created_at:'';
+            })
+            ->editColumn('action_time_diff', function($row){
+                $time_diff = gmdate("h:i A", $row->time_diff);
+                return  isset($row->time_diff)?$time_diff:'';
+            })
+            ->editColumn('action_by', function($row){
+                $action_by = User::find($row->updated_by)->name;
+                return  isset($row->updated_by)?$action_by:'';
+            })
                
-                
-                ->rawColumns(['customer_name','created_at','action'])
+                ->rawColumns(['new_status','action_time','action_time_diff','action_by'])
                
                 ->make(true);
        
