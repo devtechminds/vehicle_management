@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\ManifestoEntry;
 use App\GateEntry;
+use App\LuGateEntrie;
 class DashboradController extends Controller
 {
     /**
@@ -32,9 +33,13 @@ class DashboradController extends Controller
       }elseif(in_array("field_supervisor", $user_type)){
         $gate_entry = GateEntry::getFieldSupervisorData();
        return view('dashborad.field_supervisor_dashborad')->with('gate_entry',$gate_entry);  
-      }elseif(in_array("sfs_operation_manager", $user_type) || in_array("admin", $user_type)){
-        $gate_entry = GateEntry::getCFSOperationManagerData();
+      }elseif(in_array("sfs_operation_manager", $user_type)){
+        $gate_entry    = GateEntry::getCFSOperationManagerData();
         return view('dashborad.sfs_operation_manager_dashborad')->with('gate_entry',$gate_entry);  
+      }elseif(in_array("admin", $user_type)){
+        $gate_entry    = GateEntry::getCFSOperationManagerData();
+        $loading_entry = LuGateEntrie::getLoadingDashboardData();
+        return view('dashborad.main_dashborad')->with('gate_entry',$gate_entry)->with('loading_entry',$loading_entry);  
       }elseif( in_array("finance_controller", $user_type)){
         $gate_entry = GateEntry::getFinanceControllerData();
         return view('dashborad.finance_controller_dashborad')->with('gate_entry',$gate_entry);  

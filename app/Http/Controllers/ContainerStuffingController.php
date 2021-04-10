@@ -145,7 +145,7 @@ class ContainerStuffingController extends Controller
         $validatedData = $request->validate([
             'container_tare_wt' => 'required',
             'wb_tare_wt' => 'required',
-            'wb_net_wt' => 'required',
+            //'wb_net_wt' => 'required',
             // 'field_supervisor_name' => 'required',
             // 'container_physical_status' => 'required',
             // 'location' => 'required',
@@ -171,10 +171,10 @@ class ContainerStuffingController extends Controller
             //echo "<pre>"; 
             //print_r($data);die;
             $update_data =array(
-                'wb_gross_wt' => $data['wb_gross_wt']?$data['wb_gross_wt']:'',
-                'container_tare_wt' => $data['container_tare_wt']?$data['container_tare_wt']:'',
-                'wb_tare_wt' => $data['wb_net_wt']?$data['wb_tare_wt']:'',
-                'wb_net_wt' => $data['wb_net_wt']?$data['wb_net_wt']:'',
+                'wb_gross_wt' => (int)$data['wb_gross_wt'],
+                'container_tare_wt' => (int)$data['container_tare_wt'],
+                'wb_tare_wt' => (int)$data['wb_tare_wt'],
+                'wb_net_wt' => (int)$data['wb_net_wt'],
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );
@@ -182,12 +182,12 @@ class ContainerStuffingController extends Controller
                     $update_manifesto_entry_data =array(
                         'consignment_type' => $data['consignment_type']?$data['consignment_type']:'',
                         'cargo_type' => explode("/",$data['cargo_type'])[1],
-                        'cargo_reference_no' => $data['cargo_reference_no']? $data['cargo_reference_no']:'',
+                        'cargo_reference_no' => isset($data['cargo_reference_no'])? $data['cargo_reference_no']:'',
                         'updated_at' => now(),
                         'updated_by' => auth()->user()->id
                         );
                     $update_gate_entry_data =array(
-                            'destination' => $data['destination']?$data['destination']:'',
+                            'destination' => isset($data['destination'])?$data['destination']:'',
                             'updated_at' => now(),
                             'updated_by' => auth()->user()->id
                         );

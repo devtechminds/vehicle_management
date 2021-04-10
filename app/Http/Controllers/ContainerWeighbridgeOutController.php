@@ -184,10 +184,10 @@ class ContainerWeighbridgeOutController extends Controller
                   $field_supervisor_entry_out->save();
 
                   $update_data = array(
-                    'wb_gross_wt'=>$data['wb_gross_wt']?$data['wb_gross_wt']:NULL, 
-                    'wb_net_wt'=>$data['wb_net_wt']?$data['wb_net_wt']:NULL, 
-                    'wb_tare_wt'=>$data['wb_tare_wt']?$data['wb_tare_wt']:NULL, 
-                    'wb_tare_wt'=>$data['wb_tare_wt']?$data['wb_tare_wt']:NULL, 
+                    'wb_gross_wt'=>(int)$data['wb_gross_wt'], 
+                    'wb_net_wt'=>(int)$data['wb_net_wt'], 
+                    'wb_tare_wt'=>(int)$data['wb_tare_wt'], 
+                    'container_tare_wt'=>(int)$data['container_tare_wt'], 
                     'weight_bridge_entry_outs_id' => $field_supervisor_entry_out->id,
                     'updated_at' => now(),
                     'status'=>1,

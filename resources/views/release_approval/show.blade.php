@@ -283,8 +283,8 @@
                                           <td><input type="date" name="carry_in_date" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->carry_in_date}}" placeholder="Carry In Date" readonly></td>
                                           <td><input type="text" min="1" name="container_no" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->container_no}}" placeholder="Enter Container No" readonly></td>
                                           <td><input type="number" min="1" name="size" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->size}}" placeholder="Enter Size"readonly></td>
-                                          <td><input type="text" min="1" name="seal_s_no1" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->seal_s_no1}}" placeholder="Enter Seal S.NO1" readonly></td>
-                                          <td><input type="text" min="1" name="seal_s_no2" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->seal_s_no2}}" placeholder="Enter Seal S.NO"  readonly></td>
+                                          <td><input type="text"  name="seal_s_no1" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->seal_s_no1}}" placeholder="Enter Seal S.NO1" readonly></td>
+                                          <td><input type="text"  name="seal_s_no2" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->seal_s_no2}}" placeholder="Enter Seal S.NO"  readonly></td>
                                           <td >
                                                    <select disabled style="width: auto;" name="commodity" class="form-control boxbrd required clone_input commodity_select">
                                                    <option value="">Select Commodity</option>
@@ -381,24 +381,24 @@
         cfs_release_exp_date: {
             required: true,
         },
-        truck_no: {
-            required: true,
-        },
-        trailer_no: {
-            required: true,
-        },
-        driver_name: {
-            required: true,
-        },
-        driver_license: {
-            required: true,
-        },
-        driver_ph_no: {
-            required: true,
-        },
-        chasis_no: {
-            required: true,
-        },
+      //   truck_no: {
+      //       required: true,
+      //   },
+      //   trailer_no: {
+      //       required: true,
+      //   },
+      //   driver_name: {
+      //       required: true,
+      //   },
+      //   driver_license: {
+      //       required: true,
+      //   },
+      //   driver_ph_no: {
+      //       required: true,
+      //   },
+      //   chasis_no: {
+      //       required: true,
+      //   },
        },
        submitHandler: function (form) { // for demo
          $('#myform').submit();

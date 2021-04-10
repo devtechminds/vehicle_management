@@ -57,4 +57,10 @@ class LuGateEntrie extends Model
     {
         return $this->hasOne('App\LuWeightBridge', 'lu_gate_entry_id', 'id');
     }
+
+    public static function getLoadingDashboardData(){
+        $data['loading_count']= LuGateEntrie::where('status','=',2)->where('out_process_status','=',2)->whereDate('created_at', '=', date('Y-m-d'))->count(); 
+        $data['unloading_count']= LuGateEntrie::where('status','=',2)->where('out_process_status','=',2)->whereDate('created_at', '=', date('Y-m-d'))->count(); 
+        return$data;
+    } 
 }

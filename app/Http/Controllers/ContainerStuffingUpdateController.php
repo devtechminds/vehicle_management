@@ -123,10 +123,10 @@ class ContainerStuffingUpdateController extends Controller
                 );
                 ManifestoEntry::where("id", "=",$data['manifesto_entry_id'])->update($update_data_manifesto_entry);
             $update_data =array(
-                'wb_gross_wt' => $data['wb_gross_wt']?$data['wb_gross_wt']:'',
-                'container_tare_wt' => $data['container_tare_wt']?$data['container_tare_wt']:'',
-                'wb_tare_wt' => $data['wb_net_wt']?$data['wb_tare_wt']:'',
-                'wb_net_wt' => $data['wb_net_wt']?$data['wb_net_wt']:'',
+                'wb_gross_wt' => (int)$data['wb_gross_wt'],
+                'container_tare_wt' => (int)$data['container_tare_wt'],
+                'wb_tare_wt' => (int)$data['wb_tare_wt'],
+                'wb_net_wt' => (int)$data['wb_net_wt'],
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );

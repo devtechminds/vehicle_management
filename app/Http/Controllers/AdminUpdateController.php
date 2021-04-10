@@ -301,13 +301,13 @@ class AdminUpdateController extends Controller
                                  DB::commit();
  
                 
-             return redirect()->route('update.entry')->with('create', ' Authorized successfully!');
+             return redirect()->route('update.entry')->with('create', ' Vehicle Entry Updated successfully!');
          } catch (\Exception $e) {
              DB::rollBack();
              return $e->getMessage();
              return redirect()->route('update.entry')->with('create',$e->getMessage());
          }
-         return redirect()->route('update.entry')->with('create', 'Authorized successfully!');
+         return redirect()->route('update.entry')->with('create', 'Vehicle Entry Updated successfully!');
        }
  
  

@@ -224,10 +224,10 @@ class StuffingApprovalController extends Controller
                     GateEntry::where("id", "=",$data['gate_entry_id'])->update($update_data_gate_entry);
                     $update_data_Weigh_bridge=array(
                         'wb_ticket_no' => $data['wb_ticket_no']?$data['wb_ticket_no']:'',
-                        'wb_gross_wt' => $data['initiated_by']?$data['wb_gross_wt']:'',
-                        'container_tare_wt' => $data['container_tare_wt']?$data['container_tare_wt']:'',
-                        'wb_tare_wt' => $data['wb_tare_wt']?$data['wb_tare_wt']:'',
-                        'wb_net_wt' => $data['wb_net_wt']?$data['wb_net_wt']:'',
+                        'wb_gross_wt' => (int)$data['wb_gross_wt'],
+                        'container_tare_wt' => (int)$data['container_tare_wt'],
+                        'wb_tare_wt' => (int)$data['wb_tare_wt'],
+                        'wb_net_wt' => (int)$data['wb_net_wt'],
                         'updated_at' => now(),
                         'updated_by' => auth()->user()->id
                         );

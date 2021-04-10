@@ -93,7 +93,7 @@ class ApproveVehicleReturnController extends Controller
             if(isset($request->created_date))
             {
                 $created_date = date('Y-m-d',strtotime($request->created_date));
-                $manifestogatgate_entry_datae_entry_data_entry_data->whereDate('created_at',$created_date);
+                $gate_entry_data->whereDate('created_at',$created_date);
             }
              $gate_entry_data->where('status','=',2);
             $gate_entry_data_list = $gate_entry_data->get();
@@ -227,10 +227,10 @@ class ApproveVehicleReturnController extends Controller
                     GateEntry::where("id", "=",$data['gate_entry_id'])->update($update_data_gate_entry);
                     $update_data_Weigh_bridge=array(
                         'wb_ticket_no' => $data['wb_ticket_no']?$data['wb_ticket_no']:NULL,
-                        'wb_gross_wt' => $data['initiated_by']?$data['wb_gross_wt']:'',
-                        'container_tare_wt' => $data['container_tare_wt']?$data['container_tare_wt']:NULL,
-                        'wb_tare_wt' => $data['wb_tare_wt']?$data['wb_tare_wt']:NULL,
-                        'wb_net_wt' => $data['wb_net_wt']?$data['wb_net_wt']:NULL,
+                        'wb_gross_wt' => (int)$data['wb_gross_wt'],
+                        'container_tare_wt' => (int)$data['container_tare_wt'],
+                        'wb_tare_wt' => (int)$data['wb_tare_wt'],
+                        'wb_net_wt' => (int)$data['wb_net_wt'],
                         'updated_at' => now(),
                         'updated_by' => auth()->user()->id
                         );
