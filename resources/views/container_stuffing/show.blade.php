@@ -351,8 +351,8 @@
                                        
                                           <td><input type="text" name="report_no" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->report_no}}" placeholder="" ></td>
                                           <td><input type="date" name="carry_in_date" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->carry_in_date}}" placeholder=""></td>
-                                          <td><input type="text" name="container_no" min="1" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->container_no}}" placeholder="" ></td>
-                                          <td><input type="number" name="size" min="1" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->size}}" placeholder="" ></td>
+                                          <td><input type="text" name="container_no" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->container_no}}" placeholder="" ></td>
+                                          <td><input type="number" name="size"  class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->size}}" placeholder="" ></td>
                                           <td><input type="text" name="seal_s_no1" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->seal_s_no1}}" placeholder=""></td>
                                           <td >
                                                    <select style="width: auto;" name="commodity" class="form-control boxbrd required clone_input commodity_select">

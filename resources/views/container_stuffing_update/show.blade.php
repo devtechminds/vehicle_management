@@ -334,8 +334,8 @@
                                        
                                           <td><input type="text" name="report_no" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->report_no}}" placeholder="" ></td>
                                           <td><input type="date" name="carry_in_date" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->carry_in_date}}" placeholder=""></td>
-                                          <td><input type="text" name="container_no" min="1" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->container_no}}" placeholder="" ></td>
-                                          <td><input type="number" name="size" min="1" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->size}}" placeholder="" ></td>
+                                          <td><input type="text" name="container_no"  class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->container_no}}" placeholder="" ></td>
+                                          <td><input type="number" name="size"  class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->size}}" placeholder="" ></td>
                                           <td><input type="text" name="seal_s_no1" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->seal_s_no1}}" placeholder=""></td>
                                           <td><input type="text" name="seal_s_no2" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->seal_s_no2}}" placeholder=""></td>
                                           <td >
@@ -365,7 +365,7 @@
                                           <td><input type="number" min="1" name="qty" class="form-control cwth" value="" placeholder="Enter Qty" ></td>
                                           <td><input type="text" name="lot_no" class="form-control cwth" value="" placeholder="Enter Lot No" ></td>  
                                           <td>
-                                          <input type="text" min="1" name="location_consignment" class="form-control cwth" value="" placeholder="Enter Location" >
+                                          <input type="text"  name="location_consignment" class="form-control cwth" value="" placeholder="Enter Location" >
                                                 <!-- <select  style="width: auto;" name="location" id="location" class="form-control boxbrd required clone_input">
                                                    <option value="">Select Location</option>
                                                    @foreach($locations as $location)
