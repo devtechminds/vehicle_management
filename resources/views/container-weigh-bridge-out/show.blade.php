@@ -244,11 +244,11 @@
 
 <label class="col-sm-2 col-form-label">Container Tare Wt </label>
 <div class="col-sm-4">
-<input type="number" min="1" required  name="container_tare_wt"  id="container_tare_wt" class="form-control calculate" value="{{ $gate_entry->container_tare_wt}}" placeholder="Enter Container Tare Wt" {{ $gate_entry->status==0?'':'readonly'}}>
+<input type="number"  required  name="container_tare_wt"  id="container_tare_wt" class="form-control calculate" value="{{ $gate_entry->container_tare_wt}}" placeholder="Enter Container Tare Wt" {{ $gate_entry->status==0?'':'readonly'}}>
 </div>
 <label class="col-sm-2 col-form-label">WB Tare Wt</label>
 <div class="col-sm-4">
-<input type="number" min="1" required class="form-control calculate" name="wb_tare_wt" id="wb_tare_wt" value="{{ $gate_entry->wb_tare_wt}}" placeholder="Enter WB Tare Wt"  readonly>
+<input type="number"  required class="form-control calculate" name="wb_tare_wt" id="wb_tare_wt" value="{{ $gate_entry->wb_tare_wt}}" placeholder="Enter WB Tare Wt"  readonly>
 </div>
 </div>    
 
@@ -326,7 +326,7 @@
 <div class="form-group row fheigt">
 <label class="col-sm-2 col-form-label">No of Package : </label>
 <div class="col-sm-4">
-<input type="number" name="no_of_package" class="form-control " min="1" value="{{ $gate_entry->no_of_package}}" placeholder="Enter No of Package" >
+<input type="number" name="no_of_package" class="form-control "  value="{{ $gate_entry->no_of_package}}" placeholder="Enter No of Package" >
 </div>
 <label class="col-sm-2 col-form-label">Uploaded File : </label>
 <div class="col-sm-4">
@@ -426,7 +426,7 @@
                                                    </select>
                                                 </td>
                                           
-                                          <td><input type="number"  name="qty" min="1" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->qty}}" placeholder="Enter Qty" readonly></td>
+                                          <td><input type="number"  name="qty"  class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->qty}}" placeholder="Enter Qty" readonly></td>
                                           <td><input type="text" name="lot_no" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->lot_no}}" placeholder="Enter Lot No" readonly></td>
                                           <td><input type="text" name="location" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->location}}" placeholder="Enter Location" readonly></td>  
                                           <td><input type="text" name="truck_no" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->truck_no}}" placeholder="Enter Truck Number" readonly></td> 

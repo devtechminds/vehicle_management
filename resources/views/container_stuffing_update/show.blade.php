@@ -177,11 +177,11 @@
 
 <label class="col-sm-2 col-form-label">Container Tare Wt </label>
 <div class="col-sm-4">
-<input type="number" min="1" name="container_tare_wt"  id="container_tare_wt" class="form-control calculate" value="{{ $gate_entry->getWeighBridge->container_tare_wt}}" placeholder="Enter Container Tare Wt" readonly >
+<input type="number"  name="container_tare_wt"  id="container_tare_wt" class="form-control calculate" value="{{ $gate_entry->getWeighBridge->container_tare_wt}}" placeholder="Enter Container Tare Wt" readonly >
 </div>
 <label class="col-sm-2 col-form-label">WB Tare Wt</label>
 <div class="col-sm-4">
-<input type="number" min="1" class="form-control calculate" name="wb_tare_wt" id="wb_tare_wt" value="{{ $gate_entry->getWeighBridge->wb_tare_wt}}" placeholder="Enter WB Tare Wt" readonly>
+<input type="number"  class="form-control calculate" name="wb_tare_wt" id="wb_tare_wt" value="{{ $gate_entry->getWeighBridge->wb_tare_wt}}" placeholder="Enter WB Tare Wt" readonly>
 </div>
 </div>    
 
@@ -259,7 +259,7 @@
 <div class="form-group row fheigt">
 <label class="col-sm-2 col-form-label">No of Package : </label>
 <div class="col-sm-4">
-<input type="number" name="no_of_package" class="form-control " min="1" value="{{ $gate_entry->no_of_package}}" placeholder="Enter No of Package" readonly>
+<input type="number" name="no_of_package" class="form-control "  value="{{ $gate_entry->no_of_package}}" placeholder="Enter No of Package" readonly>
 </div>
 <label class="col-sm-2 col-form-label">Uploaded File : </label>
 <div class="col-sm-4">
@@ -362,7 +362,7 @@
                                                    @endforeach
                                                    </select>
                                                 </td>
-                                          <td><input type="number" min="1" name="qty" class="form-control cwth" value="" placeholder="Enter Qty" ></td>
+                                          <td><input type="number"  name="qty" class="form-control cwth" value="" placeholder="Enter Qty" ></td>
                                           <td><input type="text" name="lot_no" class="form-control cwth" value="" placeholder="Enter Lot No" ></td>  
                                           <td>
                                           <input type="text"  name="location_consignment" class="form-control cwth" value="" placeholder="Enter Location" >

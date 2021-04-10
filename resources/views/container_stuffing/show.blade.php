@@ -198,11 +198,11 @@
 
 <label class="col-sm-2 col-form-label">Container Tare Wt </label>
 <div class="col-sm-4">
-<input type="number" min="1" name="container_tare_wt"  id="container_tare_wt" class="form-control calculate" value="{{ $gate_entry->getWeighBridge->container_tare_wt}}" readonly placeholder="Enter Container Tare Wt" >
+<input type="number"  name="container_tare_wt"  id="container_tare_wt" class="form-control calculate" value="{{ $gate_entry->getWeighBridge->container_tare_wt}}" readonly placeholder="Enter Container Tare Wt" >
 </div>
 <label class="col-sm-2 col-form-label">WB Tare Wt</label>
 <div class="col-sm-4">
-<input type="number" min="1" class="form-control calculate" name="wb_tare_wt" id="wb_tare_wt" value="{{ $gate_entry->getWeighBridge->wb_tare_wt}}" readonly placeholder="Enter WB Tare Wt" >
+<input type="number"  class="form-control calculate" name="wb_tare_wt" id="wb_tare_wt" value="{{ $gate_entry->getWeighBridge->wb_tare_wt}}" readonly placeholder="Enter WB Tare Wt" >
 </div>
 </div>    
 
@@ -283,7 +283,7 @@
 <div class="form-group row fheigt">
 <label class="col-sm-2 col-form-label">No of Package : </label>
 <div class="col-sm-4">
-<input type="number" name="no_of_package" class="form-control " min="1" value="{{$gate_entry->no_of_package}}" placeholder="Enter No of Package" readonly>
+<input type="number" name="no_of_package" class="form-control "  value="{{$gate_entry->no_of_package}}" placeholder="Enter No of Package" readonly>
 </div>
 <label class="col-sm-2 col-form-label">Uploaded File : </label>
 <div class="col-sm-4">
@@ -378,7 +378,7 @@
                                                    @endforeach
                                                    </select>
                                                 </td>
-                                          <td><input type="number" min="1" name="declared_wgt" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->declared_wgt}}" placeholder="" ></td>
+                                          <td><input type="number"  name="declared_wgt" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->declared_wgt}}" placeholder="" ></td>
                                          
                                        </tr>
                                     </tbody>

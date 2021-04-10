@@ -303,11 +303,11 @@
 
 <label class="col-sm-2 col-form-label">Container Tare Wt </label>
 <div class="col-sm-4">
-<input type="number" min="1"   name="container_tare_wt"  id="container_tare_wt" class="form-control calculate" value="{{ $gate_entry->container_tare_wt}}" placeholder="Enter Container Tare Wt" >
+<input type="number"    name="container_tare_wt"  id="container_tare_wt" class="form-control calculate" value="{{ $gate_entry->container_tare_wt}}" placeholder="Enter Container Tare Wt" >
 </div>
 <label class="col-sm-2 col-form-label">WB Tare Wt</label>
 <div class="col-sm-4">
-<input type="number" min="1"  class="form-control calculate" name="wb_tare_wt" id="wb_tare_wt" value="{{ $gate_entry->wb_tare_wt}}" placeholder="Enter WB Tare Wt" >
+<input type="number"   class="form-control calculate" name="wb_tare_wt" id="wb_tare_wt" value="{{ $gate_entry->wb_tare_wt}}" placeholder="Enter WB Tare Wt" >
 </div>
 </div>    
 
@@ -373,14 +373,14 @@
          <label class="col-sm-2 col-form-label ">Yard : </label>
          <div class="col-sm-4">
            
-         <input type="text" name="bin" class="form-control " min="1" value="{{ isset($gate_entry->getFieldSupervisorEntryOut->bin_id)?$gate_entry->getFieldSupervisorEntryOut->bin_id:''}}" placeholder="Enter Yard">
+         <input type="text" name="bin" class="form-control "  value="{{ isset($gate_entry->getFieldSupervisorEntryOut->bin_id)?$gate_entry->getFieldSupervisorEntryOut->bin_id:''}}" placeholder="Enter Yard">
             
          </div>
       </div>
       <div class="form-group row fheigt">
          <label class="col-sm-2 col-form-label">No of Package : </label>
          <div class="col-sm-4">
-            <input type="number" name="no_of_package" class="form-control " min="1" value="{{ isset($gate_entry->getFieldSupervisorEntryOut->no_of_package)?$gate_entry->getFieldSupervisorEntryOut->no_of_package:''}}" placeholder="Enter No of Package">
+            <input type="number" name="no_of_package" class="form-control "  value="{{ isset($gate_entry->getFieldSupervisorEntryOut->no_of_package)?$gate_entry->getFieldSupervisorEntryOut->no_of_package:''}}" placeholder="Enter No of Package">
          </div>
          <label class="col-sm-2 col-form-label">Uploaded File : </label>
          <div class="col-sm-4">
@@ -485,7 +485,7 @@
                                                    </select>
                                                 </td>
                                           
-                                          <td><input type="number"  name="qty" min="1" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->qty}}" placeholder="Enter Qty" ></td>
+                                          <td><input type="number"  name="qty"  class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->qty}}" placeholder="Enter Qty" ></td>
                                           <td><input type="text" name="lot_no" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->lot_no}}" placeholder="Enter Lot No" ></td>
                                           <td><input type="text" name="location" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->location}}" placeholder="Enter Location" ></td>  
                                           <td><input type="text" name="truck_no" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->truck_no}}" placeholder="Enter Truck Number" ></td> 

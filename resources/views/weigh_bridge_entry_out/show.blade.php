@@ -245,11 +245,11 @@
 
 <label class="col-sm-2 col-form-label">Container Tare Wt </label>
 <div class="col-sm-4">
-<input type="number" min="1"   name="container_tare_wt"  id="container_tare_wt" class="form-control calculate" value="" placeholder="Enter Container Tare Wt" readonly>
+<input type="number"    name="container_tare_wt"  id="container_tare_wt" class="form-control calculate" value="" placeholder="Enter Container Tare Wt" readonly>
 </div>
 <label class="col-sm-2 col-form-label">WB Tare Wt</label>
 <div class="col-sm-4">
-<input type="number" min="1" required class="form-control calculate" name="wb_tare_wt" id="wb_tare_wt" value="{{ isset($wb_entry_out->wb_tare_wt)?$wb_entry_out->wb_tare_wt:''}}" placeholder="Enter WB Tare Wt" >
+<input type="number"  required class="form-control calculate" name="wb_tare_wt" id="wb_tare_wt" value="{{ isset($wb_entry_out->wb_tare_wt)?$wb_entry_out->wb_tare_wt:''}}" placeholder="Enter WB Tare Wt" >
 </div>
 </div>    
 
@@ -342,7 +342,7 @@
                                                    </select>
                                                 </td>
                                           
-                                          <td><input type="number"  name="qty" min="1" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->qty}}" placeholder="Enter Qty" readonly></td>
+                                          <td><input type="number"  name="qty"  class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->qty}}" placeholder="Enter Qty" readonly></td>
                                           <td><input type="text" name="lot_no" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->lot_no}}" placeholder="Enter Lot No" readonly></td>
                                           <td><input type="text" name="location" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->location}}" placeholder="Enter Location" readonly></td>  
                                           <td><input type="text" name="truck_no" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->truck_no}}" placeholder="Enter Truck Number" readonly></td> 

@@ -223,7 +223,7 @@
                                                    </select>
                                                 </td>
 
-                                                <td><input type="text"  readonly value="{{$value->declared_wgt}}"  name="declared_wgt"  class="form-control cwth required clone_input" placeholder="Declared wgt"></td>
+                                                <td><input type="text"  readonly value="{{$value->declared_wgt}}"  name="declared_wgt"  class="form-control cwth  clone_input" placeholder="Declared wgt"></td>
                                                 <td><input type="text"  readonly value="{{$value->truck_no}}"  name="truck_no"  class="form-control cwth required clone_input" placeholder="Truck No"></td>
                                                 <td><input type="text"   readonly value="{{$value->trailer_no}}"  name="trailer_no" class="form-control cwth required clone_input" placeholder="Trailer No"></td>
                                                 <td><input type="text"   readonly value="{{$value->driver_name}}"  name="driver_name" class="form-control cwth required clone_input" placeholder="Driver Name"></td>
