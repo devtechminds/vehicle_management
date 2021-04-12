@@ -215,9 +215,10 @@ class ApproveContainerOutController extends Controller
                     );
                  ReleaseApprovalFinacialOfficerEntry::where("id", "=",$data['release_approval_finacial_officer_entries_id'])->update($update_finacial_officer_entry);    
                  $update_WeightBridgeEntryOut = array(
-                    'wb_gross_wt'=> $data['wb_gross_wt']?$data['wb_gross_wt']:NULL,
-                    'container_tare_wt'=> $data['container_tare_wt']?$data['container_tare_wt']:NULL,
-                    'wb_tare_wt'=> $data['wb_tare_wt']?$data['wb_tare_wt']:NULL,
+                    'wb_gross_wt'=> (int)$data['wb_gross_wt'],
+                    'container_tare_wt'=> (int)$data['container_tare_wt'],
+                    'wb_tare_wt'=> (int)$data['wb_tare_wt'],
+                    'wb_net_wt'=>(int)$data['wb_net_wt'], 
                     'status' => 3,
                     'updated_at' => now(),
                     'updated_by' => auth()->user()->id
@@ -240,14 +241,14 @@ class ApproveContainerOutController extends Controller
                 $update_data_consignment_details = array(
                     'report_no'=> $data['report_no']?$data['report_no']:'',
                     'carry_in_date'=> $data['carry_in_date']?$data['carry_in_date']:'',
-                    'container_no'=> isset($data['container_no'])?$data['container_no']:NULL,
-                    'size'=> isset($data['size'])?$data['size']:NULL,
-                    'seal_s_no1'=> isset($data['seal_s_no1'])?$data['seal_s_no1']:NULL,
-                    'seal_s_no2'=> $data['seal_s_no2']?$data['seal_s_no2']:'',
+                    'container_no'=> (strlen($data['container_no'])>0)?$data['container_no']:NULL,
+                    'size'=> (int)$data['size'],
+                    'seal_s_no1'=> (strlen($data['seal_s_no1'])>0)?$data['seal_s_no1']:NULL,
+                    'seal_s_no2'=> (strlen($data['seal_s_no2'])>0)?$data['seal_s_no2']:'',
                     'commodity'=> $data['commodity']?$data['commodity']:'',
                     'material'=> $data['material']?$data['material']:'',
                     'uom'=> $data['uom']?$data['uom']:'',
-                    'qty'=> $data['qty']?$data['qty']:'',
+                    'qty'=> (int)$data['qty'],
                     'lot_no'=> $data['lot_no']?$data['lot_no']:'',
                     'location'=> $data['location']?$data['location']:'',
                     'truck_no'=> $data['truck_no']?$data['truck_no']:'',

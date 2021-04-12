@@ -199,13 +199,13 @@ class ContainerStuffingController extends Controller
                 $update_data_consignment_details =array(
                     'report_no' => $data['report_no']?$data['report_no']:'',
                     'carry_in_date' => $data['carry_in_date']?$data['carry_in_date']:'',
-                    'container_no' => $data['container_no']?$data['container_no']:'',
-                    'size' => $data['size']?$data['size']:'',
-                    'seal_s_no1' => $data['seal_s_no1']?$data['seal_s_no1']:'',
+                    'container_no' => (strlen($data['container_no'])>0)?$data['container_no']:'',
+                    'size' => (int)$data['size'],
+                    'seal_s_no1' => (strlen($data['seal_s_no1'])>0)?$data['seal_s_no1']:'',
                     'commodity' => $data['commodity']?$data['commodity']:'',
                     'material' => $data['material']?$data['material']:'',
                     'uom' => $data['uom']?$data['uom']:NULL,
-                    'declared_wgt' => $data['declared_wgt']?$data['declared_wgt']:'',
+                    'declared_wgt' => (int)$data['declared_wgt'],
                     'updated_at' => now(),
                     'updated_by' => auth()->user()->id
                     );

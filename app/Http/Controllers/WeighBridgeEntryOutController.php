@@ -148,10 +148,10 @@ class WeighBridgeEntryOutController extends Controller
                 $weight_bridge_entry_out->consignment_details_id= $data['consignment_details_id']?$data['consignment_details_id']:'';
                 $weight_bridge_entry_out->finacial_officer_entry_id= $data['release_approval_finacial_officer_entries_id']?$data['release_approval_finacial_officer_entries_id']:'';
                 $weight_bridge_entry_out->wb_ticket_no= $data['wb_ticket_no']?$data['wb_ticket_no']:'';
-                $weight_bridge_entry_out->wb_gross_wt= ($data['wb_gross_wt'])?$data['wb_gross_wt']:NULL;
-                $weight_bridge_entry_out->container_tare_wt= $data['container_tare_wt']?$data['container_tare_wt']:NULL;
-                $weight_bridge_entry_out->wb_tare_wt= $data['wb_tare_wt']?$data['wb_tare_wt']:NULL;
-                $weight_bridge_entry_out->wb_net_wt= ($data['wb_net_wt'])?$data['wb_net_wt']:NULL;
+                $weight_bridge_entry_out->wb_gross_wt= (int)$data['wb_gross_wt'];
+                $weight_bridge_entry_out->container_tare_wt= (int)$data['container_tare_wt'];
+                $weight_bridge_entry_out->wb_tare_wt= (int)$data['wb_tare_wt'];
+                $weight_bridge_entry_out->wb_net_wt= (int)($data['wb_net_wt']);
                 $weight_bridge_entry_out->created_by= auth()->user()->id;
                 $weight_bridge_entry_out->updated_by= auth()->user()->id;
                 $weight_bridge_entry_out->save();

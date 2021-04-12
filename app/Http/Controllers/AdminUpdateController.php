@@ -45,12 +45,18 @@ class AdminUpdateController extends Controller
         if(isset($request->created_date))
         {
             $created_date = date('Y-m-d',strtotime($request->created_date));
-            $gate_entry_data->whereDate('created_at',$created_date);
+            $gate_entry_data->WhereDate('created_at',$created_date);
         }
         if(isset($request->gate_entry_no))
         {
             
-            $gate_entry_data->where('gate_entry_no',$request->gate_entry_no);
+            $gate_entry_data->orWhere('gate_entry_no','=',$request->gate_entry_no);
+        }
+        if($request->ref_no)
+        {
+            $gate_entry_data->whereHas('getManifestoEntry', function($q) use($request){
+                $q->orWhere('ref_no','=',$request->ref_no);
+            });
         }
         
         $gate_entry_data_list = $gate_entry_data->get();
