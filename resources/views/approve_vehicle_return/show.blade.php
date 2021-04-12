@@ -240,13 +240,13 @@
                               </div>
                               <label class="col-sm-2 col-form-label">Consignment Weight  </label>
                               <div class="col-sm-4">
-                                 <input type="number" min="1" name="consignment_wgt" id="consignment_wgt" value="{{ $gate_entry->getManifestoEntry->consignment_wgt}}" class="form-control" placeholder="Enter Consignment Weight">
+                                 <input type="number"  name="consignment_wgt" id="consignment_wgt" value="{{ $gate_entry->getManifestoEntry->consignment_wgt}}" class="form-control" placeholder="Enter Consignment Weight">
                               </div>
                            </div>
                            <div class="form-group row">
                               <label class="col-sm-2 col-form-label">No of Package  </label>
                               <div class="col-sm-4">
-                                 <input type="number" min="1" name="no_package" id="no_package"  value="{{ $gate_entry->getManifestoEntry->no_package}}" class="form-control" placeholder="Enter No of Package">
+                                 <input type="number"  name="no_package" id="no_package"  value="{{ $gate_entry->getManifestoEntry->no_package}}" class="form-control" placeholder="Enter No of Package">
                               </div>
                            </div>
                         
@@ -332,11 +332,11 @@
 
 <label class="col-sm-2 col-form-label">Container Tare Wt </label>
 <div class="col-sm-4">
-<input type="number" min="1" name="container_tare_wt"  id="container_tare_wt" class="form-control calculate" value="{{ $gate_entry->getWeighBridge->container_tare_wt}}" placeholder="Enter Container Tare Wt"  >
+<input type="number"  name="container_tare_wt"  id="container_tare_wt" class="form-control calculate" value="{{ $gate_entry->getWeighBridge->container_tare_wt}}" placeholder="Enter Container Tare Wt"  >
 </div>
 <label class="col-sm-2 col-form-label">WB Tare Wt</label>
 <div class="col-sm-4">
-<input type="number" min="1" class="form-control calculate" name="wb_tare_wt" id="wb_tare_wt" value="{{ $gate_entry->getWeighBridge->wb_tare_wt}}" placeholder="Enter WB Tare Wt">
+<input type="number"  class="form-control calculate" name="wb_tare_wt" id="wb_tare_wt" value="{{ $gate_entry->getWeighBridge->wb_tare_wt}}" placeholder="Enter WB Tare Wt">
 </div>
 </div>    
 
@@ -471,9 +471,9 @@
                                        
                                           <td><input name="report_no" type="text" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->report_no}}" placeholder="Enter Report No" ></td>
                                           <td><input type="date" name="carry_in_date" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->carry_in_date}}" placeholder="Carry In Date" ></td>
-                                          <td><input type="text" min="1" name="container_no" class="form-control cwth container_no" value="{{$gate_entry->getConsignmentDetails->container_no}}" placeholder="Enter Container No" ></td>
-                                          <td><input type="number" min="1" name="size" class="form-control cwth size" value="{{$gate_entry->getConsignmentDetails->size}}" placeholder="Enter Size" ></td>
-                                          <td><input type="text" min="1" name="seal_s_no1" class="form-control cwth seal_s_no1" value="{{$gate_entry->getConsignmentDetails->seal_s_no1}}" placeholder="Enter Seal S.NO1" ></td>
+                                          <td><input type="text"  name="container_no" class="form-control cwth container_no" value="{{$gate_entry->getConsignmentDetails->container_no}}" placeholder="Enter Container No" ></td>
+                                          <td><input type="number"  name="size" class="form-control cwth size" value="{{$gate_entry->getConsignmentDetails->size}}" placeholder="Enter Size" ></td>
+                                          <td><input type="text"  name="seal_s_no1" class="form-control cwth seal_s_no1" value="{{$gate_entry->getConsignmentDetails->seal_s_no1}}" placeholder="Enter Seal S.NO1" ></td>
                                           <td >
                                                    <select style="width: auto;" name="commodity" class="form-control boxbrd required clone_input commodity_select">
                                                    <option value="">Select Commodity</option>
@@ -499,7 +499,7 @@
                                                    </select>
                                                 </td>
                                           
-                                          <td><input type="text"  name="declared_wgt" min="1" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->declared_wgt}}" placeholder="Enter Declared Wgt" ></td>
+                                          <td><input type="text"  name="declared_wgt"  class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->declared_wgt}}" placeholder="Enter Declared Wgt" ></td>
                                           <td><input type="text" name="truck_no" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->truck_no}}" placeholder="Enter Truck No" ></td>
                                           <td><input type="text" name="trailer_no" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->trailer_no}}" placeholder="Enter Trailer No" ></td>
                                           <td><input type="text" name="driver_name" class="form-control cwth" value="{{$gate_entry->getConsignmentDetails->driver_name}}" placeholder="Enter Driver Name" ></td>

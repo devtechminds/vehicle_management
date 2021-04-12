@@ -201,7 +201,6 @@ class GateEntryOfficerController extends Controller
             $gate_entry->time_in = $data['time_in']?$data['time_in']:'';
             $gate_entry->destination = $data['destination']?$data['destination']:'';
             $gate_entry->shipping_line = $data['shipping_line']?$data['shipping_line']:'';
-            $gate_entry->shipping_line = $data['shipping_line']?$data['shipping_line']:'';
             $gate_entry->created_at = now();
             $gate_entry->created_by = auth()->user()->id;
             $gate_entry->updated_by = auth()->user()->id;

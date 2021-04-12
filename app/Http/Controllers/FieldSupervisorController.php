@@ -153,7 +153,7 @@ class FieldSupervisorController extends Controller
             $upload_documents->location = $data['location']?$data['location']:NULL;
            // $upload_documents->field_supervisor_entry_date = $data['field_supervisor_entry_date']?$data['field_supervisor_entry_date']:NULL;
             $upload_documents->field_supervisor_entry_date = date('Y-m-d');
-            $upload_documents->no_of_package = $data['no_of_package']?$data['no_of_package']:NULL;
+            $upload_documents->no_of_package = (int)$data['no_of_package'];
             $upload_documents->remarks = $data['remarks']?$data['remarks']:'';
             $upload_documents->file_upload = 'na';
             $upload_documents->area_id = $data['area']?$data['area']:'';

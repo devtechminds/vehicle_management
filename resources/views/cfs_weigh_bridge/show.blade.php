@@ -159,7 +159,7 @@
 </div>
 <label class="col-sm-2 col-form-label">WB Gross Wt </label>
 <div class="col-sm-4">
-<input type="number" min="1" class="form-control" name="wb_gross_wt" id="wb_gross_wt" value="" placeholder="Enter WB Gross Wt">
+<input type="number"  class="form-control" name="wb_gross_wt" id="wb_gross_wt" value="" placeholder="Enter WB Gross Wt">
 </div>
 </div>
 

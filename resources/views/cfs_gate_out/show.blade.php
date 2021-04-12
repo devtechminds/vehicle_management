@@ -175,11 +175,11 @@
 
 <label class="col-sm-2 col-form-label">Container Tare Wt </label>
 <div class="col-sm-4">
-<input type="number" min="1" name="container_tare_wt" class="form-control" value="{{ $gate_entry->getWeighBridge->container_tare_wt}}" placeholder="Enter Container Tare Wt" readonly >
+<input type="number"  name="container_tare_wt" class="form-control" value="{{ $gate_entry->getWeighBridge->container_tare_wt}}" placeholder="Enter Container Tare Wt" readonly >
 </div>
 <label class="col-sm-2 col-form-label">WB Tare Wt</label>
 <div class="col-sm-4">
-<input type="number" min="1" class="form-control" name="wb_tare_wt" value="{{ $gate_entry->getWeighBridge->wb_tare_wt}}" placeholder="Enter WB Tare Wt" readonly>
+<input type="number"  class="form-control" name="wb_tare_wt" value="{{ $gate_entry->getWeighBridge->wb_tare_wt}}" placeholder="Enter WB Tare Wt" readonly>
 </div>
 </div>    
 

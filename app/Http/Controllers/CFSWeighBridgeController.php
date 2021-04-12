@@ -133,8 +133,8 @@ class CFSWeighBridgeController extends Controller
             DB::beginTransaction();
             $data = $request->all();  
             $weigh_bridge = new WeighBridge();
-            $weigh_bridge->wb_gross_wt = $data['wb_gross_wt']?$data['wb_gross_wt']:NULL;
-            $weigh_bridge->container_tare_wt = $data['container_tare_wt']?$data['container_tare_wt']:NULL;
+            $weigh_bridge->wb_gross_wt = (int)$data['wb_gross_wt'];
+            $weigh_bridge->container_tare_wt = (int)$data['container_tare_wt'];
             $weigh_bridge->gate_entry_id = $data['gate_entry_id']?$data['gate_entry_id']:'';
             $weigh_bridge->consignment_details_id = $data['consignment_details_id']?$data['consignment_details_id']:'';
             $weigh_bridge->manifesto_entry_id = $data['manifesto_entry_id']?$data['manifesto_entry_id']:'';

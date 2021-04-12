@@ -261,13 +261,13 @@ class ManifestoEntryController extends Controller
                 $consignment_detail->manifesto_entry_id= $manifesto_entry->id;
                 $consignment_detail->report_no= $data['report_no'][$key];
                 $consignment_detail->carry_in_date= $data['carry_in_date'][$key];
-                $consignment_detail->container_no= isset($data['container_no'][$key])?$data['container_no'][$key]:NULL;
+                $consignment_detail->container_no= (strlen($data['container_no'][$key])>0)?$data['container_no'][$key]:NULL;
                 $consignment_detail->size= isset($data['size'][$key])?$data['size'][$key]:NULL;
-                $consignment_detail->seal_s_no1= isset($data['seal_s_no1'][$key])?$data['seal_s_no1'][$key]:NULL;
+                $consignment_detail->seal_s_no1= (strlen($data['seal_s_no1'][$key])>0)?$data['seal_s_no1'][$key]:NULL;
                 $consignment_detail->commodity= $data['commodity'][$key];
                 $consignment_detail->material= $data['material'][$key];
                 $consignment_detail->uom= $data['uom'][$key];
-                $consignment_detail->declared_wgt= $data['declared_wgt'][$key];
+                $consignment_detail->declared_wgt= (int)$data['declared_wgt'][$key];
                 $consignment_detail->truck_no= $data['truck_no'][$key];
                 $consignment_detail->trailer_no= $data['trailer_no'][$key];
                 $consignment_detail->driver_name= $data['driver_name'][$key];

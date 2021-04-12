@@ -234,7 +234,7 @@
       <div class="form-group row fheigt">
       <label class="col-sm-2 col-form-label">No of Package : </label>
       <div class="col-sm-4">
-      <input type="number"  min="1" class="form-control " name="no_of_package" value="" placeholder="Enter No of Package">
+      <input type="number"   class="form-control " name="no_of_package" value="" placeholder="Enter No of Package">
       </div>
       <label class="col-sm-2 col-form-label ">File Upload:</label>
       <div class="col-sm-4">
