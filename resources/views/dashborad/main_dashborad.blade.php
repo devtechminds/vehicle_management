@@ -133,7 +133,7 @@
                      </div>
                      <div class="card-block p-b-0">
                         <div class="table-responsive">
-                           <table class="table table-hover m-b-0" id="loading_dashboard_list">
+                           <table class="table table-hover m-b-0" id="Vehicle_Return_Approval">
                               <thead>
                                 <tr>
                                 <th class="hd">Id </th>
@@ -370,7 +370,7 @@
                      </div>
                      <div class="card-block p-b-0">
                         <div class="table-responsive">
-                           <table class="table table-hover m-b-0" id="Vehicle_Return_Approval">
+                           <table class="table table-hover m-b-0" id="loading_dashboard_list">
                               <thead>
                                 <tr>
                                 <th class="hd">Id </th>
@@ -962,11 +962,11 @@ document.getElementById("defaultOpen").click();
         });
 
        
-        var tb5 = $('#Vehicle_Return_Approval').DataTable({
+        var tb5 = $('#loading_dashboard_list').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ route('operation.manager.entry') }}",
+                    url: "{{ route('loading.dashboard.entry') }}",
                     type: 'GET',
                     data: function (d) {
                         d.gate_entry_no = $('#gate_entry_no').val();
@@ -980,60 +980,11 @@ document.getElementById("defaultOpen").click();
                     return meta.row + meta.settings._iDisplayStart + 1;
                     }
                     },
-                    
-                    {data: 'gate_entry_no', name: 'gate_entry_no',render:function(data, type, row){
-                          if(row.get_gate_entry.gate_entry_no){
-                            return row.get_gate_entry.gate_entry_no;
-                        }else{
-                            return '';
-                        }
-                        
-                    }},
-
-                    {data: 'manifesto_entry_id', name: 'manifesto_entry_id',render:function(data, type, row){
-                          if(row.get_manifesto_entry.ref_no){
-                            return row.get_manifesto_entry.ref_no;
-                        }else{
-                            return '';
-                        }
-                        
-                    }},
-                    {data: 'manifesto_entry_id', name: 'manifesto_entry_id',render:function(data, type, row){
-                          if(row.get_manifesto_entry.cargo_reference_no){
-                            return row.get_manifesto_entry.cargo_reference_no;
-                        }else{
-                            return '';
-                        }
-                        
-                    }},
-                    {data: 'consignment_details_id', name: 'consignment_details_id',render:function(data, type, row){
-                          if(row.get_consignment_details.container_no){
-                            return row.get_consignment_details.container_no;
-                        }else{
-                            return '';
-                        }
-                        
-                    }},
-                  
-                    {data: 'manifesto_entry_id', name: 'manifesto_entry_id',render:function(data, type, row){
-                          if(row.get_manifesto_entry.get_cargo.cargo_name){
-                            return row.get_manifesto_entry.get_cargo.cargo_name;
-                        }else{
-                            return '';
-                        }
-                        
-                    }},
-                      {data: 'manifesto_entry_id', name: 'manifesto_entry_id',render:function(data, type, row){
-                          if(row.get_manifesto_entry.get_consignment.consignment_type){
-                            return row.get_manifesto_entry.get_consignment.consignment_type;
-                        }else{
-                            return '';
-                        }
-                        
-                    }},
-
-                   
-                    
+                    {data: 'ref_no', name: 'ref_no'},
+                    {data: 'customer_name', name: 'customer_name'},
+                    {data: 'commodity_name', name: 'commodity_name'},
+                    {data: 'truck_no', name: 'truck_no'},
+                    {data: 'status', name: 'status'},
                     {data: 'created_at', name: 'created_at'},
                     {data: 'action', name: 'action'}
                 ],

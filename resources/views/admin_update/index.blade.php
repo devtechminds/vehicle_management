@@ -143,6 +143,7 @@
                         d.status = $('#status').val();
                         d.gate_entry_no = $('#gate_entry_no').val();
                         d.created_date = $('#created_date').val();
+                        d.ref_no = $('#ref_no').val();
                     }
                 },
                 columns: [

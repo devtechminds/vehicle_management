@@ -31,31 +31,34 @@ class AdminUpdateController extends Controller
     }
 
     public function proceedEntryList(Request $request){
+        
         $gate_entry_data = GateEntry::with('getManifestoEntry','getConsignmentDetails','getManifestoEntry.getConsignment','getManifestoEntry.getCargo');
-        if($request->status)
+        if(isset($request->status))
         {
+            if($request->status)
+            {
             $gate_entry_data->where('status','=',$request->status);
             $gate_entry_data->orWhere('status',3);
-        }else{
-            $gate_entry_data->where('status','=',0);
-            $gate_entry_data->orWhere('status',1);
-            $gate_entry_data->orWhere('status',2);
-            $gate_entry_data->orWhere('status',3);
+            }else{
+                $gate_entry_data->where('status','=',0);
+                $gate_entry_data->orWhere('status',1);
+                $gate_entry_data->orWhere('status',2);
+                $gate_entry_data->orWhere('status',3);
+            }
         }
         if(isset($request->created_date))
         {
             $created_date = date('Y-m-d',strtotime($request->created_date));
-            $gate_entry_data->WhereDate('created_at',$created_date);
+            $gate_entry_data->whereDate('created_at',$created_date);
         }
         if(isset($request->gate_entry_no))
-        {
-            
-            $gate_entry_data->orWhere('gate_entry_no','=',$request->gate_entry_no);
+        {    
+            $gate_entry_data->where('gate_entry_no','=',$request->gate_entry_no);
         }
-        if($request->ref_no)
+        if(isset($request->ref_no))
         {
             $gate_entry_data->whereHas('getManifestoEntry', function($q) use($request){
-                $q->orWhere('ref_no','=',$request->ref_no);
+                $q->where('ref_no','=',$request->ref_no);
             });
         }
         

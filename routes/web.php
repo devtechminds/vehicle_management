@@ -474,7 +474,7 @@ Route::group(['middleware' => ['auth']], function () {
          //Route::get('/lists-time-tracking','LuTimeTrackingController@loadingList')->name('list.time.tracking')->middleware('role:gate1_entry_officer');
 
          //LoadingUnloadingDashboard
-         Route::get('/operation-manager-entry','ApproveVehicleReturnController@index')->name('operation.manager.entry')->middleware('role:cfs_gate_officer');
+         Route::get('/loading-dashboard-entry','LuGateEntrieController@loadingDashboard')->name('loading.dashboard.entry');
 
          //AdminUpdate
          Route::get('/update-entry','AdminUpdateController@entryIndex')->name('update.entry')->middleware('role:admin');
