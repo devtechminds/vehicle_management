@@ -235,7 +235,7 @@ class AdminUpdateController extends Controller
                  'booking_no' => $data['booking_no']?$data['booking_no']:'',
                  'customer_name' => $data['customer_name']?$data['customer_name']:'',
                  'cf_agent' => $data['cf_agent']?$data['cf_agent']:'',
-                 'no_package' => isset($data['no_package'])?$data['no_package']:NULL,
+                 'no_package' => (int)$data['no_package'],
                  'interchange_no' => $data['interchange_no']?$data['interchange_no']:'',
                  'destination' => $data['destination']?$data['destination']:'',
                  'shipping_line' => $data['shipping_line']?$data['shipping_line']:'',
@@ -258,10 +258,10 @@ class AdminUpdateController extends Controller
                      if(!empty($data['weight_bridge_entry_id'])){
                         $update_data_Weigh_bridge=array(
                             'wb_ticket_no' => $data['wb_ticket_no']?$data['wb_ticket_no']:NULL,
-                            'wb_gross_wt' => $data['initiated_by']?$data['wb_gross_wt']:'',
-                            'container_tare_wt' => $data['container_tare_wt']?$data['container_tare_wt']:NULL,
-                            'wb_tare_wt' => $data['wb_tare_wt']?$data['wb_tare_wt']:NULL,
-                            'wb_net_wt' => $data['wb_net_wt']?$data['wb_net_wt']:NULL,
+                            'wb_gross_wt' => (int)$data['wb_gross_wt'],
+                            'container_tare_wt' => (int)$data['container_tare_wt'],
+                            'wb_tare_wt' => (int)$data['wb_tare_wt'],
+                            'wb_net_wt' => (int)$data['wb_net_wt'],
                             'updated_at' => now(),
                             'updated_by' => auth()->user()->id
                             );
@@ -284,13 +284,13 @@ class AdminUpdateController extends Controller
                              $update_data_consignment_details = array(
                                  'report_no' => $data['report_no']?$data['report_no']:'',
                                  'carry_in_date' => $data['carry_in_date']?$data['carry_in_date']:'',
-                                 'container_no' => isset($data['container_no'])?$data['container_no']:NULL,
-                                 'size' => isset($data['size'])?$data['size']:NULL,
-                                 'seal_s_no1' => isset($data['seal_s_no1'])?$data['seal_s_no1']:NULL,
+                                 'container_no' => (strlen($data['container_no'])>0)?$data['container_no']:NULL,
+                                 'size' => (int)$data['size'],
+                                 'seal_s_no1' => (strlen($data['seal_s_no1'])>0)?$data['seal_s_no1']:NULL,
                                  'commodity' => $data['commodity']?$data['commodity']:'',
                                  'material' => $data['material']?$data['material']:'',
                                  'uom' => $data['uom']?$data['uom']:NULL,
-                                 'declared_wgt' => $data['declared_wgt']?$data['declared_wgt']:'',
+                                 'declared_wgt' =>  (int)$data['declared_wgt'],
                                  'truck_no' => $data['truck_no']?$data['truck_no']:'',
                                  'trailer_no' => $data['trailer_no']?$data['trailer_no']:'',
                                  'driver_name' => $data['driver_name']?$data['driver_name']:'',
