@@ -150,11 +150,11 @@
 <div class="form-group row " style="margin-bottom: -12px;">
 <label class="col-sm-2 col-form-label" style="padding-top: 0px;font-weight: 700;font-size: 12px;">Initiated By </label>
 <div class="col-sm-4">
-<p style="font-size: 12px !important;">{{ isset($gate_entry->initiated_by)?$gate_entry->initiated_by:"N/A"}}</p>
+<p style="font-size: 12px !important;">{{ isset($gate_entry->getGateEntryOut->initiated_by)?$gate_entry->getGateEntryOut->initiated_by:"N/A"}}</p>
 </div>
 <label class="col-sm-2 col-form-label" style="padding-top: 0px;font-weight: 700;font-size: 12px;">Interchange No </label>
 <div class="col-sm-4">
-<p style="font-size: 12px !important;">{{ isset($gate_entry->interchange_no)?$gate_entry->interchange_no:'N/A'}}</p>
+<p style="font-size: 12px !important;">{{ isset($gate_entry->getGateEntryOut->interchange_no)?$gate_entry->getGateEntryOut->interchange_no:'N/A'}}</p>
 </div>
 </div>
 
@@ -162,11 +162,11 @@
 <div class="form-group row " style="margin-bottom: -12px;">
 <label class="col-sm-2 col-form-label" style="padding-top: 0px;font-weight: 700;font-size: 12px;">Time In: </label>
 <div class="col-sm-4">
-<p style="font-size: 12px !important;">{{  date('g:i a', strtotime($gate_entry->time_in))  }}</p>
+<p style="font-size: 12px !important;">{{  date('g:i a', strtotime($gate_entry->getGateEntryOut->time_in))  }}</p>
 </div>
 <label class="col-sm-2 col-form-label" style="padding-top: 0px;font-weight: 700;font-size: 12px;">Destination </label>
 <div class="col-sm-4">
-<p style="font-size: 12px !important;">{{ isset($gate_entry->destination)?$gate_entry->destination:'N/A'}}</p>
+<p style="font-size: 12px !important;">{{ isset($gate_entry->getGateEntryOut->destination)?$gate_entry->getGateEntryOut->destination:'N/A'}}</p>
 </div>
 </div>
 
@@ -174,7 +174,7 @@
 <div class="form-group row " style="margin-bottom: -12px;">
 <label class="col-sm-2 col-form-label" style="padding-top: 0px;font-weight: 700;font-size: 12px;">Shipping Line</label>
 <div class="col-sm-4">
-<p style="font-size: 12px !important;">{{ isset($gate_entry->shipping_line)?$gate_entry->shipping_line:'N/A'}}</p>
+<p style="font-size: 12px !important;">{{ isset($gate_entry->getGateEntryOut->shipping_line)?$gate_entry->getGateEntryOut->shipping_line:'N/A'}}</p>
 </div>
 <label class="col-sm-2 col-form-label" style="padding-top: 0px;font-weight: 700;font-size: 12px;">WB Ticket No </label>
 <div class="col-sm-4">
@@ -185,7 +185,7 @@
 <div class="form-group row " style="margin-bottom: -12px;">
 <label class="col-sm-2 col-form-label" style="padding-top: 0px;font-weight: 700;font-size: 12px;">WB Gross Wt </label>
 <div class="col-sm-4">
-<p style="font-size: 12px !important;">{{ isset($gate_entry->weighBridges->wb_gross_wt)?$gate_entry->weighBridges->wb_gross_wt:'N/A'}}</p>
+<p style="font-size: 12px !important;">{{ isset($gate_entry->wb_gross_wt)?$gate_entry->wb_gross_wt:'N/A'}}</p>
 </div>
 <label class="col-sm-2 col-form-label" style="padding-top: 0px;font-weight: 700;font-size: 12px;">Container Tare Wt</label>
 <div class="col-sm-4">
@@ -236,13 +236,15 @@
     <tbody>
       <tr>
       
-        <td style="font-size: 12px !important;height: 20px;padding: .25rem .25rem !important;">{{ isset($gate_entry->field_supervisor_name)?$gate_entry->field_supervisor_name:'N/A'}}</td>
-        <td style="font-size: 12px !important;height: 20px;padding: .25rem .25rem !important;">{{ isset($gate_entry->container_physical_status)?$gate_entry->container_physical_status:'N/A'}}</td>
-        <td  style="font-size: 12px !important;height: 20px;padding: .25rem .25rem !important;">{{ isset($gate_entry->no_of_package)?$gate_entry->no_of_package:'N/A'}}</td>
-        <td  style="font-size: 12px !important;height: 20px;padding: .25rem .25rem !important;">{{ isset($gate_entry->getLocation->location)?$gate_entry->getLocation->location:'N/A'}}</td>
-        <td  style="font-size: 12px !important;height: 20px;padding: .25rem .25rem !important;">{{ isset($gate_entry->getArea->area)?$gate_entry->getArea->area:'N/A'}}</td>
-        <td  style="font-size: 12px !important;height: 20px;padding: .25rem .25rem !important;">{{ isset($gate_entry->bin_id)?$gate_entry->bin_id:'N/A'}}</td>
-        <td  style="font-size: 12px !important;height: 20px;padding: .25rem .25rem !important;">{{ isset($gate_entry->created_at)?$gate_entry->created_at:'N/A'}}</td>
+        <td style="font-size: 12px !important;height: 20px;padding: .25rem .25rem !important;">{{ isset($gate_entry->getFieldSupervisorEntryOut->field_supervisor_name)?$gate_entry->getFieldSupervisorEntryOut->field_supervisor_name:'N/A'}}</td>
+        <td style="font-size: 12px !important;height: 20px;padding: .25rem .25rem !important;">{{ isset($gate_entry->getFieldSupervisorEntryOut->container_physical_status)?$gate_entry->getFieldSupervisorEntryOut->container_physical_status:'N/A'}}</td>
+        <td  style="font-size: 12px !important;height: 20px;padding: .25rem .25rem !important;">{{ isset($gate_entry->getFieldSupervisorEntryOut->no_of_package)?$gate_entry->getFieldSupervisorEntryOut->no_of_package:'N/A'}}</td>
+        <td  style="font-size: 12px !important;height: 20px;padding: .25rem .25rem !important;">{{ isset($gate_entry->getFieldSupervisorEntryOut->location)?$gate_entry->getFieldSupervisorEntryOut->getLocation->location:'N/A'}}</td>
+        <td  style="font-size: 12px !important;height: 20px;padding: .25rem .25rem !important;">{{ isset($gate_entry->getFieldSupervisorEntryOut->area_id)?$gate_entry->getFieldSupervisorEntryOut->getArea->area:'N/A'}}</td>
+        <td  style="font-size: 12px !important;height: 20px;padding: .25rem .25rem !important;">{{ isset($gate_entry->getFieldSupervisorEntryOut->bin_id)?$gate_entry->getFieldSupervisorEntryOut->bin_id:'N/A'}}</td>
+        <td  style="font-size: 12px !important;height: 20px;padding: .25rem .25rem !important;">
+        {{empty($gate_entry->getFieldSupervisorEntryOut->created_at_print)? 'N/A' : $gate_entry->getFieldSupervisorEntryOut->created_at_print}}
+       </td>
 
       </tr>
       

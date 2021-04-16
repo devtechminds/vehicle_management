@@ -246,7 +246,7 @@
 </div>
 <label class="col-sm-2 col-form-label ">Yard:</label>
 <div class="col-sm-4">
-<input type="text" name="bin" class="form-control " value="{{ $gate_entry->bin_id}}" placeholder="" >
+<input type="text" name="bin" id="bin" class="form-control " value="{{ $gate_entry->bin_id}}" placeholder="" >
 </div>
 </div>
 

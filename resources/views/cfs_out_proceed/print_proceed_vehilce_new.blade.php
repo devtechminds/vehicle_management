@@ -188,7 +188,7 @@
 <div class="form-group row " style="margin-bottom: -12px;">
 <label class="col-sm-2 col-form-label" style="padding-top: 0px;font-weight: 700;font-size: 12px;">WB Ticket No </label>
 <div class="col-sm-4">
-<p style="font-size: 12px !important;">CFS/W/2020/2</p>
+<p style="font-size: 12px !important;">N/A</p>
 </div>
 <label class="col-sm-2 col-form-label" style="padding-top: 0px;font-weight: 700;font-size: 12px;">WB Gross Wt</label>
 <div class="col-sm-4">

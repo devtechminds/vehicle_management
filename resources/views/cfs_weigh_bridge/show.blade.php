@@ -88,7 +88,7 @@
                               </div>
                               <label class="col-sm-2 col-form-label">Consignment Weight  </label>
                               <div class="col-sm-4">
-                                 <input type="text" class="form-control" value="40 ton" placeholder="" readonly="">
+                                 <input type="text" class="form-control" value="{{ $gate_entry->getManifestoEntry->consignment_wgt}}" placeholder="" readonly="">
                               </div>
                            </div>
                            <div class="form-group row">

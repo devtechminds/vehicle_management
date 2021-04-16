@@ -206,7 +206,7 @@ class StuffingApprovalController extends Controller
                 'interchange_no' => $data['interchange_no']?$data['interchange_no']:'',
                 'destination' => $data['destination']?$data['destination']:'',
                 'shipping_line' => $data['shipping_line']?$data['shipping_line']:'',
-                'bl_no' => $data['bl_no']?$data['bl_no']:'',
+                'bl_no' => strlen($data['bl_no'])>0?$data['bl_no']:'',
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );

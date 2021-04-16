@@ -12,9 +12,16 @@ class FieldSupervisorEntryOut extends Model
      * @param  string $value
      * @return string
      */
+    protected $append = ['created_at_print'];
+
     public function getCreatedAtAttribute($value)
     {
-    return date('d/m/Y H:i:s', strtotime($value));
+        return date('d-m-Y H:i:s', strtotime($value));
+    }
+
+    public function getCreatedAtPrintAttribute()
+    {
+        return date('Y-m-d', strtotime($this->created_at));
     }
     
     
@@ -53,5 +60,10 @@ class FieldSupervisorEntryOut extends Model
     public function getLocation()
     {
     return $this->hasOne('App\Location', 'id', 'location');
+    }
+
+    public function getArea()
+    {
+    return $this->hasOne('App\Area', 'id', 'area_id');
     }
 }

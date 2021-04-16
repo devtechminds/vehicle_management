@@ -220,7 +220,7 @@ class ContainerWeighbridgeOutController extends Controller
 
     public function print($id)
     {
-        $gate_entry = WeightBridgeEntryOut::with('getManifestoEntry','getManifestoEntry.getCargo','getManifestoEntry.getConsignment','getManifestoEntry.getAgent','getConsignmentDetails','getReleaseApprovalFinacialOfficerEntry','getGateEntryOut')
+        $gate_entry = WeightBridgeEntryOut::with('getManifestoEntry','getManifestoEntry.getCargo','getManifestoEntry.getConsignment','getManifestoEntry.getAgent','getConsignmentDetails','getReleaseApprovalFinacialOfficerEntry','getGateEntryOut','getFieldSupervisorEntryOut')
         ->where("id", "=", base64_decode($id))
         ->first();
         UserLog::AddLog('Container Weigh bridge Out Printed By');

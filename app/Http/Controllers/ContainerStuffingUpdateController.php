@@ -117,7 +117,7 @@ class ContainerStuffingUpdateController extends Controller
             //echo "<pre>"; 
 
              $update_data_manifesto_entry =array(
-                'bl_no' => $data['bl_no']?$data['bl_no']:'',
+                'bl_no' => strlen($data['bl_no'])>0?$data['bl_no']:'',
                 'updated_at' => now(),
                 'updated_by' => auth()->user()->id
                 );
