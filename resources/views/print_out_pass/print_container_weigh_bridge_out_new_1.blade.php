@@ -243,13 +243,15 @@
     <tbody>
       <tr>
       
-        <td style="font-size: 12px !important;height: 30px;padding: .25rem .25rem !important;">{{ isset($gate_entry->getManifestoEntry->getUploadDocuments->field_supervisor_name)?$gate_entry->getManifestoEntry->getUploadDocuments->field_supervisor_name:''}}</td>
-        <td style="font-size: 12px !important;height: 30px;padding: .25rem .25rem !important;">{{ isset($gate_entry->getManifestoEntry->getUploadDocuments->container_physical_status)?$gate_entry->getManifestoEntry->getUploadDocuments->container_physical_status:''}}</td>
-        <td  style="font-size: 12px !important;height: 30px;padding: .25rem .25rem !important;">{{ isset($gate_entry->getManifestoEntry->getUploadDocuments->no_of_package)?$gate_entry->getManifestoEntry->getUploadDocuments->no_of_package:''}}</td>
-        <td  style="font-size: 12px !important;height: 30px;padding: .25rem .25rem !important;">{{ isset($gate_entry->getManifestoEntry->getUploadDocuments->getLocation->location)?$gate_entry->getManifestoEntry->getUploadDocuments->getLocation->location:''}}</td>
-        <td  style="font-size: 12px !important;height: 30px;padding: .25rem .25rem !important;">{{ isset($gate_entry->getManifestoEntry->getUploadDocuments->getArea->area)?$gate_entry->getManifestoEntry->getUploadDocuments->getArea->area:''}}</td>
-        <td  style="font-size: 12px !important;height: 30px;padding: .25rem .25rem !important;">{{ isset($gate_entry->getManifestoEntry->getUploadDocuments->bin_id)?$gate_entry->getManifestoEntry->getUploadDocuments->bin_id:''}}</td>
-        <td  style="font-size: 12px !important;height: 30px;padding: .25rem .25rem !important;">{{ isset($gate_entry->getManifestoEntry->getUploadDocuments->created_at)?$gate_entry->getManifestoEntry->getUploadDocuments->created_at:''}}</td>
+      <td style="font-size: 12px !important;height: 20px;padding: .25rem .25rem !important;">{{ isset($gate_entry->getFieldSupervisorEntryOut->field_supervisor_name)?$gate_entry->getFieldSupervisorEntryOut->field_supervisor_name:'N/A'}}</td>
+        <td style="font-size: 12px !important;height: 20px;padding: .25rem .25rem !important;">{{ isset($gate_entry->getFieldSupervisorEntryOut->container_physical_status)?$gate_entry->getFieldSupervisorEntryOut->container_physical_status:'N/A'}}</td>
+        <td  style="font-size: 12px !important;height: 20px;padding: .25rem .25rem !important;">{{ isset($gate_entry->getFieldSupervisorEntryOut->no_of_package)?$gate_entry->getFieldSupervisorEntryOut->no_of_package:'N/A'}}</td>
+        <td  style="font-size: 12px !important;height: 20px;padding: .25rem .25rem !important;">{{ isset($gate_entry->getFieldSupervisorEntryOut->location)?$gate_entry->getFieldSupervisorEntryOut->getLocation->location:'N/A'}}</td>
+        <td  style="font-size: 12px !important;height: 20px;padding: .25rem .25rem !important;">{{ isset($gate_entry->getFieldSupervisorEntryOut->area_id)?$gate_entry->getFieldSupervisorEntryOut->getArea->area:'N/A'}}</td>
+        <td  style="font-size: 12px !important;height: 20px;padding: .25rem .25rem !important;">{{ isset($gate_entry->getFieldSupervisorEntryOut->bin_id)?$gate_entry->getFieldSupervisorEntryOut->bin_id:'N/A'}}</td>
+        <td  style="font-size: 12px !important;height: 20px;padding: .25rem .25rem !important;">
+        {{empty($gate_entry->getFieldSupervisorEntryOut->created_at_print)? 'N/A' : $gate_entry->getFieldSupervisorEntryOut->created_at_print}}
+       </td>
 
       </tr>
       

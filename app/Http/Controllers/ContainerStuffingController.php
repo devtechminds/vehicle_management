@@ -30,9 +30,11 @@ class ContainerStuffingController extends Controller
     {
      
         if($request->ajax()){
-            $gate_entry_data = UploadDocuments::whereHas('getManifestoEntry', function($where){ 
-                $where->whereNotIn('cargo_type',[4,8,10,11]);
-             })->with('getGateEntry','getManifestoEntry.getCargo','getManifestoEntry.getConsignment','getConsignmentDetails');
+            $gate_entry_data = UploadDocuments::with('getGateEntry','getManifestoEntry','getManifestoEntry.getCargo','getManifestoEntry.getConsignment','getConsignmentDetails');
+
+            //  $gate_entry_data = UploadDocuments::whereHas('getManifestoEntry', function($where){ 
+            //     $where->whereNotIn('cargo_type',[4,8,10,11]);
+            //  })->with('getGateEntry','getManifestoEntry.getCargo','getManifestoEntry.getConsignment','getConsignmentDetails');
             
             
             if($request->status)

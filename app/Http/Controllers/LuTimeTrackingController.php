@@ -116,9 +116,8 @@ class LuTimeTrackingController extends Controller
                 $created_at = date('d-m-Y h:i A', strtotime($row->created_at) );
                 return  isset($row->created_at)?$created_at:'';
             })
-            ->editColumn('action_time_diff', function($row){
-                $time_diff = gmdate("h:i", $row->time_diff);
-                return  isset($row->time_diff)?$time_diff:'';
+            ->editColumn('action_time_diff', function($row){                
+                return $row->time_diff> 0 ?gmdate("h:i", $row->time_diff):0;                
             })
             ->editColumn('action_by', function($row){
                 $action_by = User::find($row->updated_by)->name;

@@ -157,7 +157,7 @@ class FieldSupervisorController extends Controller
             $upload_documents->remarks = $data['remarks']?$data['remarks']:'';
             $upload_documents->file_upload = 'na';
             $upload_documents->area_id = $data['area']?$data['area']:'';
-            $upload_documents->bin_id = $data['bin']?$data['bin']:'';
+            $upload_documents->bin_id = isset($data['bin'])?$data['bin']:'';
             $upload_documents->created_at = now();
             $upload_documents->updated_at = now();
             $upload_documents->created_by = auth()->user()->id;

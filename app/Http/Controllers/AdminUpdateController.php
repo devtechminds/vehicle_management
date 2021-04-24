@@ -287,9 +287,9 @@ class AdminUpdateController extends Controller
                              $update_data_consignment_details = array(
                                  'report_no' => $data['report_no']?$data['report_no']:'',
                                  'carry_in_date' => $data['carry_in_date']?$data['carry_in_date']:'',
-                                 'container_no' => (strlen($data['container_no'])>0)?$data['container_no']:NULL,
+                                 'container_no' => isset($data['container_no'])?$data['container_no']:NULL,
                                  'size' => (int)$data['size'],
-                                 'seal_s_no1' => (strlen($data['seal_s_no1'])>0)?$data['seal_s_no1']:NULL,
+                                 'seal_s_no1' => isset($data['seal_s_no1'])?$data['seal_s_no1']:NULL,
                                  'commodity' => $data['commodity']?$data['commodity']:'',
                                  'material' => $data['material']?$data['material']:'',
                                  'uom' => $data['uom']?$data['uom']:NULL,
